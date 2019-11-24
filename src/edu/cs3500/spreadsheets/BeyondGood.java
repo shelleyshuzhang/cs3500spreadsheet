@@ -14,8 +14,10 @@ import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
-import edu.cs3500.spreadsheets.view.VisualViewBlank;
-import edu.cs3500.spreadsheets.view.VisualViewEvaluated;
+import edu.cs3500.spreadsheets.view.editableView.EditableViewBlank;
+import edu.cs3500.spreadsheets.view.editableView.EditableViewEval;
+import edu.cs3500.spreadsheets.view.nonEditableView.VisualViewBlank;
+import edu.cs3500.spreadsheets.view.nonEditableView.VisualViewEvaluated;
 
 /**
  * The main class for our program.
@@ -48,7 +50,11 @@ public class BeyondGood {
           writer.close();
         } else if (args.length == 3 && args[2].equals("-gui")) {
           model.evaluateAll();
-          view = new VisualViewEvaluated("evaluated", model);
+          view = new VisualViewEvaluated("evaluated and uneditable", model);
+          view.render();
+        } else if (args.length == 3 && args[2].equals("-edit")) {
+          model.evaluateAll();
+          view = new EditableViewEval("evaluated and editable", model);
           view.render();
         } else {
           System.out.print("Illegal command line");
@@ -66,7 +72,10 @@ public class BeyondGood {
         System.out.print("the file reading is not successful/the file is not well formed");
       }
     } else if (args.length == 1 && args[0].equals("-gui")) {
-      view = new VisualViewBlank("blank", 100, 100);
+      view = new VisualViewBlank("blank and uneditable", 100, 100);
+      view.render();
+    } else if (args.length == 1 && args[0].equals("-edit")) {
+      view = new EditableViewBlank("blank and editable", 100, 100);
       view.render();
     } else {
       System.out.print("Illegal command line");

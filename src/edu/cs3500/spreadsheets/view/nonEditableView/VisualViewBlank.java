@@ -1,10 +1,13 @@
-package edu.cs3500.spreadsheets.view;
+package edu.cs3500.spreadsheets.view.nonEditableView;
 
 import java.awt.Dimension;
 import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
+
+import edu.cs3500.spreadsheets.view.IView;
+import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
 
 /**
@@ -32,7 +35,13 @@ public class VisualViewBlank extends JFrame implements IView {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(true);
     this.setMinimumSize(VIEW_MIN_SIZE);
-    this.panel = new WorksheetScrollablePanel(new JTable(row, col));
+    this.panel = new WorksheetScrollablePanel(new JTable(row, col) {
+      private static final long serialVersionUID = 1L;
+
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
+    });
     this.add(this.panel);
     this.setBackground(FRAME_BACKGROUND);
     pack();
@@ -53,6 +62,11 @@ public class VisualViewBlank extends JFrame implements IView {
   @Override
   public void increaseRowHeaderWidth() {
     this.panel.increaseWorksheetHeaderSize();
+  }
+
+  @Override
+  public void editCell(int col, int row, String value) {
+    //do nothing because this is not the job for a uneditable view
   }
 
   @Override

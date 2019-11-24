@@ -28,4 +28,6 @@ public interface IView {
    */
   void increaseRowHeaderWidth();
 
+  void editCell(int col, int row, String value);
+
 }

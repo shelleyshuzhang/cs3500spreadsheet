@@ -25,7 +25,7 @@ public class WorksheetScrollablePanel extends JScrollPane {
   private static Color HEADER_GRID_COLOR = new Color(233, 233, 243);
   private static Color WORKSHEET_GRID_COLOR = Color.GRAY;
   private static Color WORKSHEET_FOREGROUND = Color.BLACK;
-  private static Color WORKSHEET_SELECTED_BACKGROUND = new Color(187, 187, 187);
+  private static Color WORKSHEET_SELECTED_BACKGROUND = new Color(182, 213, 212);
 
   /**
    * Construct a WorksheetScrollablePanel with a table in it.
@@ -104,6 +104,7 @@ public class WorksheetScrollablePanel extends JScrollPane {
     headerTable.setBackground(BACK_GROUND_COLOR);
     headerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     headerTable.setPreferredScrollableViewportSize(this.viewportSize);
-    headerTable.setCellSelectionEnabled(false);
+    headerTable.setFocusable(false);
+    headerTable.setRowSelectionAllowed(false);
   }
 }

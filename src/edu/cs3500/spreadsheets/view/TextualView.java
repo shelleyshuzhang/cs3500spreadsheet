@@ -49,6 +49,11 @@ public class TextualView implements IView {
     // do nothing because this is not the job for a textual view
   }
 
+  @Override
+  public void editCell(int col, int row, String value) {
+    // do nothing because this is not the job for a textual view
+  }
+
   private void appendToOut(String s) {
     try {
       out.append(s);

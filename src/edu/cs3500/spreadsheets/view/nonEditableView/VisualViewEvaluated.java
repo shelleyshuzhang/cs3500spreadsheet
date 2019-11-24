@@ -1,9 +1,10 @@
-package edu.cs3500.spreadsheets.view;
+package edu.cs3500.spreadsheets.view.nonEditableView;
 
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
+import edu.cs3500.spreadsheets.view.nonEditableView.VisualViewBlank;
 
 /**
  * A visual view class for worksheet which can produce an worksheet with evaluated values in it, the
