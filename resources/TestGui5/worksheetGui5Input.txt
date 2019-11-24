@@ -1,0 +1,24 @@
+A1 3
+A2 true
+A3 lalalalal
+A4 =5
+A5 =false
+A6 ="something"
+A7 ="Else"
+A8 =A1
+A9 =(SUM A1 A2 A6)
+A10 =(SUM A1:A2)
+A11 =(SUM A2:A3)
+A12 =(SUM A1)
+A13 =(PRODUCT A1 A2 A6)
+A14 =(PRODUCT A1:A2)
+A15 =(PRODUCT A2:A3)
+A16 =(PRODUCT A1)
+A17 =(< A1 A4)
+A18 =(SAPPEND A2 A3 A6:A7)
+A19 =(SUM 1 7)
+A20 =(PRODUCT 3 0)
+A21 =(< 2 1)
+A22 =(SAPPEND "skT" "skwT")
+
+
