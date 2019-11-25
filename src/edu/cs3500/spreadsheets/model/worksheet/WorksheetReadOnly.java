@@ -49,5 +49,5 @@ public interface WorksheetReadOnly {
    */
   Set<String> getAllCellCoordinates();
 
-  HashMap<Coord, CellGeneral> getAllEvaCell();
+  HashMap<Coord, CellGeneral> getAllRawCell();
 }

@@ -100,7 +100,7 @@ public class BasicWorkSheet implements Worksheet {
   }
 
   @Override
-  public HashMap<Coord, CellGeneral> getAllEvaCell() {
+  public HashMap<Coord, CellGeneral> getAllRawCell() {
     return allRawCell;
   }
 

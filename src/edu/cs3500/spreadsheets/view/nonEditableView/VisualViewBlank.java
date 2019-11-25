@@ -70,6 +70,17 @@ public class VisualViewBlank extends JFrame implements IView {
   }
 
   @Override
+  public String getTextFieldInput() {
+    // should never return anything because there is no text field in an uneditable cell
+    return null;
+  }
+
+  @Override
+  public void clearTextField() {
+    // nothing here because an uneditable cell should not have a text field
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }

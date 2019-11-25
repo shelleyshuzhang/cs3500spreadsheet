@@ -79,5 +79,9 @@ public class EditableViewBlank extends JFrame implements IView {
     return this.textField.getText();
   }
 
+  @Override
+  public void clearTextField() {
+    this.textField.setText("");
+  }
 
 }
