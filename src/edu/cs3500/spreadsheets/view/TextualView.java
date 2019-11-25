@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.view;
 
 import java.io.IOException;
 
+import javax.swing.*;
+
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 
 /**
@@ -73,6 +76,28 @@ public class TextualView implements IView {
   @Override
   public void getFocus() {
     // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public void setHotKey(KeyStroke key, String featureName) {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public void addFeature(Features f) {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public int getSelectedCellRow() {
+    // should never be called because there won't be a selected cell in the text view
+    return 0;
+  }
+
+  @Override
+  public int getSelectedCellCol() {
+    // should never be called because there won't be a selected cell in the text view
+    return 0;
   }
 
   private void appendToOut(String s) {

@@ -3,9 +3,9 @@ package edu.cs3500.spreadsheets.view.nonEditableView;
 import java.awt.Dimension;
 import java.awt.Color;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
+import javax.swing.*;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
@@ -78,6 +78,31 @@ public class VisualViewBlank extends JFrame implements IView {
   @Override
   public void clearTextField() {
     // nothing here because an uneditable cell should not have a text field
+  }
+
+  @Override
+  public void resetFocus() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void setHotKey(KeyStroke key, String featureName) {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void addFeature(Features f) {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public int getSelectedCellRow() {
+    return this.panel.getSelectedCellRow();
+  }
+
+  @Override
+  public int getSelectedCellCol() {
+    return this.panel.getSelectedCellColumn();
   }
 
   @Override
