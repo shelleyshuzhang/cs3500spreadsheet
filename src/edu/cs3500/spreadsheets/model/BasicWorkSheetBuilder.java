@@ -7,6 +7,7 @@ import edu.cs3500.spreadsheets.model.cell.Cell;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
+import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.content.value.ValueBoolean;
 import edu.cs3500.spreadsheets.model.content.value.ValueDouble;
 import edu.cs3500.spreadsheets.model.content.value.ValueString;
@@ -65,7 +66,7 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
     Coord coord = new Coord(col, row);
     if (allRawCell.containsKey(coord)) {
       CellGeneral toChange = allRawCell.get(coord);
-      toChange.setContents(c);
+      toChange.setContents(c, new HashMap<Coord, Value>());
     } else {
       CellGeneral cell = new Cell(coord, c);
       this.allRawCell.put(coord, cell);

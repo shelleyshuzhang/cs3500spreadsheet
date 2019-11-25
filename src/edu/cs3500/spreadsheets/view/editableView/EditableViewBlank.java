@@ -10,6 +10,8 @@ import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 public class EditableViewBlank extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private JToolBar toolBar;
+  private TextField textField;
+  KeyComponent keyComponent;
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
   private static int VIEW_LOCATION_Y = 500;
@@ -29,7 +31,8 @@ public class EditableViewBlank extends JFrame implements IView {
     this.toolBar = new JToolBar();
     this.toolBar.add(new JButton(SIGN_TICK));
     this.toolBar.add(new JButton(SIGN_CROSS));
-    this.toolBar.add(new TextField());
+    this.textField = new TextField();
+    this.toolBar.add(textField);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
     this.add(toolBar, BorderLayout.NORTH);
     this.panel = new WorksheetScrollablePanel(new JTable(row, col) {
@@ -70,4 +73,11 @@ public class EditableViewBlank extends JFrame implements IView {
   public void editCell(int col, int row, String value) {
     this.panel.editCellValue(col, row, value);
   }
+
+  @Override
+  public String getTextFieldInput() {
+    return this.textField.getText();
+  }
+
+
 }

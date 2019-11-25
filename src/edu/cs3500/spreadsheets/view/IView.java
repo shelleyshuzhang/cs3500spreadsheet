@@ -30,4 +30,8 @@ public interface IView {
 
   void editCell(int col, int row, String value);
 
+  String getTextFieldInput();
+
+  void clear
+
 }
