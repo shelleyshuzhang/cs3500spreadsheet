@@ -1,5 +1,8 @@
 package edu.cs3500.spreadsheets.model.worksheet;
 
+import java.util.List;
+
+import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
 
 /**
@@ -23,5 +26,5 @@ public interface Worksheet extends WorksheetReadOnly {
    * @param row      the row of the cell
    * @param contents the contents that should change
    */
-  void editCellContent(int col, int row, Contents contents);
+  List<Coord> editCellContent(int col, int row, Contents contents);
 }

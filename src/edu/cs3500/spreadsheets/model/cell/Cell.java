@@ -1,6 +1,8 @@
 package edu.cs3500.spreadsheets.model.cell;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import edu.cs3500.spreadsheets.model.Coord;
@@ -19,6 +21,7 @@ public class Cell implements CellGeneral {
   private final Coord coordinate;
   private Contents contents;
   private Value evaluatedValue = null;
+  private List<CellObserver> observers = null;
 
   /**
    * Construct a Cell with given coordinate and contents.
@@ -53,8 +56,10 @@ public class Cell implements CellGeneral {
   }
 
   @Override
-  public void setContents(Contents contents) {
+  public List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell) {
     this.contents = contents;
+    HashMap<Formula, Value> formulaValueHashMap = new HashMap<>();
+    return this.executeUpdate(allEvaCell, formulaValueHashMap);
   }
 
   @Override
@@ -69,6 +74,26 @@ public class Cell implements CellGeneral {
     } else {
       return null;
     }
+  }
+
+  @Override
+  public void addObserver(CellObserver o) {
+    this.observers.add(o);
+  }
+
+  @Override
+  public List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
+                                   HashMap<Formula, Value> formulaValueHashMap) {
+    List<Coord> acc = new ArrayList<>();
+    acc.add(this.coordinate);
+    Value newValue = this.evaluate(formulaValueHashMap);
+    allEvaCell.replace(this.coordinate, newValue);
+    for (CellObserver o : this.observers) {
+      if (!acc.contains(o.getCoordinate())) {
+        acc.addAll(o.update(allEvaCell, formulaValueHashMap));
+      }
+    }
+    return acc;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model.cell;
 
 import java.util.HashMap;
+import java.util.List;
 
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
@@ -39,12 +40,7 @@ public interface CellGeneral {
    */
   Contents getContents();
 
-  /**
-   * Set the contents to the cell.
-   *
-   * @param contents the given content to put in the cell
-   */
-  void setContents(Contents contents);
+  List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell);
 
   /**
    * Determine if the cell contain reference.
@@ -59,5 +55,10 @@ public interface CellGeneral {
    * @return the value if we stored before, null if we do not
    */
   Value getCellValue();
+
+  public void addObserver(CellObserver o);
+
+  public List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
+                                   HashMap<Formula, Value> formulaValueHashMap);
 
 }

@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.model.worksheet;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -99,10 +100,9 @@ public class BasicWorkSheet implements Worksheet {
   }
 
   @Override
-  public void editCellContent(int col, int row, Contents contents) {
+  public List<Coord> editCellContent(int col, int row, Contents contents) {
     Coord c = new Coord(col, row);
-    allRawCell.get(c).setContents(contents);
-    this.evaluateAll();
+    return allRawCell.get(c).setContents(contents, allEvaCell);
   }
 
   @Override
