@@ -19,8 +19,10 @@ public class BasicController implements Features {
 
 
   @Override
-  public void acceptEdit(int col, int row) {
+  public void acceptEdit() {
     String content = view.getTextFieldInput();
+    int col = view.getSelectedCellCol();
+    int row = view.getSelectedCellRow();
     Contents contents = BasicWorkSheetBuilder.createContent(
             col, row, content, model.getAllRawCell());
     List<Coord> lo = model.editCellContent(col, row, contents);
@@ -39,13 +41,13 @@ public class BasicController implements Features {
   }
 
   @Override
-  public void refuseEdit(int col, int row) {
+  public void refuseEdit() {
     view.clearTextField();
     view.removeFocus();
   }
 
   @Override
-  public void invokeEdit(int col, int row) {
+  public void invokeEdit() {
     view.getFocus();
   }
 

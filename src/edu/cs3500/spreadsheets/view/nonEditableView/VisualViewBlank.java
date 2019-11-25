@@ -106,6 +106,16 @@ public class VisualViewBlank extends JFrame implements IView {
   }
 
   @Override
+  public void removeFocus() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void getFocus() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }

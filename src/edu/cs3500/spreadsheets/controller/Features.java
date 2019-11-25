@@ -1,10 +1,10 @@
 package edu.cs3500.spreadsheets.controller;
 
 public interface Features {
-  void acceptEdit(int col, int row);
+  void acceptEdit();
 
-  void refuseEdit(int col, int row);
+  void refuseEdit();
 
-  void invokeEdit(int col, int row);
+  void invokeEdit();
 
 }
