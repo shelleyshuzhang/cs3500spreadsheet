@@ -114,4 +114,15 @@ public class EditableViewBlank extends JFrame implements IView {
     return this.panel.getSelectedCellColumn();
   }
 
+  @Override
+  public void removeFocus() {
+    this.textField.setFocusable(false);
+  }
+
+  @Override
+  public void getFocus() {
+    this.textField.setFocusable(true);
+    this.textField.requestFocus();
+  }
+
 }

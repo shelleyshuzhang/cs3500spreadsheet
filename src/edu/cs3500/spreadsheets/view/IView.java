@@ -48,4 +48,7 @@ public interface IView {
 
   int getSelectedCellCol();
 
+  void removeFocus();
+
+  void getFocus();
 }

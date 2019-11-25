@@ -69,6 +69,11 @@ public class TextualView implements IView {
   }
 
   @Override
+  public void resetFocus() {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
   public void removeFocus() {
     // do nothing because this is not the job for a textual view
   }
