@@ -32,6 +32,6 @@ public interface IView {
 
   String getTextFieldInput();
 
-  void clear
+  void clearTextField();
 
 }

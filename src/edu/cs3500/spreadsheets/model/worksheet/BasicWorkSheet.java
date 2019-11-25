@@ -100,6 +100,11 @@ public class BasicWorkSheet implements Worksheet {
   }
 
   @Override
+  public HashMap<Coord, CellGeneral> getAllEvaCell() {
+    return allRawCell;
+  }
+
+  @Override
   public List<Coord> editCellContent(int col, int row, Contents contents) {
     Coord c = new Coord(col, row);
     return allRawCell.get(c).setContents(contents, allEvaCell);

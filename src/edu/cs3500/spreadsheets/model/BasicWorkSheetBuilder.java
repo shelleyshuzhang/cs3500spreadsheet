@@ -33,6 +33,20 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
 
   @Override
   public WorksheetReader.WorksheetBuilder<Worksheet> createCell(int col, int row, String contents) {
+    Contents c = this.createContent(col, row, contents, this.allRawCell);
+    Coord coord = new Coord(col, row);
+    if (allRawCell.containsKey(coord)) {
+      CellGeneral toChange = allRawCell.get(coord);
+      toChange.setContents(c, new HashMap<Coord, Value>());
+    } else {
+      CellGeneral cell = new Cell(coord, c);
+      this.allRawCell.put(coord, cell);
+    }
+    return this;
+  }
+
+  public static Contents createContent(int col, int row, String contents,
+                                       HashMap<Coord, CellGeneral> allRawCell) {
     Contents c;
     if (contents == null) {
       c = new Blank();
@@ -63,15 +77,7 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
         }
       }
     }
-    Coord coord = new Coord(col, row);
-    if (allRawCell.containsKey(coord)) {
-      CellGeneral toChange = allRawCell.get(coord);
-      toChange.setContents(c, new HashMap<Coord, Value>());
-    } else {
-      CellGeneral cell = new Cell(coord, c);
-      this.allRawCell.put(coord, cell);
-    }
-    return this;
+    return c;
   }
 
   @Override

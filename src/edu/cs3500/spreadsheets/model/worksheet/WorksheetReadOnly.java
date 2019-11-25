@@ -1,7 +1,10 @@
 package edu.cs3500.spreadsheets.model.worksheet;
 
+import java.util.HashMap;
 import java.util.Set;
 
+import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 
@@ -45,4 +48,6 @@ public interface WorksheetReadOnly {
    * @return all cells' coordinate as a set.
    */
   Set<String> getAllCellCoordinates();
+
+  HashMap<Coord, CellGeneral> getAllEvaCell();
 }
