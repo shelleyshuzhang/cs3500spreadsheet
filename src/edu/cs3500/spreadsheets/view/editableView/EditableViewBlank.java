@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.KeyComponent;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
@@ -86,9 +87,13 @@ public class EditableViewBlank extends JFrame implements IView {
   }
 
   @Override
-  public void resetFocus() {
-    this.setFocusable(true);
-    this.requestFocus();
+  public void removeFocus() {
+    this.textField.setFocusable(false);
   }
 
+  @Override
+  public void getFocus() {
+    this.textField.setFocusable(true);
+    this.textField.requestFocus();
+  }
 }

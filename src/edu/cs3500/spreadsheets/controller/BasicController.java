@@ -34,18 +34,20 @@ public class BasicController implements Features {
       view.editCell(col, row, value);
     }
     view.clearTextField();
-    view.resetFocus();
+    view.removeFocus();
     //??? not sure here, belong to controller or view
   }
 
   @Override
   public void refuseEdit(int col, int row) {
     view.clearTextField();
-    view.resetFocus();
+    view.removeFocus();
   }
 
   @Override
   public void invokeEdit(int col, int row) {
-
+    view.getFocus();
   }
+
+
 }

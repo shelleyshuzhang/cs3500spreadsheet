@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.view;
 
 import java.io.IOException;
 
+import edu.cs3500.spreadsheets.controller.Features;
+
 /**
  * The view for worksheet. It show a worksheet to user as text or graphics or some other form.
  */
@@ -34,6 +36,8 @@ public interface IView {
 
   void clearTextField();
 
-  void resetFocus();
+  void removeFocus();
+
+  void getFocus();
 
 }
