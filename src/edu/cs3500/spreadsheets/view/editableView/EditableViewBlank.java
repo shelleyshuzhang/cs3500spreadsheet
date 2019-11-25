@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.KeyComponent;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
@@ -45,6 +46,8 @@ public class EditableViewBlank extends JFrame implements IView {
     });
     this.add(this.panel, BorderLayout.CENTER);
     this.setBackground(FRAME_BACKGROUND);
+    this.keyComponent = new KeyComponent();
+    this.add(keyComponent);
     pack();
   }
 
@@ -89,6 +92,26 @@ public class EditableViewBlank extends JFrame implements IView {
   public void resetFocus() {
     this.setFocusable(true);
     this.requestFocus();
+  }
+
+  @Override
+  public void setHotKey(KeyStroke key, String featureName) {
+    this.keyComponent.getInputMap().put(key, featureName);
+  }
+
+  @Override
+  public void addFeature(Features f) {
+    this.keyComponent.addFeature(f);
+  }
+
+  @Override
+  public int getSelectedCellRow() {
+    return this.panel.getSelectedCellRow();
+  }
+
+  @Override
+  public int getSelectedCellCol() {
+    return this.panel.getSelectedCellColumn();
   }
 
 }

@@ -2,6 +2,10 @@ package edu.cs3500.spreadsheets.view;
 
 import java.io.IOException;
 
+import javax.swing.*;
+
+import edu.cs3500.spreadsheets.controller.Features;
+
 /**
  * The view for worksheet. It show a worksheet to user as text or graphics or some other form.
  */
@@ -35,5 +39,13 @@ public interface IView {
   void clearTextField();
 
   void resetFocus();
+
+  void setHotKey(KeyStroke key, String featureName);
+
+  void addFeature(Features f);
+
+  int getSelectedCellRow();
+
+  int getSelectedCellCol();
 
 }

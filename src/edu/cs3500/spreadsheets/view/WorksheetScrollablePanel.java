@@ -79,6 +79,14 @@ public class WorksheetScrollablePanel extends JScrollPane {
     worksheet.setValueAt(value, row - 1, col - 1);
   }
 
+  public int getSelectedCellRow() {
+    return worksheet.getSelectedRow();
+  }
+
+  public int getSelectedCellColumn() {
+    return worksheet.getSelectedRow();
+  }
+
   private void setWorksheet() {
     worksheet.setGridColor(WORKSHEET_GRID_COLOR);
     worksheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
