@@ -34,4 +34,6 @@ public interface IView {
 
   void clearTextField();
 
+  void resetFocus();
+
 }

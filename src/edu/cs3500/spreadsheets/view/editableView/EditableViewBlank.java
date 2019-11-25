@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import edu.cs3500.spreadsheets.view.IView;
+import edu.cs3500.spreadsheets.view.KeyComponent;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
 public class EditableViewBlank extends JFrame implements IView {
@@ -82,6 +83,12 @@ public class EditableViewBlank extends JFrame implements IView {
   @Override
   public void clearTextField() {
     this.textField.setText("");
+  }
+
+  @Override
+  public void resetFocus() {
+    this.setFocusable(true);
+    this.requestFocus();
   }
 
 }
