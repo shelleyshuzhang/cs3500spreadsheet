@@ -62,6 +62,8 @@ public interface CellGeneral {
 
   public void clearObserver();
 
+  public void deleteObserver(CellObserver observer);
+
   public List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
                                    HashMap<Formula, Value> formulaValueHashMap);
 

@@ -9,6 +9,7 @@ import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
+import edu.cs3500.spreadsheets.model.content.formula.FormulaFunction;
 import edu.cs3500.spreadsheets.model.content.formula.FormulaReference;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.content.value.ValueString;
@@ -61,10 +62,10 @@ public class Cell implements CellGeneral {
 
   @Override
   public List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell) {
+    deleteObserverContent(this.contents, this);
     this.contents = contents;
     HashMap<Formula, Value> formulaValueHashMap = new HashMap<>();
     List<Coord> toReturn = this.executeUpdate(allEvaCell, formulaValueHashMap);
-    this.clearObserver();
     BasicWorkSheetBuilder.registerObserverContent(contents, this);
     return toReturn;
   }
@@ -96,6 +97,16 @@ public class Cell implements CellGeneral {
   @Override
   public void clearObserver() {
     this.observers.clear();
+  }
+
+  @Override
+  public void deleteObserver(CellObserver observer) {
+    if (observers.contains(observer)) {
+      observers.remove(observer);
+    } else {
+      throw new IllegalArgumentException("This cell does not contain the given observer that we " +
+              "want to delete.");
+    }
   }
 
   @Override
@@ -163,6 +174,41 @@ public class Cell implements CellGeneral {
     }
     s.append(contents.toString());
     return s.toString();
+  }
+
+  public static void deleteObserverContent(Contents c, CellGeneral cell) {
+    if (c.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) c;
+      deleteObserverReference(reference, cell);
+    } else if (c.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) c;
+      deleteObserverFunction(func, cell);
+    }
+  }
+
+  private static void deleteObserverFormula(Formula f, CellGeneral cell) {
+    if (f.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) f;
+      deleteObserverFunction(func, cell);
+    } else if (f.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) f;
+      deleteObserverReference(reference, cell);
+    }
+  }
+
+  private static void deleteObserverReference(FormulaReference reference, CellGeneral cell) {
+    List<CellGeneral> references = reference.getLoc();
+    CellObserver toChangeObserver = new CellObserver(cell);
+    for (CellGeneral cg : references) {
+      cg.deleteObserver(toChangeObserver);
+    }
+  }
+
+  private static void deleteObserverFunction(FormulaFunction func, CellGeneral cell) {
+    List<Formula> lof = func.getArguments();
+    for (Formula formula : lof) {
+      deleteObserverFormula(formula, cell);
+    }
   }
 
 }
