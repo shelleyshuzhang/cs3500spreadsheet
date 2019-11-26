@@ -17,7 +17,7 @@ public class KeyComponent extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         for (Features f : featureListeners) {
-
+          f.acceptEdit();
         }
       }
     });
@@ -25,7 +25,7 @@ public class KeyComponent extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         for (Features f : featureListeners) {
-
+          f.refuseEdit();
         }
       }
     });
@@ -33,7 +33,7 @@ public class KeyComponent extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         for (Features f : featureListeners) {
-
+          f.invokeEdit();
         }
       }
     });

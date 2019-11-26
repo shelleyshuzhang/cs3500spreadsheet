@@ -85,7 +85,7 @@ public class WorksheetScrollablePanel extends JScrollPane {
   }
 
   public int getSelectedCellColumn() {
-    return worksheet.getSelectedRow();
+    return worksheet.getSelectedColumn();
   }
 
   public void addMouseEventListener(MouseListener m) {

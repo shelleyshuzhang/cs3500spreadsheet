@@ -8,7 +8,9 @@ import java.util.Objects;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
+import edu.cs3500.spreadsheets.model.content.formula.FormulaReference;
 import edu.cs3500.spreadsheets.model.content.value.Value;
+import edu.cs3500.spreadsheets.model.content.value.ValueString;
 
 // Why I choose this representation:
 // Cell should be an implementation of general cell, and because we made contents an interface
@@ -59,7 +61,17 @@ public class Cell implements CellGeneral {
   public List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell) {
     this.contents = contents;
     HashMap<Formula, Value> formulaValueHashMap = new HashMap<>();
-    return this.executeUpdate(allEvaCell, formulaValueHashMap);
+    List<Coord> toReturn = this.executeUpdate(allEvaCell, formulaValueHashMap);
+    this.clearObserver();
+    if (contents.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) contents;
+      List<CellGeneral> references = reference.getLoc();
+      CellObserver toChangeObserver = new CellObserver(this);
+      for (CellGeneral cg : references) {
+        cg.addObserver(toChangeObserver);
+      }
+    }
+    return toReturn;
   }
 
   @Override
@@ -96,8 +108,20 @@ public class Cell implements CellGeneral {
                                    HashMap<Formula, Value> formulaValueHashMap) {
     List<Coord> acc = new ArrayList<>();
     acc.add(this.coordinate);
-    Value newValue = this.evaluate(formulaValueHashMap);
-    allEvaCell.replace(this.coordinate, newValue);
+    try {
+      Value newValue = this.evaluate(formulaValueHashMap);
+      if (allEvaCell.containsKey(this.coordinate)) {
+        allEvaCell.replace(this.coordinate, newValue);
+      } else {
+        allEvaCell.put(this.coordinate, newValue);
+      }
+    } catch (IllegalArgumentException e) {
+      if (allEvaCell.containsKey(this.coordinate)) {
+        allEvaCell.replace(this.coordinate, new ValueString(e.getMessage()));
+      } else {
+        allEvaCell.put(this.coordinate, new ValueString(e.getMessage()));
+      }
+    }
     for (CellObserver o : this.observers) {
       if (!acc.contains(o.getCoordinate())) {
         acc.addAll(o.update(allEvaCell, formulaValueHashMap));

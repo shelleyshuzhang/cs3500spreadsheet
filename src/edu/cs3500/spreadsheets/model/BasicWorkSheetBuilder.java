@@ -44,9 +44,9 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
       if (c.isFormulaReference()) {
         FormulaReference reference = (FormulaReference) c;
         List<CellGeneral> references = reference.getLoc();
-        toChange.clearObserver();
+        CellObserver toChangeObserver = new CellObserver(toChange);
         for (CellGeneral cg : references) {
-          toChange.addObserver(new CellObserver(cg));
+          cg.addObserver(toChangeObserver);
         }
       }
     } else {
