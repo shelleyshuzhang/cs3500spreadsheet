@@ -1,12 +1,14 @@
 package edu.cs3500.spreadsheets.view;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.*;
 
 import edu.cs3500.spreadsheets.controller.Features;
+import edu.cs3500.spreadsheets.controller.KeybroadListener;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 
 /**
@@ -110,6 +112,10 @@ public class TextualView implements IView {
     // do nothing because this is not the job for a textual view
   }
 
+  @Override
+  public void addKeyboardListener(KeyListener k) {
+    // do nothing because this is not the job for a textual view
+  }
 
   @Override
   public int getSelectedCellRow() {

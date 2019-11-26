@@ -18,4 +18,9 @@ public class MouseEventListener extends MouseAdapter {
       actionMap.get(e.getClickCount()).run();
     }
   }
+
+  @Override
+  public void mouseMoved(MouseEvent e) {
+
+  }
 }

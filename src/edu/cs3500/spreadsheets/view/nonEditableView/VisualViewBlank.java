@@ -3,10 +3,12 @@ package edu.cs3500.spreadsheets.view.nonEditableView;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
+import edu.cs3500.spreadsheets.controller.KeybroadListener;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
@@ -128,6 +130,11 @@ public class VisualViewBlank extends JFrame implements IView {
 
   @Override
   public void resetTextField() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void addKeyboardListener(KeyListener k) {
     // nothing here because an uneditable cell should not have this functionality
   }
 

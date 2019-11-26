@@ -1,14 +1,18 @@
 package edu.cs3500.spreadsheets.controller;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.view.IView;
+
 
 public class MapController {
   Worksheet model;
@@ -19,6 +23,7 @@ public class MapController {
     this.view = view;
     setButtonListener();
     setMouseListener();
+    setKeyBoardListener();
   }
 
   private void setButtonListener() {
@@ -37,13 +42,18 @@ public class MapController {
 
     @Override
     public void run() {
-      String content = view.getTextFieldInput();
+      String contentS = view.getTextFieldInput();
       int col = view.getSelectedCellCol() + 1;
       int row = view.getSelectedCellRow() + 1;
-      Contents contents = BasicWorkSheetBuilder.createContent(
-              col, row, content, model.getAllRawCell());
+      Contents contentsC;
+      if (contentS.isEmpty()) {
+        contentsC = new Blank();
+      } else {
+        contentsC = BasicWorkSheetBuilder.createContent(
+                col, row, contentS, model.getAllRawCell());
+      }
       try {
-        List<Coord> lo = model.editCellContent(col, row, contents);
+        List<Coord> lo = model.editCellContent(col, row, contentsC);
         for (Coord c : lo) {
           int affectedCol = c.col;
           int affectedRow = c.row;
@@ -131,6 +141,47 @@ public class MapController {
       } catch (IllegalArgumentException e) {
         view.setTextFieldInput("");
       }
+    }
+  }
+
+  private void setKeyBoardListener() {
+    Map<Integer, Runnable> keyMapPress = new HashMap<>();
+    Map<Integer, Runnable> keyMapRelease = new HashMap<>();
+    Map<Character, Runnable> keyMapTyped = new HashMap<>();
+
+    keyMapPress.put(KeyEvent.VK_DELETE, new DeleteAll());
+
+    KeybroadListener kl = new KeybroadListener();
+    kl.setPressKeyMap(keyMapPress);
+    kl.setReleaseKeyMap(keyMapRelease);
+    kl.setTypedKeyMap(keyMapTyped);
+
+    view.addKeyboardListener(kl);
+  }
+
+  class DeleteAll implements Runnable {
+
+    @Override
+    public void run() {
+      int col = view.getSelectedCellCol() + 1;
+      int row = view.getSelectedCellRow() + 1;
+      try {
+        List<Coord> lo = model.editCellContent(col, row, new Blank());
+        for (Coord c : lo) {
+          int affectedCol = c.col;
+          int affectedRow = c.row;
+          String value;
+          try {
+            value = model.getOneCellResult(affectedCol, affectedRow).print();
+          } catch (IllegalArgumentException e) {
+            value = e.getMessage();
+          }
+          view.editCell(affectedCol, affectedRow, value);
+        }
+      } catch (IllegalArgumentException e) {
+        view.removeFocus();
+      }
+      view.removeFocus();
     }
   }
 }

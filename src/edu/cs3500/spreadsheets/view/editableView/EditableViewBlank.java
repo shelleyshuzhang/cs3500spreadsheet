@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.view.editableView;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
@@ -144,6 +145,11 @@ public class EditableViewBlank extends JFrame implements IView {
   @Override
   public void resetTextField() {
     this.textField.setText(this.store);
+  }
+
+  @Override
+  public void addKeyboardListener(KeyListener k) {
+    this.panel.addKeyboardEventListener(k);
   }
 
 }
