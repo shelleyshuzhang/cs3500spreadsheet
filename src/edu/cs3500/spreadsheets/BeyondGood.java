@@ -5,10 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import edu.cs3500.spreadsheets.controller.MapController;
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.content.value.Value;
+import edu.cs3500.spreadsheets.model.worksheet.BasicWorkSheet;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
@@ -55,7 +58,8 @@ public class BeyondGood {
         } else if (args.length == 3 && args[2].equals("-edit")) {
           model.evaluateAll();
           view = new EditableViewEval("evaluated and editable", model);
-          view.render();
+          MapController c = new MapController(model, view);
+          c.go();
         } else {
           System.out.print("Illegal command line");
         }
@@ -76,7 +80,9 @@ public class BeyondGood {
       view.render();
     } else if (args.length == 1 && args[0].equals("-edit")) {
       view = new EditableViewBlank("blank and editable", 100, 100);
-      view.render();
+      Worksheet model = new BasicWorkSheet(new HashMap<>());
+      MapController c = new MapController(model, view);
+      c.go();
     } else {
       System.out.print("Illegal command line");
     }

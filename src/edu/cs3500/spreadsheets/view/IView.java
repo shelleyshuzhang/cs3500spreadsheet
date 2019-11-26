@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -40,10 +42,6 @@ public interface IView {
 
   void resetFocus();
 
-  void setHotKey(KeyStroke key, String featureName);
-
-  void addFeature(Features f);
-
   int getSelectedCellRow();
 
   int getSelectedCellCol();
@@ -51,4 +49,8 @@ public interface IView {
   void removeFocus();
 
   void getFocus();
+
+  void addActionListener(ActionListener ac);
+
+  void addMouseEventListener(MouseListener m);
 }

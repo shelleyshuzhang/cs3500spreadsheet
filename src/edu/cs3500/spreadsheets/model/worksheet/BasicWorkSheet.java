@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.cell.Cell;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
@@ -107,6 +108,9 @@ public class BasicWorkSheet implements Worksheet {
   @Override
   public List<Coord> editCellContent(int col, int row, Contents contents) {
     Coord c = new Coord(col, row);
+    if (allRawCell.get(c) == null) {
+      allRawCell.put(c, new Cell(c, contents));
+    }
     return allRawCell.get(c).setContents(contents, allEvaCell);
   }
 

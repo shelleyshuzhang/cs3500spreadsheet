@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
+import java.awt.event.MouseListener;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -85,6 +86,10 @@ public class WorksheetScrollablePanel extends JScrollPane {
 
   public int getSelectedCellColumn() {
     return worksheet.getSelectedRow();
+  }
+
+  public void addMouseEventListener(MouseListener m) {
+    this.worksheet.addMouseListener(m);
   }
 
   private void setWorksheet() {

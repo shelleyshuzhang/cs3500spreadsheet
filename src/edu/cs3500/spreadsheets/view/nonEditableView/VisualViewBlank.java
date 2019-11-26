@@ -2,10 +2,11 @@ package edu.cs3500.spreadsheets.view.nonEditableView;
 
 import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
@@ -86,16 +87,6 @@ public class VisualViewBlank extends JFrame implements IView {
   }
 
   @Override
-  public void setHotKey(KeyStroke key, String featureName) {
-    // nothing here because an uneditable cell should not have this functionality
-  }
-
-  @Override
-  public void addFeature(Features f) {
-    // nothing here because an uneditable cell should not have this functionality
-  }
-
-  @Override
   public int getSelectedCellRow() {
     return this.panel.getSelectedCellRow();
   }
@@ -112,6 +103,16 @@ public class VisualViewBlank extends JFrame implements IView {
 
   @Override
   public void getFocus() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void addActionListener(ActionListener ac) {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void addMouseEventListener(MouseListener m) {
     // nothing here because an uneditable cell should not have this functionality
   }
 

@@ -1,19 +1,20 @@
 package edu.cs3500.spreadsheets.view.editableView;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.view.IView;
-import edu.cs3500.spreadsheets.view.KeyComponent;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
 public class EditableViewBlank extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private JToolBar toolBar;
   private TextField textField;
-  KeyComponent keyComponent;
+  JButton tick;
+  JButton cross;
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
   private static int VIEW_LOCATION_Y = 500;
@@ -31,8 +32,12 @@ public class EditableViewBlank extends JFrame implements IView {
     this.setMinimumSize(VIEW_MIN_SIZE);
     this.setLayout(new BorderLayout());
     this.toolBar = new JToolBar();
-    this.toolBar.add(new JButton(SIGN_TICK));
-    this.toolBar.add(new JButton(SIGN_CROSS));
+    this.tick = new JButton(SIGN_TICK);
+    this.tick.setActionCommand("accept edit");
+    this.cross = new JButton(SIGN_CROSS);
+    this.cross.setActionCommand("refuse edit");
+    this.toolBar.add(this.tick);
+    this.toolBar.add(this.cross);
     this.textField = new TextField();
     this.toolBar.add(textField);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
@@ -46,8 +51,6 @@ public class EditableViewBlank extends JFrame implements IView {
     });
     this.add(this.panel, BorderLayout.CENTER);
     this.setBackground(FRAME_BACKGROUND);
-    this.keyComponent = new KeyComponent();
-    this.add(keyComponent);
     pack();
   }
 
@@ -95,16 +98,6 @@ public class EditableViewBlank extends JFrame implements IView {
   }
 
   @Override
-  public void setHotKey(KeyStroke key, String featureName) {
-    this.keyComponent.getInputMap().put(key, featureName);
-  }
-
-  @Override
-  public void addFeature(Features f) {
-    this.keyComponent.addFeature(f);
-  }
-
-  @Override
   public int getSelectedCellRow() {
     return this.panel.getSelectedCellRow();
   }
@@ -123,6 +116,18 @@ public class EditableViewBlank extends JFrame implements IView {
   public void getFocus() {
     this.textField.setFocusable(true);
     this.textField.requestFocus();
+  }
+
+  @Override
+  public void addActionListener(ActionListener ac) {
+    this.tick.addActionListener(ac);
+    this.cross.addActionListener(ac);
+  }
+
+  @Override
+  public void addMouseEventListener(MouseListener m) {
+    this.textField.addMouseListener(m);
+    this.panel.addMouseEventListener(m);
   }
 
 }

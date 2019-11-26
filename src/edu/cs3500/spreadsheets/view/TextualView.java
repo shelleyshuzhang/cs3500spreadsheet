@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -84,12 +86,12 @@ public class TextualView implements IView {
   }
 
   @Override
-  public void setHotKey(KeyStroke key, String featureName) {
+  public void addActionListener(ActionListener ac) {
     // do nothing because this is not the job for a textual view
   }
 
   @Override
-  public void addFeature(Features f) {
+  public void addMouseEventListener(MouseListener m) {
     // do nothing because this is not the job for a textual view
   }
 

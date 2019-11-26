@@ -51,5 +51,4 @@ public class BasicController implements Features {
     view.getFocus();
   }
 
-
 }
