@@ -53,7 +53,12 @@ public class FunctionSum extends FormulaFunction {
           for (CellGeneral c : loc) {
             try {
               if (c.getCellValue() == null) {
-                double toAdd = c.evaluate(formulaValueMap).accept(new ValueVisitorDouble());
+                double toAdd;
+                if (c.evaluate(formulaValueMap) == null) {
+                  toAdd = 0.0;
+                } else {
+                  toAdd = c.evaluate(formulaValueMap).accept(new ValueVisitorDouble());
+                }
                 total += toAdd;
               } else {
                 total += c.getCellValue().accept(new ValueVisitorDouble());

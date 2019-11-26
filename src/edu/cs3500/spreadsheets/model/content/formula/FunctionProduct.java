@@ -55,10 +55,15 @@ public class FunctionProduct extends FormulaFunction {
           List<CellGeneral> loc = toEval.getLoc();
           for (CellGeneral c : loc) {
             try {
-              double toMultiply = c.evaluate(formulaValueMap).accept(new ValueVisitorDouble());
-              if (allBlank) {
-                allBlank = false;
-                total = 1.0;
+              double toMultiply;
+              if (c.evaluate(formulaValueMap) == null) {
+                toMultiply = 1.0;
+              } else {
+                toMultiply = c.evaluate(formulaValueMap).accept(new ValueVisitorDouble());
+                if (allBlank) {
+                  allBlank = false;
+                  total = 1.0;
+                }
               }
               total = total * toMultiply;
             } catch (IllegalArgumentException e2) {

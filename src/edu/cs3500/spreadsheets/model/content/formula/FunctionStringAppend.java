@@ -29,7 +29,7 @@ public class FunctionStringAppend extends FormulaFunction {
 
   @Override
   public Value evaluate(HashMap<Formula, Value> formulaValueMap) {
-    String acc = "";
+    StringBuilder acc = new StringBuilder();
     for (Formula i : arguments) {
       try {
         Value v1;
@@ -44,18 +44,21 @@ public class FunctionStringAppend extends FormulaFunction {
         }
         String toAppend = v1.accept(new ValueVisitorString());
         if (toAppend != null) {
-          acc = acc + toAppend;
+          acc.append(toAppend);
         }
       } catch (IllegalArgumentException e1) {
         FormulaReference toEval = (FormulaReference) i;
         List<CellGeneral> loc = toEval.getLoc();
         for (CellGeneral c : loc) {
           String toAdd = c.evaluate(formulaValueMap).accept(new ValueVisitorString());
-          acc += toAdd;
+          if (toAdd == null) {
+            toAdd = "";
+          }
+          acc.append(toAdd);
         }
       }
     }
-    return new ValueString(acc);
+    return new ValueString(acc.toString());
   }
 
   @Override
