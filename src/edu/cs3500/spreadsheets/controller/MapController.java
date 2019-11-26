@@ -45,13 +45,15 @@ public class MapController {
       try {
         List<Coord> lo = model.editCellContent(col, row, contents);
         for (Coord c : lo) {
+          int affectedCol = c.col;
+          int affectedRow = c.row;
           String value;
           try {
-            value = model.getOneCellResult(col, row).print();
+            value = model.getOneCellResult(affectedCol, affectedRow).print();
           } catch (IllegalArgumentException e) {
             value = e.getMessage();
           }
-          view.editCell(col, row, value);
+          view.editCell(affectedCol, affectedRow, value);
         }
       } catch (IllegalArgumentException e) {
         view.removeFocus();
