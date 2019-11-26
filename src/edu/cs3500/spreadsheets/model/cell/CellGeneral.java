@@ -58,6 +58,10 @@ public interface CellGeneral {
 
   public void addObserver(CellObserver o);
 
+  public boolean containObserver(CellObserver o);
+
+  public void clearObserver();
+
   public List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
                                    HashMap<Formula, Value> formulaValueHashMap);
 

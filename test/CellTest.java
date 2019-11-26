@@ -54,7 +54,7 @@ public class CellTest {
     List<CellGeneral> reference3 = new ArrayList<CellGeneral>();
     reference3.add(c3);
     Contents fr3 = new FormulaReference(reference3, co1);
-    c1.setContents(fr3);
+    c1.setContents(fr3, new HashMap<Coord, Value>());
   }
 
   @Test
@@ -92,7 +92,7 @@ public class CellTest {
     Coord co2 = new Coord(7, 6);
     Contents fr1 = new FormulaReference(reference, co2);
     CellGeneral c2 = new Cell(co2, fr1);
-    c2.setContents(cc1);
+    c2.setContents(cc1, new HashMap<Coord, Value>());
     assertEquals(c2.getContents(), cc1);
   }
 

@@ -87,7 +87,7 @@ public class FormulaReference extends Formula {
     return true;
   }
 
-  protected List<CellGeneral> getLoc() {
+  public List<CellGeneral> getLoc() {
     return this.loc;
   }
 

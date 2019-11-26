@@ -1,12 +1,15 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import edu.cs3500.spreadsheets.model.cell.Cell;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
+import edu.cs3500.spreadsheets.model.cell.CellObserver;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
+import edu.cs3500.spreadsheets.model.content.formula.FormulaReference;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.content.value.ValueBoolean;
 import edu.cs3500.spreadsheets.model.content.value.ValueDouble;
@@ -33,13 +36,28 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
 
   @Override
   public WorksheetReader.WorksheetBuilder<Worksheet> createCell(int col, int row, String contents) {
-    Contents c = this.createContent(col, row, contents, this.allRawCell);
+    Contents c = createContent(col, row, contents, this.allRawCell);
     Coord coord = new Coord(col, row);
     if (allRawCell.containsKey(coord)) {
       CellGeneral toChange = allRawCell.get(coord);
       toChange.setContents(c, new HashMap<Coord, Value>());
+      if (c.isFormulaReference()) {
+        FormulaReference reference = (FormulaReference) c;
+        List<CellGeneral> references = reference.getLoc();
+        toChange.clearObserver();
+        for (CellGeneral cg : references) {
+          toChange.addObserver(new CellObserver(cg));
+        }
+      }
     } else {
       CellGeneral cell = new Cell(coord, c);
+      if (c.isFormulaReference()) {
+        FormulaReference reference = (FormulaReference) c;
+        List<CellGeneral> references = reference.getLoc();
+        for (CellGeneral cg : references) {
+          cell.addObserver(new CellObserver(cg));
+        }
+      }
       this.allRawCell.put(coord, cell);
     }
     return this;

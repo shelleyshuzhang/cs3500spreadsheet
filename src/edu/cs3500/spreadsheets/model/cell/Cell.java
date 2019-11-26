@@ -21,7 +21,7 @@ public class Cell implements CellGeneral {
   private final Coord coordinate;
   private Contents contents;
   private Value evaluatedValue = null;
-  private List<CellObserver> observers = null;
+  private List<CellObserver> observers = new ArrayList<>();
 
   /**
    * Construct a Cell with given coordinate and contents.
@@ -79,6 +79,16 @@ public class Cell implements CellGeneral {
   @Override
   public void addObserver(CellObserver o) {
     this.observers.add(o);
+  }
+
+  @Override
+  public boolean containObserver(CellObserver o) {
+    return this.observers.contains(o);
+  }
+
+  @Override
+  public void clearObserver() {
+    this.observers.clear();
   }
 
   @Override
