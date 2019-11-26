@@ -37,4 +37,6 @@ public interface Contents {
   boolean isFormulaReference();
 
   boolean isFormula();
+
+  boolean isFormulaFunction();
 }

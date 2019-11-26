@@ -48,4 +48,8 @@ public abstract class Value implements Contents {
 
   public abstract boolean isStringValue();
 
+  public boolean isFormulaFunction() {
+    return false;
+  }
+
 }

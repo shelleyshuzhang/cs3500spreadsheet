@@ -9,7 +9,10 @@ import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.cell.CellObserver;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
+import edu.cs3500.spreadsheets.model.content.formula.Formula;
+import edu.cs3500.spreadsheets.model.content.formula.FormulaFunction;
 import edu.cs3500.spreadsheets.model.content.formula.FormulaReference;
+import edu.cs3500.spreadsheets.model.content.formula.FormulaValue;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.content.value.ValueBoolean;
 import edu.cs3500.spreadsheets.model.content.value.ValueDouble;
@@ -41,59 +44,89 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
     if (allRawCell.containsKey(coord)) {
       CellGeneral toChange = allRawCell.get(coord);
       toChange.setContents(c, new HashMap<Coord, Value>());
-      if (c.isFormulaReference()) {
-        FormulaReference reference = (FormulaReference) c;
-        List<CellGeneral> references = reference.getLoc();
-        CellObserver toChangeObserver = new CellObserver(toChange);
-        for (CellGeneral cg : references) {
-          cg.addObserver(toChangeObserver);
-        }
-      }
+      registerObserverContent(c, toChange);
     } else {
       CellGeneral cell = new Cell(coord, c);
-      if (c.isFormulaReference()) {
-        FormulaReference reference = (FormulaReference) c;
-        List<CellGeneral> references = reference.getLoc();
-        CellObserver toChangeObserver = new CellObserver(cell);
-        for (CellGeneral cg : references) {
-          cg.addObserver(toChangeObserver);
-        }
-      }
+      registerObserverContent(c, cell);
       this.allRawCell.put(coord, cell);
     }
     return this;
   }
 
+  public static void registerObserverContent(Contents c, CellGeneral cell) {
+    if (c.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) c;
+      registerObserverReference(reference, cell);
+    } else if (c.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) c;
+      registerObserverFunction(func, cell);
+    }
+  }
+
+  private static void registerObserverFormula(Formula f, CellGeneral cell) {
+    if (f.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) f;
+      registerObserverFunction(func, cell);
+    } else if (f.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) f;
+      registerObserverReference(reference, cell);
+    }
+  }
+
+  private static void registerObserverReference(FormulaReference reference, CellGeneral cell) {
+    List<CellGeneral> references = reference.getLoc();
+    CellObserver toChangeObserver = new CellObserver(cell);
+    for (CellGeneral cg : references) {
+      cg.addObserver(toChangeObserver);
+    }
+  }
+
+  private static void registerObserverFunction(FormulaFunction func, CellGeneral cell) {
+    List<Formula> lof = func.getArguments();
+    for (Formula formula : lof) {
+      registerObserverFormula(formula, cell);
+    }
+  }
+
   public static Contents createContent(int col, int row, String contents,
                                        HashMap<Coord, CellGeneral> allRawCell) {
     Contents c;
-    if (contents == null) {
-      c = new Blank();
-    } else if (contents.length() >= 1 && contents.charAt(0) == '=') {
-      Sexp s = Parser.parse(contents.substring(1));
-      try {
-        c = s.accept(new SexpVisitorFormula(col, row, allRawCell));
-      } catch (IllegalArgumentException e) {
-        // if the cell contains any self-reference, the model will create the cell with an error
-        // message indicating that this is not allowed
-        if (e.getMessage().equals("The reference points to the given cell itself")) {
-          c = new ValueString("The reference points to the given cell itself");
-        } else {
-          throw e;
+    try {
+      if (contents == null) {
+        c = new Blank();
+      } else if (contents.length() >= 1 && contents.charAt(0) == '=') {
+        Sexp s = Parser.parse(contents.substring(1));
+        try {
+          c = s.accept(new SexpVisitorFormula(col, row, allRawCell));
+        } catch (IllegalArgumentException e) {
+          // if the cell contains any self-reference, the model will create the cell with an error
+          // message indicating that this is not allowed
+          if (e.getMessage().equals("The reference points to the given cell itself")) {
+            c = new ValueString("The reference points to the given cell itself");
+          } else {
+            throw e;
+          }
+        }
+      } else {
+        try {
+          double d = Double.parseDouble(contents);
+          c = new ValueDouble(d);
+        } catch (NumberFormatException e) {
+          if (contents.equalsIgnoreCase("true")) {
+            c = new ValueBoolean(true);
+          } else if (contents.equalsIgnoreCase("false")) {
+            c = new ValueBoolean(false);
+          } else {
+            c = new ValueString(contents);
+          }
         }
       }
-    } else {
-      try {
-        double d = Double.parseDouble(contents);
-        c = new ValueDouble(d);
-      } catch (NumberFormatException e) {
-        if (contents.equalsIgnoreCase("true")) {
-          c = new ValueBoolean(true);
-        } else if (contents.equalsIgnoreCase("false")) {
-          c = new ValueBoolean(false);
-        } else {
-          c = new ValueString(contents);
-        }
+    } catch (IllegalArgumentException e) {
+      if (e.getMessage() == "Expected cell ref") {
+        c = new FormulaValue(new ValueString(contents));
+      } else {
+        String error = "Cell has content: " + contents + " which is error: " + e.getMessage();
+        c = new FormulaValue(new ValueString(error));
       }
     }
     return c;

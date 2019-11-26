@@ -63,4 +63,12 @@ public abstract class FormulaFunction extends Formula {
     return s.toString();
   }
 
+  public List<Formula> getArguments() {
+    return this.arguments;
+  }
+
+  public boolean isFormulaFunction() {
+    return true;
+  }
+
 }

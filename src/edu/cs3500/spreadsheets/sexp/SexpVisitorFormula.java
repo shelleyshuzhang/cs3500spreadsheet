@@ -121,12 +121,12 @@ public class SexpVisitorFormula implements SexpVisitor<Formula> {
 
   private List<Coord> getCoords(String reference) {
     if (!reference.contains(":")) {
-      int[] coords = this.getSingleRefer(reference);
+      int[] coords = getSingleRefer(reference);
       return this.createCoords(coords[0], coords[1], coords[0], coords[1]);
     } else {
       String[] los = reference.split(":");
-      int[] coordStart = this.getSingleRefer(los[0]);
-      int[] coordEnd = this.getSingleRefer(los[1]);
+      int[] coordStart = getSingleRefer(los[0]);
+      int[] coordEnd = getSingleRefer(los[1]);
       return this.createCoords(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
     }
   }

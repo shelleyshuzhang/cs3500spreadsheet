@@ -68,6 +68,11 @@ public class FormulaValue extends Formula {
   }
 
   @Override
+  public boolean isFormulaFunction() {
+    return false;
+  }
+
+  @Override
   public String toString() {
     if (value.isStringValue()) {
       return "\"" + value.toString() + "\"";

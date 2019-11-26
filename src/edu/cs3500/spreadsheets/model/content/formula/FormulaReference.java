@@ -87,6 +87,11 @@ public class FormulaReference extends Formula {
     return true;
   }
 
+  @Override
+  public boolean isFormulaFunction() {
+    return false;
+  }
+
   public List<CellGeneral> getLoc() {
     return this.loc;
   }

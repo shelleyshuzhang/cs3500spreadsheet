@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
@@ -64,14 +65,7 @@ public class Cell implements CellGeneral {
     HashMap<Formula, Value> formulaValueHashMap = new HashMap<>();
     List<Coord> toReturn = this.executeUpdate(allEvaCell, formulaValueHashMap);
     this.clearObserver();
-    if (contents.isFormulaReference()) {
-      FormulaReference reference = (FormulaReference) contents;
-      List<CellGeneral> references = reference.getLoc();
-      CellObserver toChangeObserver = new CellObserver(this);
-      for (CellGeneral cg : references) {
-        cg.addObserver(toChangeObserver);
-      }
-    }
+    BasicWorkSheetBuilder.registerObserverContent(contents, this);
     return toReturn;
   }
 
@@ -109,10 +103,8 @@ public class Cell implements CellGeneral {
                                    HashMap<Formula, Value> formulaValueHashMap) {
     List<Coord> acc = new ArrayList<>();
     acc.add(this.coordinate);
-    System.out.println(this.coordinate.toString());
     try {
       Value newValue = this.evaluate(formulaValueHashMap);
-      System.out.println(newValue.toString());
       if (allEvaCell.containsKey(this.coordinate)) {
         allEvaCell.replace(this.coordinate, newValue);
       } else {
