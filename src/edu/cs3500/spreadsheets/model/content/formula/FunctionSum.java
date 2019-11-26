@@ -39,6 +39,9 @@ public class FunctionSum extends FormulaFunction {
           v1 = i.evaluate(formulaValueMap);
           formulaValueMap.put(i, v1);
         }
+        if (v1 == null) {
+          v1 = new ValueDouble(0.0);
+        }
         if (v1.accept(new ValueVisitorDouble()) != null) {
           total += v1.accept(new ValueVisitorDouble());
         }

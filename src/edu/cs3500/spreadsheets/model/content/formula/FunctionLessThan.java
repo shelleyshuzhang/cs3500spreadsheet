@@ -47,7 +47,7 @@ public class FunctionLessThan extends FormulaFunction {
         v2 = f2.evaluate(formulaValueMap);
         formulaValueMap.put(f2, v2);
       }
-      if (v1.accept(new ValueVisitorDouble()) == null
+      if (v1 == null || v2 == null || v1.accept(new ValueVisitorDouble()) == null
               || v2.accept(new ValueVisitorDouble()) == null) {
         throw new IllegalArgumentException("Please give exactly two arguments to compare");
       } else {
