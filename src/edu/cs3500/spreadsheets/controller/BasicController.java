@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.controller;
 
 import java.util.List;
 
+import javax.swing.*;
+
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.content.Contents;
@@ -14,15 +16,29 @@ public class BasicController implements Features {
 
   public BasicController(Worksheet model, IView view) {
     this.model = model;
-    this.view = view;
+    //this.setView(view);
   }
 
+  /*
+  // This attaches this controller as our features listener
+  public void setView(IView v) {
+    this.view = v;
+    view.addFeature(this);
+
+    // Choose the keys we want
+    view.setHotKey(KeyStroke.getKeyStroke("pressed a"), "acceptCellInput");
+    view.setHotKey(KeyStroke.getKeyStroke("pressed b"), "rejectCellInput");
+    view.setHotKey(KeyStroke.getKeyStroke("pressed c"), "evokeCellEdit");
+  }
+   */
 
   @Override
   public void acceptEdit() {
     String content = view.getTextFieldInput();
     int col = view.getSelectedCellCol();
     int row = view.getSelectedCellRow();
+    System.out.println(col);
+    System.out.println(row);
     Contents contents = BasicWorkSheetBuilder.createContent(
             col, row, content, model.getAllRawCell());
     List<Coord> lo = model.editCellContent(col, row, contents);

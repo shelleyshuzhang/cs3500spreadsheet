@@ -42,8 +42,9 @@ public class Cell implements CellGeneral {
       evaluatedValue = contents.evaluate(formulaValueMap);
       return evaluatedValue;
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error in cell " + coordinate.toString() + ": "
-              + e.getMessage());
+      String error = "Error in cell " + coordinate.toString() + ": " + e.getMessage();
+      this.evaluatedValue = new ValueString(error);
+      throw new IllegalArgumentException(error);
     }
   }
 
@@ -108,8 +109,10 @@ public class Cell implements CellGeneral {
                                    HashMap<Formula, Value> formulaValueHashMap) {
     List<Coord> acc = new ArrayList<>();
     acc.add(this.coordinate);
+    System.out.println(this.coordinate.toString());
     try {
       Value newValue = this.evaluate(formulaValueHashMap);
+      System.out.println(newValue.toString());
       if (allEvaCell.containsKey(this.coordinate)) {
         allEvaCell.replace(this.coordinate, newValue);
       } else {

@@ -10,6 +10,7 @@ import java.util.Set;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.cell.Cell;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
+import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
 import edu.cs3500.spreadsheets.model.content.value.Value;
@@ -109,7 +110,7 @@ public class BasicWorkSheet implements Worksheet {
   public List<Coord> editCellContent(int col, int row, Contents contents) {
     Coord c = new Coord(col, row);
     if (allRawCell.get(c) == null) {
-      allRawCell.put(c, new Cell(c, contents));
+      allRawCell.put(c, new Cell(c, new Blank()));
     }
     return allRawCell.get(c).setContents(contents, allEvaCell);
   }
