@@ -38,8 +38,8 @@ public class MapController {
     @Override
     public void run() {
       String content = view.getTextFieldInput();
-      int col = view.getSelectedCellCol();
-      int row = view.getSelectedCellRow();
+      int col = view.getSelectedCellCol() + 1;
+      int row = view.getSelectedCellRow() + 1;
       Contents contents = BasicWorkSheetBuilder.createContent(
               col, row, content, model.getAllRawCell());
       try {
@@ -56,8 +56,8 @@ public class MapController {
       } catch (IllegalArgumentException e) {
         view.removeFocus();
       }
-      view.clearTextField();
       view.removeFocus();
+      view.storeTextFieldInput();
       //??? not sure here, belong to controller or view
     }
   }
@@ -66,7 +66,7 @@ public class MapController {
 
     @Override
     public void run() {
-      view.clearTextField();
+      view.resetTextField();
       view.removeFocus();
     }
   }
@@ -76,21 +76,59 @@ public class MapController {
   }
 
   private void setMouseListener() {
-    Map<Integer, Runnable> MouseMap = new HashMap<Integer, Runnable>();
-    MouseEventListener mListener = new MouseEventListener();
+    Map<Integer, Runnable> MouseMapTextField = new HashMap<Integer, Runnable>();
+    Map<Integer, Runnable> MouseMapCells = new HashMap<Integer, Runnable>();
+    MouseEventListener mListenerTextField = new MouseEventListener();
+    MouseEventListener mListenerCells = new MouseEventListener();
 
-    MouseMap.put(2, new GetFocusAction());
+    MouseMapTextField.put(1, new GetFocusAction());
+    MouseMapCells.put(2, new FocusAndShow());
+    MouseMapCells.put(1, new ShowContentAbove());
 
-    mListener.setMouseActionMap(MouseMap);
-    this.view.addMouseEventListener(mListener);
+    mListenerTextField.setMouseActionMap(MouseMapTextField);
+    mListenerCells.setMouseActionMap(MouseMapCells);
+    this.view.addMouseEventListener(mListenerTextField, mListenerCells);
   }
 
+  // also store the textField for reset
   class GetFocusAction implements Runnable {
 
     @Override
     public void run() {
       view.getFocus();
+      view.storeTextFieldInput();
     }
   }
 
+  class FocusAndShow implements Runnable {
+
+    @Override
+    public void run() {
+      ShowContentAbove s = new ShowContentAbove();
+      GetFocusAction g = new GetFocusAction();
+      s.run();
+      g.run();
+    }
+  }
+
+  class ShowContentAbove implements Runnable {
+
+    @Override
+    public void run() {
+      int col = view.getSelectedCellCol() + 1;
+      int row = view.getSelectedCellRow() + 1;
+      try {
+        Contents c = model.getOneCellRawContents(col, row);
+        String s;
+        if (c.isFormula()) {
+          s = "=" + model.getOneCellRawContents(col, row).toString();
+        } else {
+          s = model.getOneCellRawContents(col, row).toString();
+        }
+        view.setTextFieldInput(s);
+      } catch (IllegalArgumentException e) {
+        view.setTextFieldInput("");
+      }
+    }
+  }
 }

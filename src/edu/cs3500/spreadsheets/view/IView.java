@@ -52,5 +52,12 @@ public interface IView {
 
   void addActionListener(ActionListener ac);
 
-  void addMouseEventListener(MouseListener m);
+  void addMouseEventListener(MouseListener textField, MouseListener cells);
+
+  void setTextFieldInput(String s);
+
+  void storeTextFieldInput();
+
+  void resetTextField();
+
 }

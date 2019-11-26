@@ -91,9 +91,25 @@ public class TextualView implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener m) {
+  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
     // do nothing because this is not the job for a textual view
   }
+
+  @Override
+  public void setTextFieldInput(String s) {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public void storeTextFieldInput() {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public void resetTextField() {
+    // do nothing because this is not the job for a textual view
+  }
+
 
   @Override
   public int getSelectedCellRow() {

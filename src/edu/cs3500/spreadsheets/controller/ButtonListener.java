@@ -10,7 +10,6 @@ public class ButtonListener implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (actionMap.containsKey(e.getActionCommand())) {
-
       actionMap.get(e.getActionCommand()).run();
     }
   }

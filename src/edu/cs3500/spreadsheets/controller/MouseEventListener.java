@@ -15,7 +15,6 @@ public class MouseEventListener extends MouseAdapter {
   @Override
   public void mouseClicked(MouseEvent e) {
     if (actionMap.containsKey(e.getClickCount())) {
-
       actionMap.get(e.getClickCount()).run();
     }
   }

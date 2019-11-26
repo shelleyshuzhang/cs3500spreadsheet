@@ -15,6 +15,7 @@ public class EditableViewBlank extends JFrame implements IView {
   private TextField textField;
   JButton tick;
   JButton cross;
+  private String store;
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
   private static int VIEW_LOCATION_Y = 500;
@@ -125,9 +126,24 @@ public class EditableViewBlank extends JFrame implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener m) {
-    this.textField.addMouseListener(m);
-    this.panel.addMouseEventListener(m);
+  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
+    this.textField.addMouseListener(textField);
+    this.panel.addMouseEventListener(cells);
+  }
+
+  @Override
+  public void setTextFieldInput(String s) {
+    this.textField.setText(s);
+  }
+
+  @Override
+  public void storeTextFieldInput() {
+    this.store = this.getTextFieldInput();
+  }
+
+  @Override
+  public void resetTextField() {
+    this.textField.setText(this.store);
   }
 
 }

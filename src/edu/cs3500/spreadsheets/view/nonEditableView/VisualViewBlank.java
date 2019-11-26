@@ -112,9 +112,25 @@ public class VisualViewBlank extends JFrame implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener m) {
+  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
     // nothing here because an uneditable cell should not have this functionality
   }
+
+  @Override
+  public void setTextFieldInput(String s) {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void storeTextFieldInput() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void resetTextField() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
 
   @Override
   public void render() {
