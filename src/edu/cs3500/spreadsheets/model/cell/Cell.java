@@ -176,7 +176,7 @@ public class Cell implements CellGeneral {
     return s.toString();
   }
 
-  public static void deleteObserverContent(Contents c, CellGeneral cell) {
+  private static void deleteObserverContent(Contents c, CellGeneral cell) {
     if (c.isFormulaReference()) {
       FormulaReference reference = (FormulaReference) c;
       deleteObserverReference(reference, cell);

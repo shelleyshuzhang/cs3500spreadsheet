@@ -54,7 +54,11 @@ public class ValueString extends Value {
         s.append(c);
       }
     }
-    return "\"" + s.toString() + "\"";
+    if (s.toString().isEmpty()) {
+      return "";
+    } else {
+      return "\"" + s.toString() + "\"";
+    }
   }
 
   @Override

@@ -64,7 +64,7 @@ public class BasicWorkSheet implements Worksheet {
         try {
           return allEvaCell.get(coord).getInstance();
         } catch (NullPointerException e) {
-          throw new IllegalArgumentException("have no result for a blank");
+          return new ValueString("");
         }
       } else {
         throw new IllegalArgumentException("cannot find the cell you want");
