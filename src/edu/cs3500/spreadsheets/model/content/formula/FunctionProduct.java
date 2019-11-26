@@ -40,7 +40,7 @@ public class FunctionProduct extends FormulaFunction {
           v1 = i.evaluate(formulaValueMap);
           formulaValueMap.put(i, v1);
         }
-        if (v1.accept(new ValueVisitorDouble()) != null) {
+        if (v1 != null && v1.accept(new ValueVisitorDouble()) != null) {
           double toMultiply = v1.accept(new ValueVisitorDouble());
           if (allBlank) {
             allBlank = false;
