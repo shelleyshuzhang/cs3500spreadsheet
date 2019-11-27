@@ -142,4 +142,6 @@ public interface IView {
 
   File setSaveFileChooser();
 
+  File setOpenFileChooser();
+
 }

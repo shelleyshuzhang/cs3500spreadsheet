@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.controller;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -11,9 +12,12 @@ import javax.imageio.IIOException;
 
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
+import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
+import edu.cs3500.spreadsheets.view.EditableView;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
 
@@ -51,17 +55,7 @@ public class BasicController implements Features {
     }
     try {
       List<Coord> lo = model.editCellContent(col, row, contentsC);
-      for (Coord c : lo) {
-        int affectedCol = c.col;
-        int affectedRow = c.row;
-        String value;
-        try {
-          value = model.getOneCellResult(affectedCol, affectedRow).print();
-        } catch (IllegalArgumentException e) {
-          value = e.getMessage();
-        }
-        view.editCell(affectedCol, affectedRow, value);
-      }
+      this.editWorksheetCells(lo);
     } catch (IllegalArgumentException e) {
       view.removeFocus();
     }
@@ -111,17 +105,7 @@ public class BasicController implements Features {
     int row = view.getSelectedCellRow() + 1;
     try {
       List<Coord> lo = model.editCellContent(col, row, new Blank());
-      for (Coord c : lo) {
-        int affectedCol = c.col;
-        int affectedRow = c.row;
-        String value;
-        try {
-          value = model.getOneCellResult(affectedCol, affectedRow).print();
-        } catch (IllegalArgumentException e) {
-          value = e.getMessage();
-        }
-        view.editCell(affectedCol, affectedRow, value);
-      }
+      this.editWorksheetCells(lo);
     } catch (IllegalArgumentException e) {
       view.removeFocus();
     }
@@ -147,6 +131,40 @@ public class BasicController implements Features {
         System.out.println("Found the following exception. File can not be read or write");
         e.printStackTrace();
       }
+    }
+  }
+
+  @Override
+  public void openFile() {
+    File f = view.setOpenFileChooser();
+    if (f != null) {
+      Worksheet openedModel;
+      try {
+        FileReader read = new FileReader(f);
+        WorksheetReader.WorksheetBuilder<Worksheet> builder = new BasicWorkSheetBuilder();
+        openedModel = WorksheetReader.read(builder, read);
+        openedModel.evaluateAll();
+        IView newView = new EditableView("evaluated and editable", openedModel);
+        Features c = new BasicController(openedModel, newView);
+        c.go();
+      } catch (IOException e) {
+        System.out.println("The given file can not be opened. Please try another file");
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void editWorksheetCells(List<Coord> lo) {
+    for (Coord c : lo) {
+      int affectedCol = c.col;
+      int affectedRow = c.row;
+      String value;
+      try {
+        value = model.getOneCellResult(affectedCol, affectedRow).print();
+      } catch (IllegalArgumentException e) {
+        value = e.getMessage();
+      }
+      view.editCell(affectedCol, affectedRow, value);
     }
   }
 

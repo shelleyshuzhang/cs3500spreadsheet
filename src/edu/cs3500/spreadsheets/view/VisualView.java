@@ -169,6 +169,12 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
+  public File setOpenFileChooser() {
+    // nothing here because an uneditable cell should not have this functionality
+    return null;
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }
