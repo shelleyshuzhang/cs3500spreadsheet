@@ -4,10 +4,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-
+/**
+ * a mouse event listener extends mouse adapter (so also implements mouse listener), contain a map
+ * which has information about what to do when some specific events happened.
+ */
 public class MouseEventListener extends MouseAdapter {
-  Map<Integer, Runnable> actionMap;
+  private Map<Integer, Runnable> actionMap;
 
+  /**
+   * An Empty Default constructor for mouse event listener.
+   */
+  public MouseEventListener() {
+    //empty default constructor
+  }
+
+  /**
+   * A setter to set a event-whatToDo map for mouse action event.
+   *
+   * @param map a event-whatToDo map
+   */
   public void setMouseActionMap(Map<Integer, Runnable> map) {
     actionMap = map;
   }

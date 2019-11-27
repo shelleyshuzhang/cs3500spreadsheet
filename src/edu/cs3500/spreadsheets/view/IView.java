@@ -84,8 +84,18 @@ public interface IView {
    */
   void getFocus();
 
+  /**
+   * Add a action listener to this view's specific place.
+   *
+   * @param ac the given action listener
+   */
   void addActionListener(ActionListener ac);
 
+  /**
+   * Add a mouse event listener to this view's specific place.
+   * @param textField the given mouse event listener for textField
+   * @param cells the given mouse event listener for cells
+   */
   void addMouseEventListener(MouseListener textField, MouseListener cells);
 
   /**

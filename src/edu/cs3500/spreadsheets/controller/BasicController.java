@@ -10,19 +10,28 @@ import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.view.IView;
 
-
-public class MapController implements Features {
+/**
+ * A basic controller for worksheet, implements features interface and has some features which can
+ * deal with some specific situations.
+ */
+public class BasicController implements Features {
   Worksheet model;
   IView view;
 
-  public MapController(Worksheet model, IView view) {
+  /**
+   * Construct a BasicController take in a model and a view.
+   *
+   * @param model provided model for this controller
+   * @param view  provided view for this controller
+   */
+  public BasicController(Worksheet model, IView view) {
     this.model = model;
     this.view = view;
     view.addFeatures(this);
   }
 
   @Override
-  public void tickButtonAction() {
+  public void saveAndChange() {
     String contentS = view.getTextFieldInput();
     int col = view.getSelectedCellCol() + 1;
     int row = view.getSelectedCellRow() + 1;
@@ -55,7 +64,7 @@ public class MapController implements Features {
   }
 
   @Override
-  public void crossButtonAction() {
+  public void RefuseAndReset() {
     view.resetTextField();
     view.removeFocus();
   }

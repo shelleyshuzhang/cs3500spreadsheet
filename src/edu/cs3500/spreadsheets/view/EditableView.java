@@ -17,6 +17,9 @@ import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
+/**
+ *
+ */
 public class EditableView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private JToolBar toolBar;
@@ -36,6 +39,9 @@ public class EditableView extends JFrame implements IView {
   private static int DEFAULT_ROW = 1000;
   private static int DEFAULT_COL = 1000;
 
+  /**
+   *
+   */
   public EditableView(String caption, WorksheetReadOnly worksheetReadOnly) {
     super(caption);
     this.setLocation(VIEW_LOCATION_X, VIEW_LOCATION_Y);
@@ -217,14 +223,14 @@ public class EditableView extends JFrame implements IView {
       @Override
       public void run() {
         for (Features f : featuresListener)
-          f.tickButtonAction();
+          f.saveAndChange();
       }
     });
     buttonClickedMap.put("refuse edit", new Runnable() {
       @Override
       public void run() {
         for (Features f : featuresListener)
-          f.crossButtonAction();
+          f.RefuseAndReset();
       }
     });
 
@@ -285,7 +291,7 @@ public class EditableView extends JFrame implements IView {
       }
     });
 
-    KeybroadListener kl = new KeybroadListener();
+    KeyboardListener kl = new KeyboardListener();
     kl.setPressKeyMap(keyMapPress);
     kl.setReleaseKeyMap(keyMapRelease);
     kl.setTypedKeyMap(keyMapTyped);
