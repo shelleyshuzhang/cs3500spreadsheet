@@ -39,7 +39,6 @@ public class TextualViewTest {
     WorksheetReader.WorksheetBuilder<Worksheet> newBuilder = new BasicWorkSheetBuilder();
     Worksheet newModel = WorksheetReader.read(newBuilder, newRead);
     assertEquals(model, newModel);
-
   }
 
   @Test

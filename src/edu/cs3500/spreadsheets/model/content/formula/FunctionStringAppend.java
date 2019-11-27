@@ -50,7 +50,12 @@ public class FunctionStringAppend extends FormulaFunction {
         FormulaReference toEval = (FormulaReference) i;
         List<CellGeneral> loc = toEval.getLoc();
         for (CellGeneral c : loc) {
-          String toAdd = c.evaluate(formulaValueMap).accept(new ValueVisitorString());
+          String toAdd;
+          if (c.evaluate(formulaValueMap) == null) {
+            toAdd = "";
+          } else {
+            toAdd = c.evaluate(formulaValueMap).accept(new ValueVisitorString());
+          }
           if (toAdd == null) {
             toAdd = "";
           }

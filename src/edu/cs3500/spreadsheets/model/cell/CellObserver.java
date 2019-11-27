@@ -36,7 +36,7 @@ public class CellObserver {
     if (observer == null) {
       return cellObserver.observer == null;
     }
-    return observer.equals(cellObserver.observer);
+    return observer.toString().equals(cellObserver.observer.toString());
   }
 
   @Override

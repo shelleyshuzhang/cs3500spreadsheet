@@ -18,7 +18,10 @@ import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
 /**
- *
+ * An editable view extends JFrame implements IView. It's a editable version of visual view, take
+ * the same element as a visual view excepts that it has a text field for editing a specific cell
+ * and tow buttons for either confirm the change or reject it. User can also press the delete key
+ * to delete the content of a cell.
  */
 public class EditableView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
@@ -40,7 +43,13 @@ public class EditableView extends JFrame implements IView {
   private static int DEFAULT_COL = 1000;
 
   /**
+   * The constructor for the editable view. The same as non editable view, it takes a string which
+   * is the caption of the view and a read-only model, which provides needed read only information
+   * for the view
    *
+   * @param caption the caption of the view window
+   * @param worksheetReadOnly the read-only model it takes to get needed information of the
+   *                          spreadsheet in order to show to users
    */
   public EditableView(String caption, WorksheetReadOnly worksheetReadOnly) {
     super(caption);

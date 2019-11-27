@@ -10,7 +10,7 @@ import java.util.Objects;
  * Represents a formula function which is a function and is a kind of function.
  */
 public abstract class FormulaFunction extends Formula {
-  protected List<Formula> arguments;
+  List<Formula> arguments;
 
   /**
    * Construct a formula function with a list of arguments.
@@ -43,7 +43,7 @@ public abstract class FormulaFunction extends Formula {
     if (arguments == null) {
       return fFunc.arguments == null;
     }
-    return arguments.equals(fFunc.arguments);
+    return arguments.containsAll(fFunc.arguments) && fFunc.arguments.containsAll(arguments);
   }
 
   @Override
@@ -51,13 +51,13 @@ public abstract class FormulaFunction extends Formula {
     return Objects.hash(arguments);
   }
 
-  protected String toStringHelper(String funcName) {
+  String toStringHelper(String funcName) {
     StringBuilder s = new StringBuilder();
     s.append(funcName);
     int len = this.arguments.size();
-    for (int i = 0; i < len; i++) {
+    for (Formula argument : this.arguments) {
       s.append(" ");
-      s.append(this.arguments.get(i).toString());
+      s.append(argument.toString());
     }
     s.append(")");
     return s.toString();

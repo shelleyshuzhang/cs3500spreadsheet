@@ -108,7 +108,7 @@ public class FormulaReference extends Formula {
     if (loc == null) {
       return fr.loc == null;
     }
-    return loc.equals(fr.loc);
+    return loc.containsAll(fr.loc) && fr.loc.containsAll(loc);
   }
 
   @Override
