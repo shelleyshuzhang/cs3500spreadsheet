@@ -183,6 +183,7 @@ public class MapController {
         view.removeFocus();
       }
       view.removeFocus();
+      view.setTextFieldInput("");
     }
   }
 }
