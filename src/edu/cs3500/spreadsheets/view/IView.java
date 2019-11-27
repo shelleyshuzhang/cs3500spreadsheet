@@ -34,14 +34,16 @@ public interface IView {
 
   /**
    * edit a cell's display with the assign row and col and string.
-   * @param col the col of the cell
-   * @param row the row of the cell
+   *
+   * @param col   the col of the cell
+   * @param row   the row of the cell
    * @param value the string value to be assigned to the cell
    */
   void editCell(int col, int row, String value);
 
   /**
    * get the string inside the text field.
+   *
    * @return the text field input string
    */
   String getTextFieldInput();
@@ -58,12 +60,14 @@ public interface IView {
 
   /**
    * get the row of the cell which has been selected.
+   *
    * @return the row of the selected cell
    */
   int getSelectedCellRow();
 
   /**
    * get the col of the cell which has been selected.
+   *
    * @return the col of the selected cell
    */
   int getSelectedCellCol();
@@ -100,8 +104,18 @@ public interface IView {
 
   void addKeyboardListener(KeyListener k);
 
+  /**
+   * get all selected cells' columns.
+   *
+   * @return a array of all selected cell's columns
+   */
+  int[] getSelectedColumns();
 
-  void getSelectedColumns();
+  /**
+   * get all selected cells' rows.
+   *
+   * @return a array of all selected cell's rows
+   */
+  int[] getSelectedRows();
 
-  void getSelectedRows();
 }
