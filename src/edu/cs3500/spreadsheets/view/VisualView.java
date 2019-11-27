@@ -157,6 +157,11 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
+  public void setSelectedCell(int col, int row) {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }

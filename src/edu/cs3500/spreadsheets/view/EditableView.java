@@ -197,6 +197,11 @@ public class EditableView extends JFrame implements IView {
     this.featuresListener.add(features);
   }
 
+  @Override
+  public void setSelectedCell(int col, int row) {
+    this.panel.setSelectedCell(col, row);
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
