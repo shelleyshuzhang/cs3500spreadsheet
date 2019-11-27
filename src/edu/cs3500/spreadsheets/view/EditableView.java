@@ -31,6 +31,7 @@ public class EditableView extends JFrame implements IView {
   private JButton tick;
   private JButton cross;
   private JButton saveButton;
+  private JButton openButton;
   private String store;
   private List<Features> featuresListener = new ArrayList<>();
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
@@ -69,8 +70,11 @@ public class EditableView extends JFrame implements IView {
     this.toolBar.add(this.cross);
     this.textField = new TextField();
     this.toolBar.add(textField);
+    this.openButton = new JButton("open");
+    this.openButton.setActionCommand("open file");
     this.saveButton = new JButton("save");
     this.saveButton.setActionCommand("save file");
+    this.toolBar.add(this.openButton);
     this.toolBar.add(this.saveButton);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
     this.store = "";
@@ -160,6 +164,7 @@ public class EditableView extends JFrame implements IView {
     this.tick.addActionListener(ac);
     this.cross.addActionListener(ac);
     this.saveButton.addActionListener(ac);
+    this.openButton.addActionListener(ac);
   }
 
   @Override
@@ -220,6 +225,18 @@ public class EditableView extends JFrame implements IView {
     return f;
   }
 
+  @Override
+  public File setOpenFileChooser() {
+    File f;
+    JFileChooser open = new JFileChooser();
+    if (open.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+      f = open.getSelectedFile();
+    } else {
+      f = null;
+    }
+    return f;
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
@@ -270,6 +287,13 @@ public class EditableView extends JFrame implements IView {
       public void run() {
         for (Features f : featuresListener)
           f.saveFile();
+      }
+    });
+    buttonClickedMap.put("open file", new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.openFile();
       }
     });
 

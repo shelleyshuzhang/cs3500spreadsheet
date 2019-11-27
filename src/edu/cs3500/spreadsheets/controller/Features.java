@@ -39,6 +39,14 @@ public interface Features {
    */
   void go();
 
+  /**
+   * save the current spreadsheet to a file on disk
+   */
   void saveFile();
+
+  /**
+   * open a file on disk and show the spreadsheet in it
+   */
+  void openFile();
 
 }
