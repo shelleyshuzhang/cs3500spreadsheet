@@ -1,16 +1,17 @@
-package edu.cs3500.spreadsheets.view.editableView;
+package edu.cs3500.spreadsheets.view;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.Set;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.view.IView;
-import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
+import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
+import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
-public class EditableViewBlank extends JFrame implements IView {
+public class EditableView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private JToolBar toolBar;
   private TextField textField;
@@ -25,8 +26,10 @@ public class EditableViewBlank extends JFrame implements IView {
   private static int CROSS_INDEX = 10006;
   private static String SIGN_TICK = Character.toString((char) TICK_INDEX);
   private static String SIGN_CROSS = Character.toString((char) CROSS_INDEX);
+  private static int DEFAULT_ROW = 1000;
+  private static int DEFAULT_COL = 1000;
 
-  public EditableViewBlank(String caption, int row, int col) {
+  public EditableView(String caption, WorksheetReadOnly worksheetReadOnly) {
     super(caption);
     this.setLocation(VIEW_LOCATION_X, VIEW_LOCATION_Y);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +47,7 @@ public class EditableViewBlank extends JFrame implements IView {
     this.toolBar.add(textField);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
     this.add(toolBar, BorderLayout.NORTH);
-    this.panel = new WorksheetScrollablePanel(new JTable(row, col) {
+    this.panel = new WorksheetScrollablePanel(new JTable(DEFAULT_ROW, DEFAULT_COL) {
       private static final long serialVersionUID = 1L;
 
       public boolean isCellEditable(int row, int column) {
@@ -53,6 +56,7 @@ public class EditableViewBlank extends JFrame implements IView {
     });
     this.add(this.panel, BorderLayout.CENTER);
     this.setBackground(FRAME_BACKGROUND);
+    setTableValues(worksheetReadOnly, this.panel, this);
     pack();
   }
 
@@ -160,6 +164,33 @@ public class EditableViewBlank extends JFrame implements IView {
   @Override
   public void getSelectedRows() {
     this.panel.getSelectedRows();
+  }
+
+  protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
+                                       WorksheetScrollablePanel panel, IView view) {
+    Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
+    for (String s : coords) {
+      int[] coord = SexpVisitorFormula.getSingleRefer(s);
+      int col = coord[0];
+      int row = coord[1];
+      if (col >= 1000 || row >= 1000) {
+        while (col >= 1000) {
+          panel.addColumn();
+          col--;
+        }
+        while (row >= 1000) {
+          panel.addRow();
+          row--;
+        }
+      }
+      String value;
+      try {
+        value = worksheetReadOnly.getOneCellResult(col, row).print();
+      } catch (IllegalArgumentException e) {
+        value = e.getMessage();
+      }
+      view.editCell(col, row, value);
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-package edu.cs3500.spreadsheets.view.nonEditableView;
+package edu.cs3500.spreadsheets.view;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -9,6 +9,8 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 
 import edu.cs3500.spreadsheets.controller.KeybroadListener;
+import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
+import edu.cs3500.spreadsheets.view.EditableView;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
@@ -18,27 +20,27 @@ import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
  * scrolling. It extends JFrame class in java swing library and implements IVew interface (interface
  * for all views for worksheet).
  */
-public class VisualViewBlank extends JFrame implements IView {
+public class VisualView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
   private static int VIEW_LOCATION_Y = 500;
   private static Dimension VIEW_MIN_SIZE = new Dimension(500, 500);
+  private static int DEFAULT_ROW = 1000;
+  private static int DEFAULT_COL = 1000;
 
   /**
    * A constructor for VisualViewBlank, construct a blank visual worksheet with desired size.
    *
    * @param caption the given title for JFrame
-   * @param row     given row for how many rows are wanted
-   * @param col     given column for how many columns are wanted
    */
-  public VisualViewBlank(String caption, int row, int col) {
+  public VisualView(String caption, WorksheetReadOnly worksheetReadOnly) {
     super(caption);
     this.setLocation(VIEW_LOCATION_X, VIEW_LOCATION_Y);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(true);
     this.setMinimumSize(VIEW_MIN_SIZE);
-    this.panel = new WorksheetScrollablePanel(new JTable(row, col) {
+    this.panel = new WorksheetScrollablePanel(new JTable(DEFAULT_ROW, DEFAULT_COL) {
       private static final long serialVersionUID = 1L;
 
       public boolean isCellEditable(int row, int column) {
@@ -47,6 +49,7 @@ public class VisualViewBlank extends JFrame implements IView {
     });
     this.add(this.panel);
     this.setBackground(FRAME_BACKGROUND);
+    EditableView.setTableValues(worksheetReadOnly, this.panel, this);
     pack();
   }
 
@@ -70,6 +73,7 @@ public class VisualViewBlank extends JFrame implements IView {
   @Override
   public void editCell(int col, int row, String value) {
     //do nothing because this is not the job for a uneditable view
+    this.editTableCell(col, row, value);
   }
 
   @Override
@@ -148,10 +152,13 @@ public class VisualViewBlank extends JFrame implements IView {
     // nothing here because an uneditable cell should not have this functionality
   }
 
-
   @Override
   public void render() {
     setVisible(true);
+  }
+
+  private void editTableCell(int col, int row, String value) {
+    this.panel.editCellValue(col, row, value);
   }
 
 }

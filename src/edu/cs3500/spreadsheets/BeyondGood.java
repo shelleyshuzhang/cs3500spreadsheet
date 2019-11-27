@@ -10,6 +10,8 @@ import java.util.NoSuchElementException;
 
 import edu.cs3500.spreadsheets.controller.MapController;
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
+import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.worksheet.BasicWorkSheet;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
@@ -17,10 +19,8 @@ import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
-import edu.cs3500.spreadsheets.view.editableView.EditableViewBlank;
-import edu.cs3500.spreadsheets.view.editableView.EditableViewEval;
-import edu.cs3500.spreadsheets.view.nonEditableView.VisualViewBlank;
-import edu.cs3500.spreadsheets.view.nonEditableView.VisualViewEvaluated;
+import edu.cs3500.spreadsheets.view.EditableView;
+import edu.cs3500.spreadsheets.view.VisualView;
 
 /**
  * The main class for our program.
@@ -53,11 +53,11 @@ public class BeyondGood {
           writer.close();
         } else if (args.length == 3 && args[2].equals("-gui")) {
           model.evaluateAll();
-          view = new VisualViewEvaluated("evaluated and uneditable", model);
+          view = new VisualView("evaluated and uneditable", model);
           view.render();
         } else if (args.length == 3 && args[2].equals("-edit")) {
           model.evaluateAll();
-          view = new EditableViewEval("evaluated and editable", model);
+          view = new EditableView("evaluated and editable", model);
           MapController c = new MapController(model, view);
           c.go();
         } else {
@@ -76,11 +76,14 @@ public class BeyondGood {
         System.out.print("the file reading is not successful/the file is not well formed");
       }
     } else if (args.length == 1 && args[0].equals("-gui")) {
-      view = new VisualViewBlank("blank and uneditable", 100, 100);
+      Worksheet model = new BasicWorkSheet(new HashMap<Coord, CellGeneral>());
+      model.evaluateAll();
+      view = new VisualView("blank and uneditable", model);
       view.render();
     } else if (args.length == 1 && args[0].equals("-edit")) {
-      view = new EditableViewBlank("blank and editable", 100, 100);
-      Worksheet model = new BasicWorkSheet(new HashMap<>());
+      Worksheet model = new BasicWorkSheet(new HashMap<Coord, CellGeneral>());
+      model.evaluateAll();
+      view = new EditableView("blank and editable", model);
       MapController c = new MapController(model, view);
       c.go();
     } else {
