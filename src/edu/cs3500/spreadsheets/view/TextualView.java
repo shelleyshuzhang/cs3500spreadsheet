@@ -118,13 +118,15 @@ public class TextualView implements IView {
   }
 
   @Override
-  public void getSelectedColumns() {
+  public int[] getSelectedColumns() {
     // do nothing because this is not the job for a textual view
+    return new int[]{};
   }
 
   @Override
-  public void getSelectedRows() {
+  public int[] getSelectedRows() {
     // do nothing because this is not the job for a textual view
+    return new int[]{};
   }
 
   @Override

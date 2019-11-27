@@ -157,13 +157,13 @@ public class EditableView extends JFrame implements IView {
   }
 
   @Override
-  public void getSelectedColumns() {
-    this.panel.getSelectedColumns();
+  public int[] getSelectedColumns() {
+    return this.panel.getSelectedColumns();
   }
 
   @Override
-  public void getSelectedRows() {
-    this.panel.getSelectedRows();
+  public int[] getSelectedRows() {
+    return this.panel.getSelectedRows();
   }
 
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,

@@ -62,7 +62,7 @@ public interface IView {
 
   void addKeyboardListener(KeyListener k);
 
-  void getSelectedColumns();
+  int[] getSelectedColumns();
 
-  void getSelectedRows();
+  int[] getSelectedRows();
 }

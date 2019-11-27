@@ -143,13 +143,15 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
-  public void getSelectedColumns() {
+  public int[] getSelectedColumns() {
     // nothing here because an uneditable cell should not have this functionality
+    return new int[]{};
   }
 
   @Override
-  public void getSelectedRows() {
+  public int[] getSelectedRows() {
     // nothing here because an uneditable cell should not have this functionality
+    return new int[]{};
   }
 
   @Override
