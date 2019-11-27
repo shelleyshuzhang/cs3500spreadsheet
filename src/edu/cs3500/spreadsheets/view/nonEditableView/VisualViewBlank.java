@@ -138,6 +138,16 @@ public class VisualViewBlank extends JFrame implements IView {
     // nothing here because an uneditable cell should not have this functionality
   }
 
+  @Override
+  public void getSelectedColumns() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
+  @Override
+  public void getSelectedRows() {
+    // nothing here because an uneditable cell should not have this functionality
+  }
+
 
   @Override
   public void render() {

@@ -152,4 +152,14 @@ public class EditableViewBlank extends JFrame implements IView {
     this.panel.addKeyboardEventListener(k);
   }
 
+  @Override
+  public void getSelectedColumns() {
+    this.panel.getSelectedColumns();
+  }
+
+  @Override
+  public void getSelectedRows() {
+    this.panel.getSelectedRows();
+  }
+
 }

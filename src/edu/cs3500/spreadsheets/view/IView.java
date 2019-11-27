@@ -61,4 +61,8 @@ public interface IView {
   void resetTextField();
 
   void addKeyboardListener(KeyListener k);
+
+  void getSelectedColumns();
+
+  void getSelectedRows();
 }
