@@ -44,48 +44,11 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
     if (allRawCell.containsKey(coord)) {
       CellGeneral toChange = allRawCell.get(coord);
       toChange.setContents(c, new HashMap<Coord, Value>());
-      registerObserverContent(c, toChange);
     } else {
       CellGeneral cell = new Cell(coord, c);
-      registerObserverContent(c, cell);
       this.allRawCell.put(coord, cell);
     }
     return this;
-  }
-
-  public static void registerObserverContent(Contents c, CellGeneral cell) {
-    if (c.isFormulaReference()) {
-      FormulaReference reference = (FormulaReference) c;
-      registerObserverReference(reference, cell);
-    } else if (c.isFormulaFunction()) {
-      FormulaFunction func = (FormulaFunction) c;
-      registerObserverFunction(func, cell);
-    }
-  }
-
-  private static void registerObserverFormula(Formula f, CellGeneral cell) {
-    if (f.isFormulaFunction()) {
-      FormulaFunction func = (FormulaFunction) f;
-      registerObserverFunction(func, cell);
-    } else if (f.isFormulaReference()) {
-      FormulaReference reference = (FormulaReference) f;
-      registerObserverReference(reference, cell);
-    }
-  }
-
-  private static void registerObserverReference(FormulaReference reference, CellGeneral cell) {
-    List<CellGeneral> references = reference.getLoc();
-    CellObserver toChangeObserver = new CellObserver(cell);
-    for (CellGeneral cg : references) {
-      cg.addObserver(toChangeObserver);
-    }
-  }
-
-  private static void registerObserverFunction(FormulaFunction func, CellGeneral cell) {
-    List<Formula> lof = func.getArguments();
-    for (Formula formula : lof) {
-      registerObserverFormula(formula, cell);
-    }
   }
 
   public static Contents createContent(int col, int row, String contents,

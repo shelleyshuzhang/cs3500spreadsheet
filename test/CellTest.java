@@ -26,7 +26,6 @@ import edu.cs3500.spreadsheets.model.content.value.ValueString;
  */
 public class CellTest {
 
-  /*
   @Test
           (expected = IllegalArgumentException.class)
   public void testEditToIndirectSelfRefer() {
@@ -58,8 +57,6 @@ public class CellTest {
     c1.setContents(fr3, new HashMap<Coord, Value>());
   }
 
-   */
-
   @Test
   public void getCoordinate() {
     Value v1 = new ValueString("l");
@@ -84,7 +81,6 @@ public class CellTest {
     assertEquals(c2.getContents(), fr1);
   }
 
-  /*
   @Test
   public void setContents() {
     ValueDouble d1 = new ValueDouble(33.56);
@@ -100,8 +96,6 @@ public class CellTest {
     assertEquals(c2.getContents(), cc1);
   }
 
-
-   */
   @Test
   public void containsReference() {
     ValueDouble d1 = new ValueDouble(33.56);

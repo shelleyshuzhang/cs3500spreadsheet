@@ -137,4 +137,6 @@ public interface IView {
    */
   void addFeatures(Features features);
 
+  void setSelectedCell(int col, int row);
+
 }

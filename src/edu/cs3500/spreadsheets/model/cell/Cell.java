@@ -2,8 +2,10 @@ package edu.cs3500.spreadsheets.model.cell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -36,6 +38,7 @@ public class Cell implements CellGeneral {
   public Cell(Coord coordinate, Contents c) {
     this.coordinate = coordinate;
     this.contents = c;
+    registerObserverContent(contents, this);
   }
 
   @Override
@@ -66,7 +69,7 @@ public class Cell implements CellGeneral {
     this.contents = contents;
     HashMap<Formula, Value> formulaValueHashMap = new HashMap<>();
     List<Coord> toReturn = this.executeUpdate(allEvaCell, formulaValueHashMap);
-    BasicWorkSheetBuilder.registerObserverContent(contents, this);
+    registerObserverContent(contents, this);
     return toReturn;
   }
 
@@ -155,13 +158,13 @@ public class Cell implements CellGeneral {
       return c.evaluatedValue == null;
     }
     return coordinate.equals(c.coordinate)
-            && contents.equals(c.contents)
+            && contents.toString().equals(c.contents.toString())
             && evaluatedValue.equals(c.evaluatedValue);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(coordinate, evaluatedValue);
+    return Objects.hash(coordinate, evaluatedValue, contents.toString());
   }
 
   @Override
@@ -208,6 +211,41 @@ public class Cell implements CellGeneral {
     List<Formula> lof = func.getArguments();
     for (Formula formula : lof) {
       deleteObserverFormula(formula, cell);
+    }
+  }
+
+  private static void registerObserverContent(Contents c, CellGeneral cell) {
+    if (c.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) c;
+      registerObserverReference(reference, cell);
+    } else if (c.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) c;
+      registerObserverFunction(func, cell);
+    }
+  }
+
+  private static void registerObserverFormula(Formula f, CellGeneral cell) {
+    if (f.isFormulaFunction()) {
+      FormulaFunction func = (FormulaFunction) f;
+      registerObserverFunction(func, cell);
+    } else if (f.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) f;
+      registerObserverReference(reference, cell);
+    }
+  }
+
+  private static void registerObserverReference(FormulaReference reference, CellGeneral cell) {
+    List<CellGeneral> references = reference.getLoc();
+    CellObserver toChangeObserver = new CellObserver(cell);
+    for (CellGeneral cg : references) {
+      cg.addObserver(toChangeObserver);
+    }
+  }
+
+  private static void registerObserverFunction(FormulaFunction func, CellGeneral cell) {
+    List<Formula> lof = func.getArguments();
+    for (Formula formula : lof) {
+      registerObserverFormula(formula, cell);
     }
   }
 

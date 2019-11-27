@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="cs3500spreadsheet:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cs3500spreadsheet_jar</output-path>
+    <root id="archive" name="cs3500spreadsheet.jar">
+      <element id="module-output" name="cs3500spreadsheet" />
+      <element id="library" level="project" name="cs3500hk5" />
+    </root>
+  </artifact>
+</component>

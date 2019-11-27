@@ -132,6 +132,11 @@ public class TextualView implements IView {
   }
 
   @Override
+  public void setSelectedCell(int col, int row) {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
   public int getSelectedCellRow() {
     // should never be called because there won't be a selected cell in the text view
     return 0;

@@ -130,14 +130,14 @@ public class BasicWorkSheet implements Worksheet {
     if (allEvaCell == null) {
       return bws.allEvaCell == null;
     }
-    return allRawCell.equals(bws.allRawCell)
-            && allEvaCell.equals(bws.allEvaCell)
+    return allRawCell.toString().equals(bws.allRawCell.toString())
+            && allEvaCell.toString().equals(bws.allEvaCell.toString())
             && evaluated == bws.evaluated;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(allRawCell, allEvaCell, evaluated);
+    return Objects.hash(allRawCell.toString(), allEvaCell.toString(), evaluated);
   }
 
   @Override
@@ -154,4 +154,3 @@ public class BasicWorkSheet implements Worksheet {
     }
   }
 }
-
