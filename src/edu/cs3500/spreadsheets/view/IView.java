@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
 import edu.cs3500.spreadsheets.controller.Features;
@@ -138,5 +139,7 @@ public interface IView {
   void addFeatures(Features features);
 
   void setSelectedCell(int col, int row);
+
+  File setSaveFileChooser();
 
 }

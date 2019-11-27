@@ -1,7 +1,13 @@
 package edu.cs3500.spreadsheets.controller;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
+
+import javax.imageio.IIOException;
 
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -9,6 +15,7 @@ import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.view.IView;
+import edu.cs3500.spreadsheets.view.TextualView;
 
 /**
  * A basic controller for worksheet, implements features interface and has some features which can
@@ -60,7 +67,6 @@ public class BasicController implements Features {
     }
     view.removeFocus();
     view.storeTextFieldInput();
-    //??? not sure here, belong to controller or view
   }
 
   @Override
@@ -128,5 +134,20 @@ public class BasicController implements Features {
     this.view.render();
   }
 
+  @Override
+  public void saveFile() {
+    File f = view.setSaveFileChooser();
+    if (f != null) {
+      try {
+        FileWriter writer = new FileWriter(f);
+        IView viewToWrite = new TextualView(model, writer);
+        viewToWrite.render();
+        writer.close();
+      } catch (IOException e) {
+        System.out.println("Found the following exception. File can not be read or write");
+        e.printStackTrace();
+      }
+    }
+  }
 
 }
