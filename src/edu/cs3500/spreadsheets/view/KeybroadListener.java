@@ -1,4 +1,4 @@
-package edu.cs3500.spreadsheets.controller;
+package edu.cs3500.spreadsheets.view;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

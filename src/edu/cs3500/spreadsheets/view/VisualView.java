@@ -8,11 +8,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.controller.KeybroadListener;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
-import edu.cs3500.spreadsheets.view.EditableView;
-import edu.cs3500.spreadsheets.view.IView;
-import edu.cs3500.spreadsheets.view.WorksheetScrollablePanel;
 
 
 /**
@@ -152,6 +149,11 @@ public class VisualView extends JFrame implements IView {
   public int[] getSelectedRows() {
     // nothing here because an uneditable cell should not have this functionality
     return new int[]{};
+  }
+
+  @Override
+  public void addFeatures(Features features) {
+    // nothing here because an uneditable cell should not have this functionality
   }
 
   @Override

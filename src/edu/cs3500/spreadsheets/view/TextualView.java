@@ -5,10 +5,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
-import javax.swing.*;
-
 import edu.cs3500.spreadsheets.controller.Features;
-import edu.cs3500.spreadsheets.controller.KeybroadListener;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 
 /**
@@ -127,6 +124,11 @@ public class TextualView implements IView {
   public int[] getSelectedRows() {
     // do nothing because this is not the job for a textual view
     return new int[]{};
+  }
+
+  @Override
+  public void addFeatures(Features features) {
+    // do nothing because this is not the job for a textual view
   }
 
   @Override

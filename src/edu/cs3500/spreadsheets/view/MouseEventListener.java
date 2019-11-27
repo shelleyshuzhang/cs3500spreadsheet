@@ -1,4 +1,4 @@
-package edu.cs3500.spreadsheets.controller;
+package edu.cs3500.spreadsheets.view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,10 +17,5 @@ public class MouseEventListener extends MouseAdapter {
     if (actionMap.containsKey(e.getClickCount())) {
       actionMap.get(e.getClickCount()).run();
     }
-  }
-
-  @Override
-  public void mouseMoved(MouseEvent e) {
-
   }
 }

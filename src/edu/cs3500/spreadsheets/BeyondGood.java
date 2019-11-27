@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.controller.MapController;
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -58,7 +59,7 @@ public class BeyondGood {
         } else if (args.length == 3 && args[2].equals("-edit")) {
           model.evaluateAll();
           view = new EditableView("evaluated and editable", model);
-          MapController c = new MapController(model, view);
+          Features c = new MapController(model, view);
           c.go();
         } else {
           System.out.print("Illegal command line");

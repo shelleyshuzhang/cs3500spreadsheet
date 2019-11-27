@@ -1,4 +1,4 @@
-package edu.cs3500.spreadsheets.controller;
+package edu.cs3500.spreadsheets.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

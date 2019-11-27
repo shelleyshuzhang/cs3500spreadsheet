@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import edu.cs3500.spreadsheets.controller.Features;
+
 
 /**
  * The view for worksheet. It show a worksheet to user as text or graphics or some other form.
@@ -117,5 +119,12 @@ public interface IView {
    * @return a array of all selected cell's rows
    */
   int[] getSelectedRows();
+
+  /**
+   * add features which can listen and respond to the view.
+   *
+   * @param features features object which can respond to specific event
+   */
+  void addFeatures(Features features);
 
 }

@@ -2,12 +2,18 @@ package edu.cs3500.spreadsheets.view;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.*;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
@@ -18,6 +24,7 @@ public class EditableView extends JFrame implements IView {
   JButton tick;
   JButton cross;
   private String store;
+  private List<Features> featuresListener = new ArrayList<>();
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
   private static int VIEW_LOCATION_Y = 500;
@@ -46,6 +53,7 @@ public class EditableView extends JFrame implements IView {
     this.textField = new TextField();
     this.toolBar.add(textField);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
+    this.store = "";
     this.add(toolBar, BorderLayout.NORTH);
     this.panel = new WorksheetScrollablePanel(new JTable(DEFAULT_ROW, DEFAULT_COL) {
       private static final long serialVersionUID = 1L;
@@ -58,6 +66,9 @@ public class EditableView extends JFrame implements IView {
     this.setBackground(FRAME_BACKGROUND);
     setTableValues(worksheetReadOnly, this.panel, this);
     pack();
+    setButtonListener();
+    setMouseListener();
+    setKeyBoardListener();
   }
 
   @Override
@@ -166,6 +177,11 @@ public class EditableView extends JFrame implements IView {
     return this.panel.getSelectedRows();
   }
 
+  @Override
+  public void addFeatures(Features features) {
+    this.featuresListener.add(features);
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
@@ -191,6 +207,90 @@ public class EditableView extends JFrame implements IView {
       }
       view.editCell(col, row, value);
     }
+  }
+
+  private void setButtonListener() {
+    Map<String, Runnable> buttonClickedMap = new HashMap<String, Runnable>();
+    ButtonListener bListener = new ButtonListener();
+
+    buttonClickedMap.put("accept edit", new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.tickButtonAction();
+      }
+    });
+    buttonClickedMap.put("refuse edit", new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.crossButtonAction();
+      }
+    });
+
+    bListener.setButtonActionMap(buttonClickedMap);
+    this.addActionListener(bListener);
+  }
+
+  private void setMouseListener() {
+    Map<Integer, Runnable> MouseMapTextField = new HashMap<Integer, Runnable>();
+    Map<Integer, Runnable> MouseMapCells = new HashMap<Integer, Runnable>();
+    MouseEventListener mListenerTextField = new MouseEventListener();
+    MouseEventListener mListenerCells = new MouseEventListener();
+
+    MouseMapTextField.put(1, new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.getFocusAction();
+      }
+    });
+    MouseMapCells.put(2, new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.focusAndShow();
+      }
+    });
+    MouseMapCells.put(1, new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.showContentAbove();
+      }
+    });
+
+    mListenerTextField.setMouseActionMap(MouseMapTextField);
+    mListenerCells.setMouseActionMap(MouseMapCells);
+    this.addMouseEventListener(mListenerTextField, mListenerCells);
+  }
+
+  private void setKeyBoardListener() {
+    Map<Integer, Runnable> keyMapPress = new HashMap<>();
+    Map<Integer, Runnable> keyMapRelease = new HashMap<>();
+    Map<Character, Runnable> keyMapTyped = new HashMap<>();
+
+    keyMapPress.put(KeyEvent.VK_DELETE, new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.deleteAll();
+      }
+    });
+    keyMapPress.put(KeyEvent.VK_BACK_SPACE, new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.deleteAll();
+      }
+    });
+
+    KeybroadListener kl = new KeybroadListener();
+    kl.setPressKeyMap(keyMapPress);
+    kl.setReleaseKeyMap(keyMapRelease);
+    kl.setTypedKeyMap(keyMapTyped);
+
+    this.addKeyboardListener(kl);
   }
 
 }
