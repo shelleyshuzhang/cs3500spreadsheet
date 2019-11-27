@@ -150,6 +150,7 @@ public class MapController {
     Map<Character, Runnable> keyMapTyped = new HashMap<>();
 
     keyMapPress.put(KeyEvent.VK_DELETE, new DeleteAll());
+    keyMapPress.put(KeyEvent.VK_BACK_SPACE, new DeleteAll());
 
     KeybroadListener kl = new KeybroadListener();
     kl.setPressKeyMap(keyMapPress);

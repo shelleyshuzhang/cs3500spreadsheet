@@ -116,7 +116,6 @@ public class Cell implements CellGeneral {
     acc.add(this.coordinate);
     try {
       Value newValue = this.evaluate(formulaValueHashMap);
-      System.out.println(newValue);
       if (allEvaCell.containsKey(this.coordinate)) {
         allEvaCell.replace(this.coordinate, newValue);
       } else {

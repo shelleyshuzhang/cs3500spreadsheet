@@ -112,7 +112,6 @@ public class BasicWorkSheet implements Worksheet {
     if (allRawCell.get(c) == null) {
       allRawCell.put(c, new Cell(c, new Blank()));
     }
-    System.out.println(allRawCell.get(c).setContents(contents, allEvaCell));
     return allRawCell.get(c).setContents(contents, allEvaCell);
   }
 
