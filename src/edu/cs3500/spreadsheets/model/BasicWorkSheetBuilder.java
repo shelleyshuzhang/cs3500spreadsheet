@@ -1,17 +1,12 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 import edu.cs3500.spreadsheets.model.cell.Cell;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
-import edu.cs3500.spreadsheets.model.cell.CellObserver;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
-import edu.cs3500.spreadsheets.model.content.formula.Formula;
-import edu.cs3500.spreadsheets.model.content.formula.FormulaFunction;
-import edu.cs3500.spreadsheets.model.content.formula.FormulaReference;
 import edu.cs3500.spreadsheets.model.content.formula.FormulaValue;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.content.value.ValueBoolean;
@@ -51,6 +46,18 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
     return this;
   }
 
+  /**
+   * Create a content of a cell with coordinate of the cell which the contents belong, contents
+   * described in string, and a allRawCell map as a references to help detected self-references
+   *
+   * @param col        the given column for this contents
+   * @param row        the given row for this contents
+   * @param contents   the given string representation for this content
+   * @param allRawCell the given reference cell map
+   * @return the final content create by given information
+   * @throws IllegalArgumentException there are IllegalArgumentException other than self-reference
+   *                                  exception been throw in the process of creating contents
+   */
   public static Contents createContent(int col, int row, String contents,
                                        HashMap<Coord, CellGeneral> allRawCell) {
     Contents c;

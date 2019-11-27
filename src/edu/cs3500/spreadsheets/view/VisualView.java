@@ -7,7 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;

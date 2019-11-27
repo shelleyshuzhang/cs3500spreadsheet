@@ -1,6 +1,9 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.TextField;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,7 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
 
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
@@ -279,7 +287,7 @@ public class EditableView extends JFrame implements IView {
       @Override
       public void run() {
         for (Features f : featuresListener)
-          f.RefuseAndReset();
+          f.refuseAndReset();
       }
     });
     buttonClickedMap.put("save file", new Runnable() {

@@ -40,6 +40,9 @@ public interface CellGeneral {
    */
   Contents getContents();
 
+  /**
+   *
+   */
   List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell);
 
   /**
@@ -56,15 +59,37 @@ public interface CellGeneral {
    */
   Value getCellValue();
 
-  public void addObserver(CellObserver o);
+  /**
+   * Add an given observer with the target cell.
+   * @param o the given observer
+   */
+  void addObserver(CellObserver o);
 
-  public boolean containObserver(CellObserver o);
+  /**
+   * determine if the target cell already contain the given observer.
+   *
+   * @param o the given observer
+   * @return true if it contains this observer, false if it not
+   */
+  boolean containObserver(CellObserver o);
 
-  public void clearObserver();
+  /**
+   * clear all the observers in the target cell.
+   */
+  void clearObserver();
 
-  public void deleteObserver(CellObserver observer);
+  /**
+   * delete the given observer in the target cell.
+   *
+   * @param observer the given observer to be deleted
+   * @throws IllegalArgumentException if the observer do not exist before delete
+   */
+  void deleteObserver(CellObserver observer);
 
-  public List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
-                                   HashMap<Formula, Value> formulaValueHashMap);
+  /**
+   * Update cells based on
+   */
+  List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
+                            HashMap<Formula, Value> formulaValueHashMap);
 
 }

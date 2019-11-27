@@ -12,7 +12,7 @@ public interface Features {
   /**
    * refuse the revise and reset the initial state.
    */
-  void RefuseAndReset();
+  void refuseAndReset();
 
   /**
    * get focus on specific place and store data in this place.

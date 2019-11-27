@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.controller;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,15 +7,12 @@ import java.io.IOException;
 import java.util.List;
 
 
-import javax.imageio.IIOException;
-
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
-import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.view.EditableView;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
@@ -64,7 +60,7 @@ public class BasicController implements Features {
   }
 
   @Override
-  public void RefuseAndReset() {
+  public void refuseAndReset() {
     view.resetTextField();
     view.removeFocus();
   }
@@ -166,6 +162,12 @@ public class BasicController implements Features {
       }
       view.editCell(affectedCol, affectedRow, value);
     }
+  }
+
+  @Override
+  public String toString() {
+    return "Basic Controller with features: saveAndChange, RefuseAndReset, " +
+            "getFocusAction, focusAndShow, showContentAbove, deleteAll\n";
   }
 
 }

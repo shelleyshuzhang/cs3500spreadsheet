@@ -33,4 +33,5 @@ public class ButtonListener implements ActionListener {
   public void setButtonActionMap(Map<String, Runnable> map) {
     this.actionMap = map;
   }
+
 }

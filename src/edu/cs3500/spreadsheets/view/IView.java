@@ -115,6 +115,11 @@ public interface IView {
    */
   void resetTextField();
 
+  /**
+   * Add a key board listener to this view's specific place.
+   *
+   * @param k the given key listener wait to be added
+   */
   void addKeyboardListener(KeyListener k);
 
   /**
@@ -138,6 +143,11 @@ public interface IView {
    */
   void addFeatures(Features features);
 
+  /**
+   * Method helped to set col and row for a selected cell.
+   * @param col the given column for selected cell
+   * @param row the given row for selected cell
+   */
   void setSelectedCell(int col, int row);
 
   File setSaveFileChooser();
