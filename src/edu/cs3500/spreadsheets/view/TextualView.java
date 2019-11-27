@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
 import edu.cs3500.spreadsheets.controller.Features;
@@ -134,6 +135,12 @@ public class TextualView implements IView {
   @Override
   public void setSelectedCell(int col, int row) {
     // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public File setSaveFileChooser() {
+    // do nothing because this is not the job for a textual view
+    return null;
   }
 
   @Override

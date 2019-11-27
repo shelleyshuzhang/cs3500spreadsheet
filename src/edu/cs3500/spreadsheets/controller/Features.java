@@ -39,4 +39,6 @@ public interface Features {
    */
   void go();
 
+  void saveFile();
+
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,9 @@ public class EditableView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;
   private JToolBar toolBar;
   private TextField textField;
-  JButton tick;
-  JButton cross;
+  private JButton tick;
+  private JButton cross;
+  private JButton saveButton;
   private String store;
   private List<Features> featuresListener = new ArrayList<>();
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
@@ -67,6 +69,9 @@ public class EditableView extends JFrame implements IView {
     this.toolBar.add(this.cross);
     this.textField = new TextField();
     this.toolBar.add(textField);
+    this.saveButton = new JButton("save");
+    this.saveButton.setActionCommand("save file");
+    this.toolBar.add(this.saveButton);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
     this.store = "";
     this.add(toolBar, BorderLayout.NORTH);
@@ -154,6 +159,7 @@ public class EditableView extends JFrame implements IView {
   public void addActionListener(ActionListener ac) {
     this.tick.addActionListener(ac);
     this.cross.addActionListener(ac);
+    this.saveButton.addActionListener(ac);
   }
 
   @Override
@@ -202,6 +208,18 @@ public class EditableView extends JFrame implements IView {
     this.panel.setSelectedCell(col, row);
   }
 
+  @Override
+  public File setSaveFileChooser() {
+    File f;
+    JFileChooser save = new JFileChooser();
+    if (save.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+      f = save.getSelectedFile();
+    } else {
+      f = null;
+    }
+    return f;
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
@@ -245,6 +263,13 @@ public class EditableView extends JFrame implements IView {
       public void run() {
         for (Features f : featuresListener)
           f.RefuseAndReset();
+      }
+    });
+    buttonClickedMap.put("save file", new Runnable() {
+      @Override
+      public void run() {
+        for (Features f : featuresListener)
+          f.saveFile();
       }
     });
 
