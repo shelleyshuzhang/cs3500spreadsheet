@@ -41,7 +41,14 @@ public interface CellGeneral {
   Contents getContents();
 
   /**
+   * Set the content of the cell to the given one. Will return a list of coordinates of all the
+   * cells that are affected by this change and need to reevaluate and update in the view. Will
+   * remove the observers that no longer belong to this cell after updates, and add the new ones
+   * that should be here after the update.
    *
+   * @param contents the contents to set in the cell
+   * @param allEvaCell the results of all the cells that have been evaluated and saved in the model
+   * @return a list of coordinates that will be affected by the content change and need to change
    */
   List<Coord> setContents(Contents contents, HashMap<Coord, Value> allEvaCell);
 
@@ -87,7 +94,13 @@ public interface CellGeneral {
   void deleteObserver(CellObserver observer);
 
   /**
-   * Update cells based on
+   * Execute updates for all the observers in the cell. Make sure that all the observer cells and
+   * their observers will be updated together with this cell.
+   *
+   * @param allEvaCell the results of all the cells that have been evaluated
+   * @param formulaValueHashMap the results of the formulas that have been evaluated in this update
+   * @return a list of the coordinates of the observers of the cell and their observers that need to
+   *         be changed after this update
    */
   List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
                             HashMap<Formula, Value> formulaValueHashMap);

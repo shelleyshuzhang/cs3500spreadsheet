@@ -40,6 +40,7 @@ public class CellObserver {
 
   /**
    * Get the coordinate of the target cell.
+   *
    * @return the coordinate of the target cell
    */
   public Coord getCoordinate() {

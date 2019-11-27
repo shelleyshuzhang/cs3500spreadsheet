@@ -28,6 +28,8 @@ public class Cell implements CellGeneral {
 
   /**
    * Construct a Cell with given coordinate and contents.
+   * Changes: Register the cell with its observers. Will check if the content is a reference or
+   * a function that contains any reference, then add them as observers to this cell.
    *
    * @param coordinate coordinate represents where is the cell
    * @param c          contents represents what is in the cell
