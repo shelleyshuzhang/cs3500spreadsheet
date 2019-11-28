@@ -24,4 +24,42 @@
     and double click a cell or click the text field when a cell is selected to edit the cell. We
     add the new methods in the interface and let the visual and textual view do nothing in case of
     those methods so that we avoid casting or letting the editable view have public methods that
-    are not in the interface.
+    are not in the interface. View also response to set up listeners which it need to use, it create
+    map(s) with Key (as String/Integer/Character) and Value (Runnable) and set map(s) to listener
+    then listener know what to do when events occur. But view do not response for setting exactly
+    what to do when a event occur, it just create runnable, and inside the runnable, it delegate
+    Features, which is the controller, to decide what to do.
+* For the controller and listener:
+Controller:
+1. Features Interface:
+Include features methods which should be implements by the controller class.
+2. BasicController implements Feature Interface:
+In the Constructor of the BasicController takes in a model and a view, the model is ediatble.
+BasicController add itself as a feature listener to the view, it accomplishing features by coordinate model and view.
+The reason we choose this design is, because "hearing from outside" (like hearing from mouse clicked, button clicked...)will done by Listener in view's packege,
+it do not bond the controller with specific library. It just responds when user doing something on the view (on the GUI), but do not
+exactly heard directly from the user (view heard directly from the user).
+
+
+Listener:
+We make three listener: ButtonListener, KeyboardListener (implements KeyListener),
+and MouseEventListener (implements MouseListener). We made these three classes, and let view to
+set up objects of each of Listener and add them to (view)itself. We choose this design is because we
+think it is clear and flexible.
+1. ButtonListener (implements ActionListener)
+Contain a map with String as key, Runnable as Value. When a action (like button clicked), the
+listener will find the corresponding String of the ActionEvent. Use this String as key, to find a
+Runnable value which should be run in this situation.
+2. KeyboardListener (implements KeyListener)
+Contain three maps for keyPressEvent, keyReleaseEvent, and keyTypedEvent. The first two have
+Integer as Key, the third has Character as Key. Values are all Runnable. Same as ButtonListener,
+catch a event -> transfer it to corresponding Integer/Character, find which runnable should run now
+(or do nothing if the map do not contain corresponding Key).
+3. MouseEventListener (implements MouseListener)
+Because We don't want to rewrite all method in MouseListener Interface, we use "extends
+MouseAdapter" to allow us only re-write the method we want. This Listener also contain a map,
+Integer as Key, Runnable as Value, and do similar thing as above listener.
+
+The reason we design map(s) for all listener is because we think it is, again, clear and flexible,
+if we want to add some new function to it, we only need to put new Key and Value in the map.
+
