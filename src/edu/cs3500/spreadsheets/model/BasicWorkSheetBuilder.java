@@ -48,7 +48,7 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
 
   /**
    * Create a content of a cell with coordinate of the cell which the contents belong, contents
-   * described in string, and a allRawCell map as a references to help detected self-references
+   * described in string, and a allRawCell map as a references to help detected self-references.
    *
    * @param col        the given column for this contents
    * @param row        the given row for this contents
@@ -92,7 +92,7 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
         }
       }
     } catch (IllegalArgumentException e) {
-      if (e.getMessage() == "Expected cell ref") {
+      if (e.getMessage().equals("Expected cell ref")) {
         c = new FormulaValue(new ValueString(contents));
       } else {
         String error = "Cell has content: " + contents + " which is error: " + e.getMessage();

@@ -283,29 +283,33 @@ public class EditableView extends JFrame implements IView {
     buttonClickedMap.put("accept edit", new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.saveAndChange();
+        }
       }
     });
     buttonClickedMap.put("refuse edit", new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.refuseAndReset();
+        }
       }
     });
     buttonClickedMap.put("save file", new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.saveFile();
+        }
       }
     });
     buttonClickedMap.put("open file", new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.openFile();
+        }
       }
     });
 
@@ -314,35 +318,38 @@ public class EditableView extends JFrame implements IView {
   }
 
   private void setMouseListener() {
-    Map<Integer, Runnable> MouseMapTextField = new HashMap<Integer, Runnable>();
-    Map<Integer, Runnable> MouseMapCells = new HashMap<Integer, Runnable>();
+    Map<Integer, Runnable> mouseMapTextField = new HashMap<Integer, Runnable>();
+    Map<Integer, Runnable> mouseMapCells = new HashMap<Integer, Runnable>();
     MouseEventListener mListenerTextField = new MouseEventListener();
     MouseEventListener mListenerCells = new MouseEventListener();
 
-    MouseMapTextField.put(1, new Runnable() {
+    mouseMapTextField.put(1, new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.getFocusAction();
+        }
       }
     });
-    MouseMapCells.put(2, new Runnable() {
+    mouseMapCells.put(2, new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.focusAndShow();
+        }
       }
     });
-    MouseMapCells.put(1, new Runnable() {
+    mouseMapCells.put(1, new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.showContentAbove();
+        }
       }
     });
 
-    mListenerTextField.setMouseActionMap(MouseMapTextField);
-    mListenerCells.setMouseActionMap(MouseMapCells);
+    mListenerTextField.setMouseActionMap(mouseMapTextField);
+    mListenerCells.setMouseActionMap(mouseMapCells);
     this.addMouseEventListener(mListenerTextField, mListenerCells);
   }
 
@@ -354,15 +361,17 @@ public class EditableView extends JFrame implements IView {
     keyMapPress.put(KeyEvent.VK_DELETE, new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.deleteAll();
+        }
       }
     });
     keyMapPress.put(KeyEvent.VK_BACK_SPACE, new Runnable() {
       @Override
       public void run() {
-        for (Features f : featuresListener)
+        for (Features f : featuresListener) {
           f.deleteAll();
+        }
       }
     });
 

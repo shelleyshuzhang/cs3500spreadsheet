@@ -62,7 +62,7 @@ public class BeyondGood {
           model.evaluateAll();
           view = new EditableView("evaluated and editable", model);
           Features c = new BasicController(model, view);
-          c.go();
+          c.makeVisible();
         } else {
           System.out.print("Illegal command line");
         }
@@ -88,7 +88,7 @@ public class BeyondGood {
       model.evaluateAll();
       view = new EditableView("blank and editable", model);
       Features c = new BasicController(model, view);
-      c.go();
+      c.makeVisible();
     } else {
       System.out.print("Illegal command line");
     }
