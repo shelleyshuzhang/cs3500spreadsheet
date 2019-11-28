@@ -34,11 +34,13 @@ Controller:
 1. Features Interface:
 Include features methods which should be implements by the controller class.
 2. BasicController implements Feature Interface:
-In the Constructor of the BasicController takes in a model and a view, the model is ediatble.
-BasicController add itself as a feature listener to the view, it accomplishing features by coordinate model and view.
-The reason we choose this design is, because "hearing from outside" (like hearing from mouse clicked, button clicked...)will done by Listener in view's packege,
-it do not bond the controller with specific library. It just responds when user doing something on the view (on the GUI), but do not
-exactly heard directly from the user (view heard directly from the user).
+In the Constructor of the BasicController takes in a model and a view, the model is editable.
+BasicController add itself as a feature listener to the view, it accomplishing features by
+coordinate model and view. The reason we choose this design is, because "hearing from outside"
+(like hearing from mouse clicked, button clicked...)will done by Listener in view's package, it do
+not bond the controller with specific library. It just responds when user doing something on the
+view (on the GUI), but do not exactly heard directly from the user (view heard directly from the
+user).
 
 
 Listener:
