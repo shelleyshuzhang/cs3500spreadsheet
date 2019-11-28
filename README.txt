@@ -42,7 +42,6 @@ not bond the controller with specific library. It just responds when user doing 
 view (on the GUI), but do not exactly heard directly from the user (view heard directly from the
 user).
 
-
 Listener:
 We make three listener: ButtonListener, KeyboardListener (implements KeyListener),
 and MouseEventListener (implements MouseListener). We made these three classes, and let view to
