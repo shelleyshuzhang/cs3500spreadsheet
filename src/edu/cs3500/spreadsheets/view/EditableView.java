@@ -30,7 +30,11 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
  * An editable view extends JFrame implements IView. It's a editable version of visual view, take
  * the same element as a visual view excepts that it has a text field for editing a specific cell
  * and tow buttons for either confirm the change or reject it. User can also press the delete key
- * to delete the content of a cell.
+ * to delete the content of a cell. There is one text field for showing the formula of a cell and
+ * edit it, a button for confirming changes, a button for refusing changes, a button for saving
+ * the file, and another button for open a file. You can select a cell by single click the mouse,
+ * move the selection to neighbor cells by pressing the keyboard, and double click a cell or click
+ * the text field when a cell is selected to edit the cell.
  */
 public class EditableView extends JFrame implements IView {
   protected WorksheetScrollablePanel panel;

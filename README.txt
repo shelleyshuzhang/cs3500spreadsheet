@@ -1,28 +1,27 @@
-﻿We have four interfaces in the model. Each of which contains several abstract and concrete classes. The basic functionality is to represent the spreadsheet, the cells on the spreadsheet, and the information they contain. The model will also keep track of the raw content and the evaluated value of a single cell. 
-* Interface Worksheet: Represent the spreadsheet we are going to implement in the future.
-   * Concrete Class BasicWorkSheet: Implements the interface and represents one possible spreadsheet. Have all the cells, their coordinates, their raw contents, and the evaluated values. We also have another method that can edit a cell to have new content, but we have not implemented this because we are not sure how we can get the value from the user.
-* Interface CellGeneral: Represent the cell of the worksheet in general.
-   * Concrete Class Cell: The class to represent a single cell, has the basic ability to get the instance of its content, evaluate its content, get its coordinate, and store the value after it evaluates itself.
-* Interface Contents: Represent the information that could be stored in the cell.
-   * Concrete Class Blank: Represents a blank content
-   * Abstract Class Value: Represent the content that only contains a value, no equivalence mark.
-      * Concrete Class String
-      * Concrete Class Boolean
-      * Concrete Class Double
-   * Abstract Class Formula: Represent the content that is a formula that starts with an equivalence mark.
-      * Concrete Class FormulaValue: Represent the value inside a Formula, use the Value class directly
-      * Concrete Class FormulaReference: Represent the reference to cells, either single or a group
-      * Abstract Class FormulaFunction: Represents the formula that is a function
-         * Concrete Class FunctionLessThan: Represent the function “<”
-         * Concrete Class FunctionProduct: Represent the function “PRODUCT”
-         * Concrete Class FunctionSum: Represent the function “SUM”
-         * Concrete Class StringAppend: Represent the function “SAPPEND”, it will append the given strings into a single string, if the given value is not a string, it will convert it to the string representation and append it.
-* Interface ValueVisitor: visit the potential value that a cell could produce and transfer that to the type of value the visitor wants.
-   * Concrete Class ValueVisitorBoolean: Visit a Value and convert it to a boolean, throw an exception if the Value does not contain a boolean
-   * Concrete Class ValueVisitorDouble: Visit a Value and convert it to a double, throw an exception if the Value does not contain a double
-   * Concrete Class ValueVisitorString: Visit a Value and convert it to a String, throw an exception if the Value does not contain a String
-The Model also has:
-* Concrete Class BasicWorkSheetBuilder: Implements the given builder interface and will build a Worksheet based on the given input.
-* Enum BasicSupportFunctions: Provide the available functions that the spreadsheet supports, has a static method that will return a map with the string name of the function as the key and the Enum name as the value.
-The sexp has one more class than given:
-* Concrete Class SexpVisitorFormula: Implements the SexpVisitor, will read the expressions and convert them to the Formula we have.
+﻿Our design is mostly based on the previous code, but we did make several changes.
+* The model now enforces the observer pattern. In our cell package, we have a new CellObserver class
+    which takes in a cell. The observer class will be added to any cell that it wants to observe.
+    For example, if A3 is the sum of A1 and A2, we will create an observer that takes in A3 and add
+    this observer to both A1 and A2. Every time that A1 or A2 changes, A3 will change too. Also,
+    if A1 or A2 observes another cell, say A1 observes A10, then the change of A10 will cause A1
+    and A3 to change too. We enforced this functionality by using recursive functions to go through
+    the list of observers in a cell and updates the evaluated results. Our method returns a list of
+    coordinates contains every cell that changes and has to be updated in the view, then we update
+    them accordingly. We will remove the old observers and add new ones whenever we construct a new
+    cell or update the content of an existing cell. There should not be any cycles because our
+    content throws an exception for the cells that contain self-reference, and so stop them from
+    existing. And we do not go into a cell if its coordinate already exists before in our returning
+    list of coordinates.
+* For the view, we added the new editable view using the existing scrollable panel we have created.
+    We merged the blank and evaluated views into a single view because we found it unnecessary.
+    Whenever a blank view is edited by a user, it becomes an evaluated view, so we changed that.
+    Now, we have a textual view, a visual view, and an editable view. The editable view is almost
+    the same as the visual view except that it has a toolbar for all the necessary editing
+    operations. There is one text field for showing the formula of a cell and edit it, a button for
+    confirming changes, a button for refusing changes, a button for saving the file, and another
+    button for open a file. You can select a cell by single click the mouse, move the selection to
+    neighbor cells by pressing the keyboard, delete the cell content by pressing the delete key,
+    and double click a cell or click the text field when a cell is selected to edit the cell. We
+    add the new methods in the interface and let the visual and textual view do nothing in case of
+    those methods so that we avoid casting or letting the editable view have public methods that
+    are not in the interface.
