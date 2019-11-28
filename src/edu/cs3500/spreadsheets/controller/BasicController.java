@@ -167,7 +167,7 @@ public class BasicController implements Features {
   @Override
   public String toString() {
     return "Basic Controller with features: saveAndChange, RefuseAndReset, " +
-            "getFocusAction, focusAndShow, showContentAbove, deleteAll\n";
+            "getFocusAction, focusAndShow, showContentAbove, deleteAll";
   }
 
 }

@@ -262,5 +262,34 @@ public class TestBasicController {
             "view has been called to render itself\n", log.toString());
   }
 
+  //test to verify controller call right method and pass right argument to view and model
+  @Test
+  public void testOpenFileUseMock() {
+    StringBuilder log = new StringBuilder();
+    Worksheet model = new MockModel(log);
+    IView view = new MockView(log);
+    Features c = new BasicController(model, view);
+    c.openFile();
+    assertEquals("view has been called to add a features object:\n" +
+            "Basic Controller with features: saveAndChange, RefuseAndReset, getFocusAction, " +
+            "focusAndShow, showContentAbove, deleteAll\n" +
+            "view has been called to open file", log.toString());
+  }
+
+  //test to verify controller call right method and pass right argument to view and model
+  @Test
+  public void testSaveFileUseMock() {
+    StringBuilder log = new StringBuilder();
+    Worksheet model = new MockModel(log);
+    IView view = new MockView(log);
+    Features c = new BasicController(model, view);
+    c.saveFile();
+    assertEquals("view has been called to add a features object:\n" +
+            "Basic Controller with features: saveAndChange, RefuseAndReset, " +
+            "getFocusAction, focusAndShow, showContentAbove, deleteAll\n" +
+            "view has been called to save file", log.toString());
+  }
+
+
 
 }

@@ -3,12 +3,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.model.worksheet.BasicWorkSheet;
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
 import edu.cs3500.spreadsheets.model.content.Blank;
@@ -296,6 +298,105 @@ public class BasicWorkSheetTest {
     assertEquals("\"jhjl\\\\\"", model.getOneCellResult(1, 3).print());
     assertEquals("\"ABC\"", model.getOneCellResult(1, 4).print());
     assertEquals("\"\"\"", model.getOneCellResult(1, 5).print());
+  }
+
+  //add more tests based on grader's advise
+  @Test
+  public void testNestedFunctionCall() {
+    BasicWorkSheetBuilder builder = new BasicWorkSheetBuilder();
+    builder.createCell(1, 1, "13.0");
+    builder.createCell(1, 2, "1.0");
+    builder.createCell(1, 3, "3.5");
+    builder.createCell(1, 4, "skejq");
+    builder.createCell(1, 5, "6.0");
+    builder.createCell(1, 6, "7.0");
+    builder.createCell(1, 7, "=(PRODUCT(SUM (SUM A1 A2) A3) A4 A5 A6)");
+    Worksheet model = builder.createWorksheet();
+    model.evaluateAll();
+    assertEquals(new ValueDouble(735.0), model.getOneCellResult(1, 7));
+  }
+
+  @Test
+  public void testWithSimpleMockFile() {
+    StringReader read = new StringReader(
+            "A1 3\n" +
+                    "B1 5\n" +
+                    "C1 6\n" +
+                    "D1 11\n" +
+                    "A2 =(PRODUCT (SUM C1 A1) (SUM C1 A1))\n" +
+                    "B2 =(PRODUCT (SUM D1 B1) (SUM D1 B1))\n" +
+                    "A3 =(SUM (SUM A2:B2))\n" +
+                    "B3 =(< 11 A3)\n" +
+                    "\n" +
+                    "A4 =(SUM (PRODUCT (SUM C1 A1) (SUM C1 A1)) " +
+                    "(PRODUCT (SUM D1 B1) (SUM D1 B1)))\n");
+    WorksheetReader.WorksheetBuilder<Worksheet> builder = new BasicWorkSheetBuilder();
+    Worksheet model = WorksheetReader.read(builder, read);
+    model.evaluateAll();
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 1));
+    assertEquals(new ValueDouble(5.0), model.getOneCellResult(2, 1));
+    assertEquals(new ValueDouble(6.0), model.getOneCellResult(3, 1));
+    assertEquals(new ValueDouble(11.0), model.getOneCellResult(4, 1));
+    assertEquals(new ValueDouble(81.0), model.getOneCellResult(1, 2));
+    assertEquals(new ValueDouble(256.0), model.getOneCellResult(2, 2));
+    assertEquals(new ValueDouble(337.0), model.getOneCellResult(1, 3));
+    assertEquals(new ValueBoolean(true), model.getOneCellResult(2, 3));
+    assertEquals(new ValueDouble(337.0), model.getOneCellResult(1, 4));
+  }
+
+  @Test
+  public void testBigModelWithManyCell() {
+    StringReader read = new StringReader(
+            "A1 3\n" +
+                    "A2 true\n" +
+                    "A3 lalalalal\n" +
+                    "A4 =5\n" +
+                    "A5 =false\n" +
+                    "A6 =\"something\"\n" +
+                    "A7 =\"Else\"\n" +
+                    "A8 =A1\n" +
+                    "A9 =(SUM A1 A2 A6)\n" +
+                    "A10 =(SUM A1:A2)\n" +
+                    "A11 =(SUM A2:A3)\n" +
+                    "A12 =(SUM A1)\n" +
+                    "A13 =(PRODUCT A1 A2 A6)\n" +
+                    "A14 =(PRODUCT A1:A2)\n" +
+                    "A15 =(PRODUCT A2:A3)\n" +
+                    "A16 =(PRODUCT A1)\n" +
+                    "A17 =(< A4 A1)\n" +
+                    "A18 =(SAPPEND A2 A3 A6:A7)\n" +
+                    "A19 =(SUM 1 7)\n" +
+                    "A20 =(PRODUCT 3 0)\n" +
+                    "A21 =(< 2 1)\n" +
+                    "A22 =(SAPPEND \"skT\" \"skwT\")\n" +
+                    "\n");
+    WorksheetReader.WorksheetBuilder<Worksheet> builder = new BasicWorkSheetBuilder();
+    Worksheet model = WorksheetReader.read(builder, read);
+    model.evaluateAll();
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 1));
+    assertEquals(new ValueBoolean(true), model.getOneCellResult(1, 2));
+    assertEquals(new ValueString("lalalalal"), model.getOneCellResult(1, 3));
+    assertEquals(new ValueDouble(5.0), model.getOneCellResult(1, 4));
+    assertEquals(new ValueBoolean(false), model.getOneCellResult(1, 5));
+    assertEquals(new ValueString("something"), model.getOneCellResult(1, 6));
+    assertEquals(new ValueString("Else"), model.getOneCellResult(1, 7));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 8));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 9));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 10));
+    assertEquals(new ValueDouble(0.0), model.getOneCellResult(1, 11));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 12));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 13));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 14));
+    assertEquals(new ValueDouble(0.0), model.getOneCellResult(1, 15));
+    assertEquals(new ValueDouble(3.0), model.getOneCellResult(1, 16));
+    assertEquals(new ValueBoolean(false), model.getOneCellResult(1, 17));
+    assertEquals(new ValueString("truelalalalalsomethingElse"),
+            model.getOneCellResult(1, 18));
+    assertEquals(new ValueDouble(8.0), model.getOneCellResult(1, 19));
+    assertEquals(new ValueDouble(0.0), model.getOneCellResult(1, 20));
+    assertEquals(new ValueBoolean(false), model.getOneCellResult(1, 21));
+    assertEquals(new ValueString("skTskwT"), model.getOneCellResult(1, 22));
+
   }
 
 }
