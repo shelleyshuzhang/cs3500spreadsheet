@@ -110,7 +110,7 @@ public class BasicController implements Features {
   }
 
   @Override
-  public void go() {
+  public void makeVisible() {
     this.view.render();
   }
 
@@ -142,7 +142,7 @@ public class BasicController implements Features {
         openedModel.evaluateAll();
         IView newView = new EditableView("evaluated and editable", openedModel);
         Features c = new BasicController(openedModel, newView);
-        c.go();
+        c.makeVisible();
       } catch (IOException e) {
         System.out.println("The given file can not be opened. Please try another file");
         e.printStackTrace();

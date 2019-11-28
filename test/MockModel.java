@@ -35,8 +35,8 @@ public class MockModel implements Worksheet {
 
   @Override
   public List<Coord> editCellContent(int col, int row, Contents contents) {
-    log.append("model being called to edit a cell at col: " + col + ", " + "row: " + row + " with " +
-            "content: " + contents.toString() + "\n");
+    log.append("model being called to edit a cell at col: " + col + ", " + "row: " + row + " with "
+            + "content: " + contents.toString() + "\n");
     return new ArrayList<>();
   }
 

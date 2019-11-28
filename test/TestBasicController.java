@@ -255,7 +255,7 @@ public class TestBasicController {
     Worksheet model = new MockModel(log);
     IView view = new MockView(log);
     Features c = new BasicController(model, view);
-    c.go();
+    c.makeVisible();
     assertEquals("view has been called to add a features object:\n" +
             "Basic Controller with features: saveAndChange, RefuseAndReset, " +
             "getFocusAction, focusAndShow, showContentAbove, deleteAll\n" +
