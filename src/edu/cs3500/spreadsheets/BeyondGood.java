@@ -29,7 +29,9 @@ import edu.cs3500.spreadsheets.view.VisualView;
 public class BeyondGood {
   /**
    * The main entry point. Support four kinds of command line: "-in some-filename -eval some-cell",
-   * "-in some-filename -save some-new-filename", "-in some-filename -gui", "-gui".
+   * "-in some-filename -save some-new-filename", "-in some-filename -gui", "-gui", "-edit", and
+   * "-in some-filename -edit". User will be able to save and load file in the editable version
+   * in the user interface.
    *
    * @param args any command-line arguments
    */
@@ -47,7 +49,7 @@ public class BeyondGood {
           Value v = model.getOneCellResult(coord[0], coord[1]);
           System.out.print(v.print());
         } else if (args.length == 4 && args[2].equals("-save")) {
-          File nFile = new File(args[3]);//file will be rewrite if the file already exists
+          File nFile = new File(args[3]); //file will be rewrite if the file already exists
           FileWriter writer = new FileWriter(nFile);
           view = new TextualView(model, writer);
           view.render();
