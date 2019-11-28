@@ -37,29 +37,6 @@ public class FormulaReference extends Formula {
     }
   }
 
-  private FormulaReference(List<CellGeneral> loc) {
-    this.loc = loc;
-  }
-
-  private static boolean valid(List<CellGeneral> loc, Coord coord) {
-    boolean isValid = true;
-    List<CellGeneral> hasVisited = new ArrayList<CellGeneral>();
-    for (CellGeneral cg : loc) {
-      if (cg.getCoordinate().equals(coord)) {
-        return false;
-      } else if (!hasVisited.contains(cg) && cg.containsReference()) {
-        FormulaReference reference = (FormulaReference) cg.getContents();
-        List<CellGeneral> insideLoc = reference.getLoc();
-        isValid = valid(insideLoc, coord);
-        if (!isValid) {
-          return false;
-        }
-        hasVisited.add(cg);
-      }
-    }
-    return isValid;
-  }
-
   @Override
   public Value evaluate(HashMap<Formula, Value> formulaValueMap) {
     if (loc.size() == 1) {
@@ -92,6 +69,11 @@ public class FormulaReference extends Formula {
     return false;
   }
 
+  /**
+   * get the list of coordinates from the formula references.
+   *
+   * @return the list of coordinates contained in the formula reference
+   */
   public List<CellGeneral> getLoc() {
     return this.loc;
   }
@@ -126,6 +108,29 @@ public class FormulaReference extends Formula {
       s.append(loc.get(len - 1).getCoordinate().toString());
     }
     return s.toString();
+  }
+
+  private FormulaReference(List<CellGeneral> loc) {
+    this.loc = loc;
+  }
+
+  private static boolean valid(List<CellGeneral> loc, Coord coord) {
+    boolean isValid = true;
+    List<CellGeneral> hasVisited = new ArrayList<CellGeneral>();
+    for (CellGeneral cg : loc) {
+      if (cg.getCoordinate().equals(coord)) {
+        return false;
+      } else if (!hasVisited.contains(cg) && cg.containsReference()) {
+        FormulaReference reference = (FormulaReference) cg.getContents();
+        List<CellGeneral> insideLoc = reference.getLoc();
+        isValid = valid(insideLoc, coord);
+        if (!isValid) {
+          return false;
+        }
+        hasVisited.add(cg);
+      }
+    }
+    return isValid;
   }
 
 }

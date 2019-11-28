@@ -13,10 +13,9 @@ import javax.swing.JTable;
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 
-
 /**
- * A visual view class for worksheet which can produce an empty worksheet, the blank worksheet can
- * scrolling. It extends JFrame class in java swing library and implements IVew interface (interface
+ * A visual view class for worksheet which can produce an non editable worksheet, the worksheet can
+ * scroll. It extends JFrame class in java swing library and implements IVew interface (interface
  * for all views for worksheet).
  */
 public class VisualView extends JFrame implements IView {
@@ -29,9 +28,10 @@ public class VisualView extends JFrame implements IView {
   private static int DEFAULT_COL = 1000;
 
   /**
-   * A constructor for VisualViewBlank, construct a blank visual worksheet with desired size.
+   * A constructor for VisualView, construct a non editable visual worksheet with desired size.
    *
    * @param caption the given title for JFrame
+   * @param worksheetReadOnly a readonly worksheet for the information of the cells to be shown
    */
   public VisualView(String caption, WorksheetReadOnly worksheetReadOnly) {
     super(caption);

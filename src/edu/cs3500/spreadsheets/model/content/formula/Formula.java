@@ -1,7 +1,7 @@
 package edu.cs3500.spreadsheets.model.content.formula;
 
-//Why I choose this representation:
-//A formula can has different sub kind, so we use abstract formula to represents it.
+// Why I choose this representation:
+// A formula can has different sub kind, so we use abstract formula to represents it.
 
 import edu.cs3500.spreadsheets.model.content.Contents;
 
@@ -10,6 +10,11 @@ import edu.cs3500.spreadsheets.model.content.Contents;
  */
 public abstract class Formula implements Contents {
 
+  /**
+   * determine if this is a formula or not.
+   *
+   * @return true since this is a formula class
+   */
   public boolean isFormula() {
     return true;
   }

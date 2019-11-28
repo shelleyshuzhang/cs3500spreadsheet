@@ -51,24 +51,33 @@ public abstract class FormulaFunction extends Formula {
     return Objects.hash(arguments);
   }
 
-  String toStringHelper(String funcName) {
+  /**
+   * get a list of formula from this formula function object.
+   *
+   * @return the list of formula that is inside this function
+   */
+  public List<Formula> getArguments() {
+    return this.arguments;
+  }
+
+  /**
+   * determine if this is a formula function or not.
+   *
+   * @return true since this is a formula function
+   */
+  public boolean isFormulaFunction() {
+    return true;
+  }
+
+  protected String toStringHelper(String funcName) {
     StringBuilder s = new StringBuilder();
     s.append(funcName);
-    int len = this.arguments.size();
     for (Formula argument : this.arguments) {
       s.append(" ");
       s.append(argument.toString());
     }
     s.append(")");
     return s.toString();
-  }
-
-  public List<Formula> getArguments() {
-    return this.arguments;
-  }
-
-  public boolean isFormulaFunction() {
-    return true;
   }
 
 }

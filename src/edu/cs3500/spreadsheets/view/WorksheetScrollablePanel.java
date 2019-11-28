@@ -81,30 +81,66 @@ public class WorksheetScrollablePanel extends JScrollPane {
     worksheet.setValueAt(value, row - 1, col - 1);
   }
 
+  /**
+   * get the row of the cell that is selected.
+   *
+   * @return the row of the cell being selected
+   */
   public int getSelectedCellRow() {
     return worksheet.getSelectedRow();
   }
 
+  /**
+   * get the column of the cell that is selected.
+   *
+   * @return the column of the cell being selected
+   */
   public int getSelectedCellColumn() {
     return worksheet.getSelectedColumn();
   }
 
+  /**
+   * get the list of columns that are selected.
+   *
+   * @return the array of the index of the columns that are selected
+   */
   public int[] getSelectedColumns() {
     return worksheet.getSelectedColumns();
   }
 
+  /**
+   * get the list of rows that are selected.
+   *
+   * @return the array of the index of the rows that are selected
+   */
   public int[] getSelectedRows() {
     return worksheet.getSelectedRows();
   }
 
+  /**
+   * add the mouse event listener to the panel.
+   *
+   * @param m the mouse event listener
+   */
   public void addMouseEventListener(MouseListener m) {
     this.worksheet.addMouseListener(m);
   }
 
+  /**
+   * add the keyboard event listener to the panel.
+   *
+   * @param k the keyboard event listener
+   */
   public void addKeyboardEventListener(KeyListener k) {
     this.worksheet.addKeyListener(k);
   }
 
+  /**
+   * set the selection of cell to the given row index and column index.
+   *
+   * @param col the column of the cell to be selected
+   * @param row the row of the cell to be selected
+   */
   public void setSelectedCell(int col, int row) {
     this.worksheet.setColumnSelectionInterval(col, col);
     this.worksheet.setRowSelectionInterval(row, row);

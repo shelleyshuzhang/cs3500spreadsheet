@@ -36,7 +36,17 @@ public interface Contents {
    */
   boolean isFormulaReference();
 
+  /**
+   * determines if this content is a formula or not.
+   *
+   * @return a boolean indicating if this content is a formula or not
+   */
   boolean isFormula();
 
+  /**
+   * determines if this content is a formula function or not.
+   *
+   * @return a boolean indicating if this content is a formula function or not
+   */
   boolean isFormulaFunction();
 }

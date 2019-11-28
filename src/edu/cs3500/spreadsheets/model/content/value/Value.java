@@ -42,12 +42,27 @@ public abstract class Value implements Contents {
    */
   public abstract String print();
 
+  /**
+   * determines if this is a formula or not.
+   *
+   * @return false since the value class is not a formula
+   */
   public boolean isFormula() {
     return false;
   }
 
+  /**
+   * determines if this is a string value.
+   *
+   * @return if this class is a string value
+   */
   public abstract boolean isStringValue();
 
+  /**
+   * determines if this is a formula function class.
+   *
+   * @return false since the value class is not a function
+   */
   public boolean isFormulaFunction() {
     return false;
   }

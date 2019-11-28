@@ -8,9 +8,9 @@ import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.model.content.formula.Formula;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 
-//Why I choose this representation:
-//A WorkSheet are formed by cells, so we need to have a representation for cell,
-//It better to be an interface because Encapsulation.
+// Why I choose this representation:
+// A WorkSheet are formed by cells, so we need to have a representation for cell,
+// It better to be an interface because Encapsulation.
 
 /**
  * Represents a general cell type.
