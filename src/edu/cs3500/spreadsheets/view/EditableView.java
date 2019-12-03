@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 
 import edu.cs3500.spreadsheets.controller.Features;
+import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
 import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
@@ -253,7 +256,7 @@ public class EditableView extends JFrame implements IView {
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
     for (String s : coords) {
-      int[] coord = SexpVisitorFormula.getSingleRefer(s);
+      int[] coord = getSingleRefer(s);
       int col = coord[0];
       int row = coord[1];
       if (col >= 1000 || row >= 1000) {
@@ -273,6 +276,26 @@ public class EditableView extends JFrame implements IView {
         value = e.getMessage();
       }
       view.editCell(col, row, value);
+    }
+  }
+
+  /**
+   * A static method to get a int array represents a positions.
+   *
+   * @param single given String that may be transfer into a position representations.
+   * @return the position representation.
+   * @throws IllegalArgumentException if the given String cannot been transfer to a position
+   */
+  public static int[] getSingleRefer(String single) {
+    final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
+    Matcher m = cellRef.matcher(single);
+    if (m.matches()) {
+      int col = Coord.colNameToIndex(m.group(1));
+      int row = Integer.parseInt(m.group(2));
+      int[] a = new int[]{col, row};
+      return a;
+    } else {
+      throw new IllegalArgumentException("Expected cell ref");
     }
   }
 

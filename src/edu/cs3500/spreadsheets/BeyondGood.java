@@ -17,7 +17,6 @@ import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.worksheet.BasicWorkSheet;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
-import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
 import edu.cs3500.spreadsheets.view.EditableView;
@@ -45,7 +44,7 @@ public class BeyondGood {
         Worksheet model = WorksheetReader.read(builder, read);
         if (args.length == 4 && args[2].equals("-eval")) {
           model.evaluateAll();
-          int[] coord = SexpVisitorFormula.getSingleRefer(args[3]);
+          int[] coord = EditableView.getSingleRefer(args[3]);
           Value v = model.getOneCellResult(coord[0], coord[1]);
           System.out.print(v.print());
         } else if (args.length == 4 && args[2].equals("-save")) {

@@ -23,6 +23,7 @@ import edu.cs3500.spreadsheets.model.content.formula.FunctionSum;
 import edu.cs3500.spreadsheets.model.content.value.ValueBoolean;
 import edu.cs3500.spreadsheets.model.content.value.ValueDouble;
 import edu.cs3500.spreadsheets.model.content.value.ValueString;
+import edu.cs3500.spreadsheets.view.EditableView;
 
 import static edu.cs3500.spreadsheets.model.BasicSupportFunctions.getAvailableFunctions;
 
@@ -121,12 +122,12 @@ public class SexpVisitorFormula implements SexpVisitor<Formula> {
 
   private List<Coord> getCoords(String reference) {
     if (!reference.contains(":")) {
-      int[] coords = getSingleRefer(reference);
+      int[] coords = EditableView.getSingleRefer(reference);
       return this.createCoords(coords[0], coords[1], coords[0], coords[1]);
     } else {
       String[] los = reference.split(":");
-      int[] coordStart = getSingleRefer(los[0]);
-      int[] coordEnd = getSingleRefer(los[1]);
+      int[] coordStart = EditableView.getSingleRefer(los[0]);
+      int[] coordEnd = EditableView.getSingleRefer(los[1]);
       return this.createCoords(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
     }
   }
@@ -142,25 +143,6 @@ public class SexpVisitorFormula implements SexpVisitor<Formula> {
         }
       }
       return locd;
-    }
-  }
-
-  /**
-   * A static method to get a int array represents a positions.
-   * @param single given String that may be transfer into a position representations.
-   * @return the position representation.
-   * @throws IllegalArgumentException if the given String cannot been transfer to a position
-   */
-  public static int[] getSingleRefer(String single) {
-    final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
-    Matcher m = cellRef.matcher(single);
-    if (m.matches()) {
-      int col = Coord.colNameToIndex(m.group(1));
-      int row = Integer.parseInt(m.group(2));
-      int[] a = new int[]{col, row};
-      return a;
-    } else {
-      throw new IllegalArgumentException("Expected cell ref");
     }
   }
 
