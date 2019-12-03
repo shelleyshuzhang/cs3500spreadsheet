@@ -33,7 +33,11 @@ public class SpreadsheetAdaptor implements IModelSpreadsheet {
     try {
       value = spreadsheet.getOneCellResult(col, row).print();
     } catch (IllegalArgumentException e) {
-      value = e.getMessage();
+      if (e.getMessage().equals("cannot find the cell you want")) {
+        value = "";
+      } else {
+        value = e.getMessage();
+      }
     }
     return value;
   }

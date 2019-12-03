@@ -74,12 +74,9 @@ public class BeyondGood {
           IModelSpreadsheet providerModel = new SpreadsheetAdaptor(model);
           BasicVisualView providerViewVisual = new BasicVisualView(providerModel);
           ISpreadsheetView providerViewEditable = new EditableVisualView(providerViewVisual);
-          try {
-            providerViewEditable.render();
-          } catch (IOException e) {
-            System.out.println("The view can not be shown");
-            e.printStackTrace();
-          }
+          ProviderViewAdapter providerViewAdapter = new ProviderViewAdapter(providerViewEditable);
+          Features c = new BasicController(model, providerViewAdapter);
+          c.makeVisible();
         } else {
           System.out.print("Illegal command line");
         }
@@ -117,12 +114,6 @@ public class BeyondGood {
       IView afterAdapt = new ProviderViewAdapter(providerViewEditable);
       Features controller = new BasicController(model, afterAdapt);
       controller.makeVisible();
-      try {
-        providerViewEditable.render();
-      } catch (IOException e) {
-        System.out.println("The view can not be shown");
-        e.printStackTrace();
-      }
     } else {
       System.out.print("Illegal command line");
     }

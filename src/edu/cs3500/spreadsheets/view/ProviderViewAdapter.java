@@ -22,7 +22,8 @@ public class ProviderViewAdapter implements IView {
     try {
       view.render();
     } catch (IOException e) {
-      throw new IllegalStateException("unexpected io exception");
+      System.out.println(e.getMessage());
+      e.printStackTrace();
     }
   }
 
