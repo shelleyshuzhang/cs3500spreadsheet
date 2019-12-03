@@ -42,13 +42,7 @@ public class BasicController implements Features {
     String contentS = view.getTextFieldInput();
     int col = view.getSelectedCellCol() + 1;
     int row = view.getSelectedCellRow() + 1;
-    Contents contentsC;
-    if (contentS.isEmpty()) {
-      contentsC = new Blank();
-    } else {
-      contentsC = BasicWorkSheetBuilder.createContent(
-              col, row, contentS, model.getAllRawCell());
-    }
+    Contents contentsC = stringToContent(contentS, col, row, model);
     try {
       List<Coord> lo = model.editCellContent(col, row, contentsC);
       this.editWorksheetCells(lo);
@@ -57,6 +51,26 @@ public class BasicController implements Features {
     }
     view.removeFocus();
     view.storeTextFieldInput();
+  }
+
+  /**
+   * Convert a string to a Contents, if the string is empty, then the content is blank.
+   *
+   * @param s         the string to be converted
+   * @param col       the col of the cell that the content should fit in
+   * @param row       the row of the cell that the content should fit in
+   * @param worksheet the worksheet, which is the model
+   * @return the contents that the string converts to
+   */
+  public static Contents stringToContent(String s, int col, int row, Worksheet worksheet) {
+    Contents contentsC;
+    if (s.isEmpty()) {
+      contentsC = new Blank();
+    } else {
+      contentsC = BasicWorkSheetBuilder.createContent(
+              col, row, s, worksheet.getAllRawCell());
+    }
+    return contentsC;
   }
 
   @Override

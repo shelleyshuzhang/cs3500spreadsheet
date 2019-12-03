@@ -15,8 +15,13 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.cell.CellGeneral;
 import edu.cs3500.spreadsheets.model.content.value.Value;
 import edu.cs3500.spreadsheets.model.worksheet.BasicWorkSheet;
+import edu.cs3500.spreadsheets.model.worksheet.SpreadsheetAdaptor;
 import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
+import edu.cs3500.spreadsheets.provider.model.IModelSpreadsheet;
+import edu.cs3500.spreadsheets.provider.view.BasicVisualView;
+import edu.cs3500.spreadsheets.provider.view.EditableVisualView;
+import edu.cs3500.spreadsheets.provider.view.ISpreadsheetView;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
 import edu.cs3500.spreadsheets.view.EditableView;
@@ -62,6 +67,18 @@ public class BeyondGood {
           view = new EditableView("evaluated and editable", model);
           Features c = new BasicController(model, view);
           c.makeVisible();
+        } else if (args.length == 3 && args[2].equals("-provider")) {
+          // haven't add controller !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          model.evaluateAll();
+          IModelSpreadsheet providerModel = new SpreadsheetAdaptor(model);
+          BasicVisualView providerViewVisual = new BasicVisualView(providerModel);
+          ISpreadsheetView providerViewEditable = new EditableVisualView(providerViewVisual);
+          try {
+            providerViewEditable.render();
+          } catch (IOException e) {
+            System.out.println("The view can not be shown");
+            e.printStackTrace();
+          }
         } else {
           System.out.print("Illegal command line");
         }
@@ -88,6 +105,19 @@ public class BeyondGood {
       view = new EditableView("blank and editable", model);
       Features c = new BasicController(model, view);
       c.makeVisible();
+    } else if (args.length == 1 && args[0].equals("-provider")) {
+      // haven't add controller !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      Worksheet model = new BasicWorkSheet(new HashMap<Coord, CellGeneral>());
+      IModelSpreadsheet providerModel = new SpreadsheetAdaptor(model);
+      model.evaluateAll();
+      BasicVisualView providerViewVisual = new BasicVisualView(providerModel);
+      ISpreadsheetView providerViewEditable = new EditableVisualView(providerViewVisual);
+      try {
+        providerViewEditable.render();
+      } catch (IOException e) {
+        System.out.println("The view can not be shown");
+        e.printStackTrace();
+      }
     } else {
       System.out.print("Illegal command line");
     }

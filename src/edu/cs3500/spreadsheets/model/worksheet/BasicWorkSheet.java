@@ -18,7 +18,7 @@ import edu.cs3500.spreadsheets.model.content.value.ValueString;
 
 /**
  * Represents a basic worksheet which now support three kinds of value: boolean, string, double.
- * Four Functions are available now: SUM, PRODUCT, SAPPEND, AND <.
+ * Four Functions are available now: SUM, PRODUCT, SAPPEND, and <.
  */
 // class invariant: if evaluated field is false, allEvaCell should be empty.
 public class BasicWorkSheet implements Worksheet {

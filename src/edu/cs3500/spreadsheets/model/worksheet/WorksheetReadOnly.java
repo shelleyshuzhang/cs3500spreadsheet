@@ -49,5 +49,10 @@ public interface WorksheetReadOnly {
    */
   Set<String> getAllCellCoordinates();
 
+  /**
+   * Get the worksheet that contains all the coordinates and cells
+   *
+   * @return the HashMap that represents the worksheet
+   */
   HashMap<Coord, CellGeneral> getAllRawCell();
 }
