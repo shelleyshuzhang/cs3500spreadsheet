@@ -27,7 +27,6 @@ import javax.swing.JToolBar;
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.worksheet.WorksheetReadOnly;
-import edu.cs3500.spreadsheets.sexp.SexpVisitorFormula;
 
 /**
  * An editable view extends JFrame implements IView. It's a editable version of visual view, take

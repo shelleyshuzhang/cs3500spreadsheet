@@ -23,6 +23,7 @@ import edu.cs3500.spreadsheets.provider.view.BasicVisualView;
 import edu.cs3500.spreadsheets.provider.view.EditableVisualView;
 import edu.cs3500.spreadsheets.provider.view.ISpreadsheetView;
 import edu.cs3500.spreadsheets.view.IView;
+import edu.cs3500.spreadsheets.view.ProviderViewAdapter;
 import edu.cs3500.spreadsheets.view.TextualView;
 import edu.cs3500.spreadsheets.view.EditableView;
 import edu.cs3500.spreadsheets.view.VisualView;
@@ -107,11 +108,15 @@ public class BeyondGood {
       c.makeVisible();
     } else if (args.length == 1 && args[0].equals("-provider")) {
       // haven't add controller !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // they don't need controller...
       Worksheet model = new BasicWorkSheet(new HashMap<Coord, CellGeneral>());
       IModelSpreadsheet providerModel = new SpreadsheetAdaptor(model);
       model.evaluateAll();
       BasicVisualView providerViewVisual = new BasicVisualView(providerModel);
       ISpreadsheetView providerViewEditable = new EditableVisualView(providerViewVisual);
+      IView afterAdapt = new ProviderViewAdapter(providerViewEditable);
+      Features controller = new BasicController(model, afterAdapt);
+      controller.makeVisible();
       try {
         providerViewEditable.render();
       } catch (IOException e) {
