@@ -70,7 +70,7 @@ public interface CellGeneral {
    * Add an given observer with the target cell.
    * @param o the given observer
    */
-  void addObserver(CellObserver o);
+  void addObserver(ICellObserver o);
 
   /**
    * determine if the target cell already contain the given observer.
@@ -78,7 +78,7 @@ public interface CellGeneral {
    * @param o the given observer
    * @return true if it contains this observer, false if it not
    */
-  boolean containObserver(CellObserver o);
+  boolean containObserver(ICellObserver o);
 
   /**
    * clear all the observers in the target cell.
@@ -91,7 +91,7 @@ public interface CellGeneral {
    * @param observer the given observer to be deleted
    * @throws IllegalArgumentException if the observer do not exist before delete
    */
-  void deleteObserver(CellObserver observer);
+  void deleteObserver(ICellObserver observer);
 
   /**
    * Execute updates for all the observers in the cell. Make sure that all the observer cells and

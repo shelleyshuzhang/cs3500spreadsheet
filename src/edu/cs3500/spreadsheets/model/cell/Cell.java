@@ -24,7 +24,7 @@ public class Cell implements CellGeneral {
   private final Coord coordinate;
   private Contents contents;
   private Value evaluatedValue = null;
-  private List<CellObserver> observers = new ArrayList<>();
+  private List<ICellObserver> observers = new ArrayList<>();
 
   /**
    * Construct a Cell with given coordinate and contents.
@@ -87,12 +87,12 @@ public class Cell implements CellGeneral {
   }
 
   @Override
-  public void addObserver(CellObserver o) {
+  public void addObserver(ICellObserver o) {
     this.observers.add(o);
   }
 
   @Override
-  public boolean containObserver(CellObserver o) {
+  public boolean containObserver(ICellObserver o) {
     return this.observers.contains(o);
   }
 
@@ -102,7 +102,7 @@ public class Cell implements CellGeneral {
   }
 
   @Override
-  public void deleteObserver(CellObserver observer) {
+  public void deleteObserver(ICellObserver observer) {
     if (observers.contains(observer)) {
       observers.remove(observer);
     } else {
@@ -130,7 +130,7 @@ public class Cell implements CellGeneral {
         allEvaCell.put(this.coordinate, new ValueString(e.getMessage()));
       }
     }
-    for (CellObserver o : this.observers) {
+    for (ICellObserver o : this.observers) {
       if (!acc.contains(o.getCoordinate())) {
         acc.addAll(o.update(allEvaCell, formulaValueHashMap));
       }
@@ -200,7 +200,7 @@ public class Cell implements CellGeneral {
 
   private static void deleteObserverReference(FormulaReference reference, CellGeneral cell) {
     List<CellGeneral> references = reference.getLoc();
-    CellObserver toChangeObserver = new CellObserver(cell);
+    ICellObserver toChangeObserver = new CellObserver(cell);
     for (CellGeneral cg : references) {
       cg.deleteObserver(toChangeObserver);
     }
@@ -235,7 +235,7 @@ public class Cell implements CellGeneral {
 
   private static void registerObserverReference(FormulaReference reference, CellGeneral cell) {
     List<CellGeneral> references = reference.getLoc();
-    CellObserver toChangeObserver = new CellObserver(cell);
+    ICellObserver toChangeObserver = new CellObserver(cell);
     for (CellGeneral cg : references) {
       cg.addObserver(toChangeObserver);
     }
