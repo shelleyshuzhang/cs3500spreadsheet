@@ -107,7 +107,7 @@ public class GridPanel extends javax.swing.JPanel {
             g2.setPaint(Color.black);
             Coord cur = new Coord(j + firstCols, i + firstRows);
             if (model != null && model.getWorksheet().containsKey(cur)) {
-              String info = model.getContent(j + firstCols, i + firstRows);
+              String info = model.getContent(j + firstCols, i + firstRows, false);
               g2.drawString(info, (j + firstCols) * width + 5,
                       (i + firstRows) * height + height * 2 / 3);
             }
@@ -116,7 +116,7 @@ public class GridPanel extends javax.swing.JPanel {
             g2.drawRect((j + firstCols) * width, (i + firstRows) * height, width, height);
             Coord cur = new Coord(j + firstCols, i + firstRows);
             if (model != null && model.getWorksheet().containsKey(cur)) {
-              String info = model.getContent(j + firstCols, i + firstRows);
+              String info = model.getContent(j + firstCols, i + firstRows, false);
               g2.drawString(info, (j + firstCols) * width + 5,
                       (i + firstRows) * height + height * 2 / 3);
             }

@@ -112,21 +112,7 @@ public class EditableVisualView extends JFrame implements ISpreadsheetView {
 
   @Override
   public void updateTextField(Coord c) {
-    if (bvv.model.getWorksheet().get(c) == null) {
-      this.cleanTextString();
-    } else if (bvv.model.getWorksheet().get(c).getRestore() == null) {
-      if (bvv.model.getWorksheet().get(c).isFormula()) {
-        this.textField.setText("=" + bvv.model.getWorksheet().get(c).getContent());
-      } else {
-        this.textField.setText("=" + bvv.model.getWorksheet().get(c).getContent());
-      }
-    } else {
-      if (bvv.model.getWorksheet().get(c).getRestore().isFormula()) {
-        this.textField.setText(bvv.model.getWorksheet().get(c).getRestore().getContent());
-      } else {
-        this.textField.setText(bvv.model.getWorksheet().get(c).getRestore().getContent());
-      }
-    }
+    this.textField.setText(bvv.model.getContent(c.col, c.row, true));
   }
 
   @Override
