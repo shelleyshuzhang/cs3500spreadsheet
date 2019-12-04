@@ -151,4 +151,10 @@ public class ProviderViewAdapter implements IView {
     return null;
     // extra credit, they don't support
   }
+
+  @Override
+  public boolean isTextFieldFocused() {
+    // they do not support this
+    return false;
+  }
 }

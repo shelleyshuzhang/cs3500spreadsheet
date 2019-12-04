@@ -152,4 +152,10 @@ public class MockView implements IView {
     log.append("view has been called to open file");
     return null;
   }
+
+  @Override
+  public boolean isTextFieldFocused() {
+    log.append("view has been called to decide if the text field is being focused");
+    return false;
+  }
 }

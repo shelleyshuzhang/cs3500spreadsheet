@@ -251,6 +251,11 @@ public class EditableView extends JFrame implements IView {
     return f;
   }
 
+  @Override
+  public boolean isTextFieldFocused() {
+    return this.textField.isFocusOwner();
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();

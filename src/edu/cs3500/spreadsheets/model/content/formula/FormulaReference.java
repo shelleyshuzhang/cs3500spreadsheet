@@ -30,7 +30,7 @@ public class FormulaReference extends Formula {
   public FormulaReference(List<CellGeneral> loc, Coord coord) {
     if (loc == null) {
       throw new IllegalArgumentException("The reference cells can't be null");
-    } else if (!valid(loc, coord)) {
+    } else if (!valid(loc, coord, new ArrayList<>())) {
       throw new IllegalArgumentException("The reference points to the given cell itself");
     } else {
       this.loc = loc;
@@ -114,20 +114,60 @@ public class FormulaReference extends Formula {
     this.loc = loc;
   }
 
-  private static boolean valid(List<CellGeneral> loc, Coord coord) {
+  private static boolean valid(List<CellGeneral> loc, Coord coord, List<Coord> hasVisited) {
     boolean isValid = true;
-    List<CellGeneral> hasVisited = new ArrayList<CellGeneral>();
     for (CellGeneral cg : loc) {
-      if (cg.getCoordinate().equals(coord)) {
-        return false;
-      } else if (!hasVisited.contains(cg) && cg.containsReference()) {
-        FormulaReference reference = (FormulaReference) cg.getContents();
-        List<CellGeneral> insideLoc = reference.getLoc();
-        isValid = valid(insideLoc, coord);
+      if (!hasVisited.contains(cg.getCoordinate())) {
+        isValid = validCellHelper(cg, coord, hasVisited);
         if (!isValid) {
           return false;
         }
-        hasVisited.add(cg);
+      }
+    }
+    return isValid;
+  }
+
+  private static boolean validCellHelper(CellGeneral cell, Coord coord, List<Coord> hasVisited) {
+    hasVisited.add(cell.getCoordinate());
+    if (cell.getCoordinate().equals(coord)) {
+      return false;
+    } else {
+      Contents toCheck = cell.getContents();
+      if (toCheck.isFormula()) {
+        Formula f = (Formula) toCheck;
+        return validFormulaHelper(f, coord, hasVisited);
+      } else {
+        return true;
+      }
+    }
+  }
+
+  private static boolean validFormulaHelper(Formula f, Coord coord, List<Coord> hasVisited) {
+    if (f.isFormulaReference()) {
+      FormulaReference reference = (FormulaReference) f;
+      return validReferenceHelper(reference, coord, hasVisited);
+    } else if (f.isFormulaFunction()) {
+      FormulaFunction function = (FormulaFunction) f;
+      return validFunctionHelper(function, coord, hasVisited);
+    } else {
+      return true;
+    }
+  }
+
+  private static boolean validReferenceHelper(FormulaReference reference, Coord coord,
+                                              List<Coord> hasVisited) {
+    List<CellGeneral> insideLoc = reference.getLoc();
+    return valid(insideLoc, coord, hasVisited);
+  }
+
+  private static boolean validFunctionHelper(FormulaFunction function, Coord coord,
+                                             List<Coord> hasVisited) {
+    List<Formula> lof = function.getArguments();
+    boolean isValid = true;
+    for (Formula f : lof) {
+      isValid = validFormulaHelper(f, coord, hasVisited);
+      if (!isValid) {
+        return false;
       }
     }
     return isValid;

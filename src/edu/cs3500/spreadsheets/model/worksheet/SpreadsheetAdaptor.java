@@ -30,13 +30,26 @@ public class SpreadsheetAdaptor implements IModelSpreadsheet {
   @Override
   public String getContent(int col, int row, boolean show) {
     String value;
-    try {
-      value = spreadsheet.getOneCellResult(col, row).print();
-    } catch (IllegalArgumentException e) {
-      if (e.getMessage().equals("cannot find the cell you want")) {
+    if (!show) {
+      try {
+        value = spreadsheet.getOneCellResult(col, row).print();
+      } catch (IllegalArgumentException e) {
+        if (e.getMessage().equals("cannot find the cell you want")) {
+          value = "";
+        } else {
+          value = e.getMessage();
+        }
+      }
+    } else {
+      try {
+        Contents c = spreadsheet.getOneCellRawContents(col, row);
+        if (c.isFormula()) {
+          value = "=" + spreadsheet.getOneCellRawContents(col, row).toString();
+        } else {
+          value = spreadsheet.getOneCellRawContents(col, row).toString();
+        }
+      } catch (IllegalArgumentException e) {
         value = "";
-      } else {
-        value = e.getMessage();
       }
     }
     return value;

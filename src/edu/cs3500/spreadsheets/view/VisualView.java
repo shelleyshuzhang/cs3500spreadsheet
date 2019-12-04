@@ -176,6 +176,12 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
+  public boolean isTextFieldFocused() {
+    // should never be called because there is no text field in the visual view
+    return false;
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }

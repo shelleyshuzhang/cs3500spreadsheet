@@ -72,7 +72,9 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
           // if the cell contains any self-reference, the model will create the cell with an error
           // message indicating that this is not allowed
           if (e.getMessage().equals("The reference points to the given cell itself")) {
-            c = new ValueString("The reference points to the given cell itself");
+            Coord coord = new Coord(col, row);
+            c = new ValueString("The cell content " + contents.substring(1) + " points to this " +
+                    "cell " + coord.toString() + " itself");
           } else {
             throw e;
           }

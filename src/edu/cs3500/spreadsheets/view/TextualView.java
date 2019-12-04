@@ -150,6 +150,12 @@ public class TextualView implements IView {
   }
 
   @Override
+  public boolean isTextFieldFocused() {
+    // should never be called because there is no text field in the text view
+    return false;
+  }
+
+  @Override
   public int getSelectedCellRow() {
     // should never be called because there won't be a selected cell in the text view
     return 0;
