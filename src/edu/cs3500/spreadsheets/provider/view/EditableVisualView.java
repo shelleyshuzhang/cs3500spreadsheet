@@ -79,7 +79,14 @@ public class EditableVisualView extends JFrame implements ISpreadsheetView {
       }
     });
     this.cancel.addActionListener(e2 -> {
-      this.cleanTextString();
+      if (bvv.model.getWorksheet().containsKey(this.getCoord())) {
+        Coord c = this.getCoord();
+        textField.setText(bvv.model.getContent(c.col, c.row, true));
+        this.reDraw();
+        this.resetFocus();
+      } else {
+        this.cleanTextString();
+      }
     });
   }
 

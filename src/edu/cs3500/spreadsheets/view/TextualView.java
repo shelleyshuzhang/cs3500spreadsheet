@@ -150,9 +150,14 @@ public class TextualView implements IView {
   }
 
   @Override
-  public boolean isTextFieldFocused() {
-    // should never be called because there is no text field in the text view
+  public void setEditable(boolean editable) {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public boolean getEditable() {
     return false;
+    // do nothing because this is not the job for a textual view
   }
 
   @Override

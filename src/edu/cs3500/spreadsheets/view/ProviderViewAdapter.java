@@ -153,8 +153,13 @@ public class ProviderViewAdapter implements IView {
   }
 
   @Override
-  public boolean isTextFieldFocused() {
+  public void setEditable(boolean editable) {
     // they do not support this
+  }
+
+  @Override
+  public boolean getEditable() {
     return false;
+    // they do not support this
   }
 }

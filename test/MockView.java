@@ -154,8 +154,13 @@ public class MockView implements IView {
   }
 
   @Override
-  public boolean isTextFieldFocused() {
-    log.append("view has been called to decide if the text field is being focused");
+  public void setEditable(boolean editable) {
+    log.append("view has been called to set editable boolean as" + editable);
+  }
+
+  @Override
+  public boolean getEditable() {
+    log.append("view has been called to get editable boolean");
     return false;
   }
 }

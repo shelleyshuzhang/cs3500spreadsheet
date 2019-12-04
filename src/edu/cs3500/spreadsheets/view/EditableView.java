@@ -47,6 +47,7 @@ public class EditableView extends JFrame implements IView {
   private JButton saveButton;
   private JButton openButton;
   private String store;
+  private boolean editable;
   private List<Features> featuresListener = new ArrayList<>();
   private static Color FRAME_BACKGROUND = new Color(233, 233, 243);
   private static int VIEW_LOCATION_X = 500;
@@ -92,6 +93,7 @@ public class EditableView extends JFrame implements IView {
     this.toolBar.add(this.saveButton);
     this.toolBar.setLayout(new BoxLayout(this.toolBar, BoxLayout.X_AXIS));
     this.store = "";
+    this.editable = false;
     this.add(toolBar, BorderLayout.NORTH);
     this.panel = new WorksheetScrollablePanel(new JTable(DEFAULT_ROW, DEFAULT_COL) {
       private static final long serialVersionUID = 1L;
@@ -252,8 +254,14 @@ public class EditableView extends JFrame implements IView {
   }
 
   @Override
-  public boolean isTextFieldFocused() {
-    return this.textField.isFocusOwner();
+  public void setEditable(boolean editable) {
+    this.editable = editable;
+  }
+
+
+  @Override
+  public boolean getEditable() {
+    return this.editable;
   }
 
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,

@@ -154,6 +154,8 @@ public interface IView {
 
   File setOpenFileChooser();
 
-  boolean isTextFieldFocused();
+  void setEditable(boolean editable);
+
+  boolean getEditable();
 
 }

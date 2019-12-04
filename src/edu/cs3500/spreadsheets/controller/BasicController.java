@@ -39,19 +39,23 @@ public class BasicController implements Features {
 
   @Override
   public void saveAndChange() {
-    String contentS = view.getTextFieldInput();
-    int col = view.getSelectedCellCol() + 1;
-    int row = view.getSelectedCellRow() + 1;
-    Contents contentsC = stringToContent(contentS, col, row, model);
-    try {
-      List<Coord> lo = model.editCellContent(col, row, contentsC);
-      this.editWorksheetCells(lo);
-    } catch (IllegalArgumentException e) {
+    if (view.getEditable()) {
+      String contentS = view.getTextFieldInput();
+      int col = view.getSelectedCellCol() + 1;
+      int row = view.getSelectedCellRow() + 1;
+      Contents contentsC = stringToContent(contentS, col, row, model);
+      try {
+        List<Coord> lo = model.editCellContent(col, row, contentsC);
+        this.editWorksheetCells(lo);
+      } catch (IllegalArgumentException e) {
+        view.removeFocus();
+      }
       view.removeFocus();
+      view.setEditable(false);
+      view.storeTextFieldInput();
     }
-    view.removeFocus();
-    view.storeTextFieldInput();
   }
+
 
   /**
    * Convert a string to a Contents, if the string is empty, then the content is blank.
@@ -75,13 +79,17 @@ public class BasicController implements Features {
 
   @Override
   public void refuseAndReset() {
-    view.resetTextField();
-    view.removeFocus();
+    if (view.getEditable()) {
+      view.resetTextField();
+      view.removeFocus();
+      view.setEditable(false);
+    }
   }
 
   @Override
   public void getFocusAction() {
     view.getFocus();
+    view.setEditable(true);
     view.storeTextFieldInput();
   }
 
@@ -107,6 +115,7 @@ public class BasicController implements Features {
     } catch (IllegalArgumentException e) {
       view.setTextFieldInput("");
     }
+    view.setEditable(false);
   }
 
   @Override
@@ -142,6 +151,7 @@ public class BasicController implements Features {
         e.printStackTrace();
       }
     }
+    view.setEditable(false);
   }
 
   @Override
@@ -162,6 +172,7 @@ public class BasicController implements Features {
         e.printStackTrace();
       }
     }
+    view.setEditable(false);
   }
 
   private void editWorksheetCells(List<Coord> lo) {
