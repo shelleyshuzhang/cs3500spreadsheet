@@ -10,7 +10,16 @@ import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.provider.view.ISpreadsheetView;
 
 /**
- *
+ * A adapter let the provider's view to work as our view. Because the big difference between our
+ * design (their view do everything by itself and talk to the model directly, our view let the
+ * controller to control everything and send command to the model and view), most of methods in our
+ * IView interface are unsupported (because their view do everything so they don't need to support
+ * many functions in the interface which can be called by outside (controller)).
+ * Three are three types: 1. for methods which totally unrelated to their view, throw
+ * UnsupportedOperationException. 2. for methods which they do similar things in their
+ * implementation, but choose not make them as public methods in the interface, we wrote comment
+ * and make it default. 3. for methods which its make sense to transform theirs to ours, we call
+ * appropriate method(s) use delegation.
  */
 // the mean problem is, their view take the role of controller, they even don't need a controller
 public class ProviderViewAdapter implements IView {
@@ -33,22 +42,24 @@ public class ProviderViewAdapter implements IView {
   @Override
   public void addColumn() {
     throw new UnsupportedOperationException("provider's view can not do this");
+    // they won't need to call this
   }
 
   @Override
   public void addRow() {
     throw new UnsupportedOperationException("provider's view can not do this");
+    // they won't need to call this
   }
 
   @Override
   public void increaseRowHeaderWidth() {
     throw new UnsupportedOperationException("provider's view can not do this");
+    // they won't need to call this
   }
 
   @Override
   public void editCell(int col, int row, String value) {
-    // do nothing now, because their view directly redraw
-    // or do: redraw?
+    // do nothing now, because their view directly redraw and do everything inside
   }
 
   @Override
@@ -150,7 +161,7 @@ public class ProviderViewAdapter implements IView {
 
   @Override
   public void setSelectedCell(int col, int row) {
-
+    // they also don't need this...similar function is inside their implementation
   }
 
   @Override
