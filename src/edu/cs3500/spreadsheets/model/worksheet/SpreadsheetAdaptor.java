@@ -9,9 +9,18 @@ import edu.cs3500.spreadsheets.model.content.Blank;
 import edu.cs3500.spreadsheets.model.content.Contents;
 import edu.cs3500.spreadsheets.provider.model.IModelSpreadsheet;
 
+/**
+ * An model adaptor to adapt our model to the provider's model, and implements all their methods.
+ */
 public class SpreadsheetAdaptor implements IModelSpreadsheet {
   private Worksheet spreadsheet;
 
+  /**
+   * the constructor for SpreadsheetAdaptor that takes in a Worksheet, which is our model
+   * interface.
+   *
+   * @param w the worksheet to take in
+   */
   public SpreadsheetAdaptor(Worksheet w) {
     this.spreadsheet = w;
   }
