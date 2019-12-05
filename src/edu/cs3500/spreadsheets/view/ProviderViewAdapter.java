@@ -14,12 +14,11 @@ import edu.cs3500.spreadsheets.provider.view.ISpreadsheetView;
  * design (their view do everything by itself and talk to the model directly, our view let the
  * controller to control everything and send command to the model and view), most of methods in our
  * IView interface are unsupported (because their view do everything so they don't need to support
- * many functions in the interface which can be called by outside (controller)).
- * Three are three types: 1. for methods which totally unrelated to their view, throw
- * UnsupportedOperationException. 2. for methods which they do similar things in their
- * implementation, but choose not make them as public methods in the interface, we wrote comment
- * and make it default. 3. for methods which its make sense to transform theirs to ours, we call
- * appropriate method(s) use delegation.
+ * many functions in the interface which can be called by outside (controller)). Three are three
+ * types: 1. for methods which totally unrelated to their view, throw UnsupportedOperationException.
+ * 2. for methods which they do similar things in their implementation, but choose not make them as
+ * public methods in the interface, we wrote comment and make it default. 3. for methods which its
+ * make sense to transform theirs to ours, we call appropriate method(s) use delegation.
  */
 // the mean problem is, their view take the role of controller, they even don't need a controller
 public class ProviderViewAdapter implements IView {

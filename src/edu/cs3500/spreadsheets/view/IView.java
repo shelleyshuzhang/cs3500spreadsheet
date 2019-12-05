@@ -151,14 +151,14 @@ public interface IView {
   void setSelectedCell(int col, int row);
 
   /**
-   * Set a file chooser for saving the current worksheet to a file
+   * Set a file chooser for saving the current worksheet to a file.
    *
    * @return the file that the worksheet will be saved to
    */
   File setSaveFileChooser();
 
   /**
-   * Set a file chooser for opening a file as a worksheet
+   * Set a file chooser for opening a file as a worksheet.
    *
    * @return the file to open as a worksheet
    */
@@ -166,14 +166,14 @@ public interface IView {
 
   /**
    * set a boolean for indicating if the text filed is selected and a cell is currently being
-   * edited
+   * edited.
    *
    * @param editable a boolean indicating if a cell is being edit currently
    */
   void setEditable(boolean editable);
 
   /**
-   * get the boolean indicating if a cell is currently being edit
+   * get the boolean indicating if a cell is currently being edit.
    *
    * @return if any cell in the worksheet is being edit at this moment
    */

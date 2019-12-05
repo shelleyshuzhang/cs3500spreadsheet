@@ -86,7 +86,8 @@ public class GridPanel extends javax.swing.JPanel {
           String rowName = Integer.toString(i + firstRows);
           g2.setPaint(Color.CYAN);
           g2.drawString(rowName,
-                  (j + firstCols) * width + width / 2, (i + firstRows) * height + height / 2);
+                  (j + firstCols) * width + width / 2, (i + firstRows)
+                          * height + height / 2);
           g2.setPaint(Color.black);
         } else if (i == 0 && j >= 1) {
           g2.setPaint(Color.gray);
@@ -98,7 +99,8 @@ public class GridPanel extends javax.swing.JPanel {
                   (i + firstRows) * height + height / 2);
           g2.setPaint(Color.black);
         } else if (i != 0 && j != 0) {
-          if (coord != null && this.coord.equals(new Coord(j + firstCols, i + firstRows))) {
+          if (coord != null && this.coord.equals(new Coord(j + firstCols,
+                  i + firstRows))) {
             g2.setPaint(Color.RED);
             g2.setStroke(new BasicStroke(6));
             g2.setClip((j + firstCols) * width, (i + firstRows) * height, width, height);
