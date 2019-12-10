@@ -25,6 +25,8 @@ public class Cell implements CellGeneral {
   private Contents contents;
   private Value evaluatedValue = null;
   private List<ICellObserver> observers = new ArrayList<>();
+  private int colWidth = 75;
+  private int rowHeight = 16;
 
   /**
    * Construct a Cell with given coordinate and contents.
@@ -139,6 +141,26 @@ public class Cell implements CellGeneral {
   }
 
   @Override
+  public void setRowHeight(int height) {
+    this.rowHeight = height;
+  }
+
+  @Override
+  public void setColumnWidth(int width) {
+    this.colWidth = width;
+  }
+
+  @Override
+  public int getRowHeight() {
+    return this.rowHeight;
+  }
+
+  @Override
+  public int getColWidth() {
+    return this.colWidth;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -170,6 +192,10 @@ public class Cell implements CellGeneral {
   public String toString() {
     StringBuilder s = new StringBuilder();
     s.append(this.coordinate.toString());
+    s.append(" ");
+    s.append(colWidth);
+    s.append(" ");
+    s.append(rowHeight);
     s.append(" ");
     if (contents.isFormula()) {
       s.append("=");

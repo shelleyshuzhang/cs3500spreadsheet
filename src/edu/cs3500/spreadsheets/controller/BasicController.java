@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 
 import edu.cs3500.spreadsheets.model.BasicWorkSheetBuilder;
@@ -16,6 +17,8 @@ import edu.cs3500.spreadsheets.model.worksheet.Worksheet;
 import edu.cs3500.spreadsheets.view.EditableView;
 import edu.cs3500.spreadsheets.view.IView;
 import edu.cs3500.spreadsheets.view.TextualView;
+
+import static edu.cs3500.spreadsheets.view.EditableView.getSingleRefer;
 
 /**
  * A basic controller for worksheet, implements features interface and has some features which can
@@ -142,6 +145,14 @@ public class BasicController implements Features {
     File f = view.setSaveFileChooser();
     if (f != null) {
       try {
+        Set<String> coords = model.getAllCellCoordinates();
+        for (String s : coords) {
+          int[] coord = getSingleRefer(s);
+          int col = coord[0];
+          int row = coord[1];
+          model.setCellColWidth(col, row, view.getCellWidth(col - 1, row - 1));
+          model.setCellRowHeight(col, row, view.getCellHeight(col - 1, row - 1));
+        }
         FileWriter writer = new FileWriter(f);
         IView viewToWrite = new TextualView(model, writer);
         viewToWrite.render();
@@ -164,6 +175,7 @@ public class BasicController implements Features {
         WorksheetReader.WorksheetBuilder<Worksheet> builder = new BasicWorkSheetBuilder();
         openedModel = WorksheetReader.read(builder, read);
         openedModel.evaluateAll();
+        System.out.println(openedModel);
         IView newView = new EditableView("evaluated and editable", openedModel);
         Features c = new BasicController(openedModel, newView);
         c.makeVisible();

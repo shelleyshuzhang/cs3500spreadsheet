@@ -107,12 +107,52 @@ public class BasicWorkSheet implements Worksheet {
   }
 
   @Override
+  public int getCellRowHeight(int col, int row) {
+    Coord coord = new Coord(col, row);
+    if (allRawCell.containsKey(coord)) {
+      return allRawCell.get(coord).getRowHeight();
+    } else {
+      throw new IllegalArgumentException("There is no cell yet to get this cell height");
+    }
+  }
+
+  @Override
+  public int getCellColWidth(int col, int row) {
+    Coord coord = new Coord(col, row);
+    if (allRawCell.containsKey(coord)) {
+      return allRawCell.get(coord).getColWidth();
+    } else {
+      throw new IllegalArgumentException("There is no cell yet to get this cell width");
+    }
+  }
+
+  @Override
   public List<Coord> editCellContent(int col, int row, Contents contents) {
     Coord c = new Coord(col, row);
     if (allRawCell.get(c) == null) {
       allRawCell.put(c, new Cell(c, new Blank()));
     }
     return allRawCell.get(c).setContents(contents, allEvaCell);
+  }
+
+  @Override
+  public void setCellRowHeight(int col, int row, int height) {
+    Coord coord = new Coord(col, row);
+    if (allRawCell.containsKey(coord)) {
+      allRawCell.get(coord).setRowHeight(height);
+    } else {
+      throw new IllegalArgumentException("There is no cell yet to set this cell height");
+    }
+  }
+
+  @Override
+  public void setCellColWidth(int col, int row, int width) {
+    Coord coord = new Coord(col, row);
+    if (allRawCell.containsKey(coord)) {
+      allRawCell.get(coord).setColumnWidth(width);
+    } else {
+      throw new IllegalArgumentException("There is no cell yet to set this cell height");
+    }
   }
 
   @Override

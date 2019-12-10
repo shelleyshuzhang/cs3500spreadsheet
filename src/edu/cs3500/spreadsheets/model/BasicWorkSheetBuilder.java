@@ -34,13 +34,40 @@ public class BasicWorkSheetBuilder implements WorksheetReader.WorksheetBuilder<W
 
   @Override
   public WorksheetReader.WorksheetBuilder<Worksheet> createCell(int col, int row, String contents) {
-    Contents c = createContent(col, row, contents, this.allRawCell);
+    Contents c;
+    int cellWidth;
+    int cellHeight;
+    if (contents == null) {
+      c = new Blank();
+      cellWidth = -1;
+      cellHeight = -1;
+    } else {
+      try {
+        String[] los = contents.split(" ");
+        cellWidth = Integer.parseInt(los[0]);
+        cellHeight = Integer.parseInt(los[1]);
+        int sizeLength = los[0].length() + 1 + los[1].length() + 1;
+        c = createContent(col, row, contents.substring(sizeLength), this.allRawCell);
+      } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException e) {
+        cellWidth = -1;
+        cellHeight = -1;
+        c = createContent(col, row, contents, this.allRawCell);
+      }
+    }
     Coord coord = new Coord(col, row);
     if (allRawCell.containsKey(coord)) {
       CellGeneral toChange = allRawCell.get(coord);
       toChange.setContents(c, new HashMap<Coord, Value>());
+      if (cellHeight != -1 && cellWidth != -1) {
+        toChange.setColumnWidth(cellWidth);
+        toChange.setRowHeight(cellHeight);
+      }
     } else {
       CellGeneral cell = new Cell(coord, c);
+      if (cellHeight != -1 && cellWidth != -1) {
+        cell.setColumnWidth(cellWidth);
+        cell.setRowHeight(cellHeight);
+      }
       this.allRawCell.put(coord, cell);
     }
     return this;

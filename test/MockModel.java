@@ -41,6 +41,16 @@ public class MockModel implements Worksheet {
   }
 
   @Override
+  public void setCellRowHeight(int col, int row, int height) {
+
+  }
+
+  @Override
+  public void setCellColWidth(int col, int row, int width) {
+
+  }
+
+  @Override
   public Value getOneCellResult(int col, int row) {
     log.append("model being called to get one cell result at col: " + col + ", row: " + row + "\n");
     return new ValueString("");
@@ -68,5 +78,15 @@ public class MockModel implements Worksheet {
   public HashMap<Coord, CellGeneral> getAllRawCell() {
     log.append("model being called to get all cells' raw content\n");
     return new HashMap<>();
+  }
+
+  @Override
+  public int getCellRowHeight(int col, int row) {
+    return 0;
+  }
+
+  @Override
+  public int getCellColWidth(int col, int row) {
+    return 0;
   }
 }

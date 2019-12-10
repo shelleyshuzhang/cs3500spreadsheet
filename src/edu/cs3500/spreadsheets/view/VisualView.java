@@ -188,6 +188,28 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
+  public int getCellWidth(int col, int row) {
+    // should never be called because this is not a job for an non editable view
+    return 0;
+  }
+
+  @Override
+  public int getCellHeight(int col, int row) {
+    // should never be called because this is not a job for an non editable view
+    return 0;
+  }
+
+  @Override
+  public void setCellWidth(int col, int width) {
+    // should never be called because this is not a job for an non editable view
+  }
+
+  @Override
+  public void setCellHeight(int row, int height) {
+    // should never be called because this is not a job for an non editable view
+  }
+
+  @Override
   public void render() {
     setVisible(true);
   }

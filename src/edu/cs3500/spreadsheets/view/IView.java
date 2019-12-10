@@ -179,4 +179,12 @@ public interface IView {
    */
   boolean getEditable();
 
+  int getCellWidth(int col, int row);
+
+  int getCellHeight(int col, int row);
+
+  void setCellWidth(int col, int width);
+
+  void setCellHeight(int row, int height);
+
 }

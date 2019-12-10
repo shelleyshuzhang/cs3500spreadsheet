@@ -43,6 +43,7 @@ public class WorksheetScrollablePanel extends JScrollPane {
     this.setBorder(createEmptyBorder());
     this.setRowHeaderView(headerTable);
     this.setBackground(BACK_GROUND_COLOR);
+    TableRowResizer t = new TableRowResizer(headerTable, worksheet);
   }
 
   /**
@@ -144,6 +145,32 @@ public class WorksheetScrollablePanel extends JScrollPane {
   public void setSelectedCell(int col, int row) {
     this.worksheet.setColumnSelectionInterval(col, col);
     this.worksheet.setRowSelectionInterval(row, row);
+  }
+
+  /**
+   * get the row header of the worksheet.
+   *
+   * @return JTable represents the header of the worksheet
+   */
+  public JTable getRowHeaderTable() {
+    return headerTable;
+  }
+
+  public int getCellWidth(int col) {
+    return worksheet.getTableHeader().getColumnModel().getColumn(col).getWidth();
+  }
+
+  public int getCellHeight(int row) {
+    return worksheet.getRowHeight(row);
+  }
+
+  public void setCellWidth(int col, int width) {
+    worksheet.getTableHeader().getColumnModel().getColumn(col).setPreferredWidth(width);
+  }
+
+  public void setCellHeight(int row, int height) {
+    headerTable.setRowHeight(row, height);
+    worksheet.setRowHeight(row, height);
   }
 
   private void setWorksheet() {

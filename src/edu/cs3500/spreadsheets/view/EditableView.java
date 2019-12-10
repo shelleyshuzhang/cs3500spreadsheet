@@ -264,6 +264,26 @@ public class EditableView extends JFrame implements IView {
     return this.editable;
   }
 
+  @Override
+  public int getCellWidth(int col, int row) {
+    return panel.getCellWidth(col);
+  }
+
+  @Override
+  public int getCellHeight(int col, int row) {
+    return panel.getCellHeight(row);
+  }
+
+  @Override
+  public void setCellWidth(int col, int width) {
+    panel.setCellWidth(col, width);
+  }
+
+  @Override
+  public void setCellHeight(int row, int height) {
+    panel.setCellHeight(row, height);
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
@@ -288,6 +308,8 @@ public class EditableView extends JFrame implements IView {
         value = e.getMessage();
       }
       view.editCell(col, row, value);
+      view.setCellWidth(col - 1, worksheetReadOnly.getCellColWidth(col, row));
+      view.setCellHeight(row - 1, worksheetReadOnly.getCellRowHeight(col, row));
     }
   }
 
@@ -304,8 +326,7 @@ public class EditableView extends JFrame implements IView {
     if (m.matches()) {
       int col = Coord.colNameToIndex(m.group(1));
       int row = Integer.parseInt(m.group(2));
-      int[] a = new int[]{col, row};
-      return a;
+      return new int[]{col, row};
     } else {
       throw new IllegalArgumentException("Expected cell ref");
     }

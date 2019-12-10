@@ -163,4 +163,26 @@ public class MockView implements IView {
     log.append("view has been called to get editable boolean");
     return false;
   }
+
+  @Override
+  public int getCellWidth(int col, int row) {
+    log.append("view has been called to get cell width");
+    return 0;
+  }
+
+  @Override
+  public int getCellHeight(int col, int row) {
+    log.append("view has been called to get cell height");
+    return 0;
+  }
+
+  @Override
+  public void setCellWidth(int col, int width) {
+
+  }
+
+  @Override
+  public void setCellHeight(int row, int height) {
+
+  }
 }

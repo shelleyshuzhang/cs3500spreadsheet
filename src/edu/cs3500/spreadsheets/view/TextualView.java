@@ -161,6 +161,28 @@ public class TextualView implements IView {
   }
 
   @Override
+  public int getCellWidth(int col, int row) {
+    // should never be called because there won't be a cell in the text view
+    return 0;
+  }
+
+  @Override
+  public int getCellHeight(int col, int row) {
+    // should never be called because there won't be a cell in the text view
+    return 0;
+  }
+
+  @Override
+  public void setCellWidth(int col, int width) {
+    // should never be called because there won't be a cell in the text view
+  }
+
+  @Override
+  public void setCellHeight(int row, int height) {
+    // should never be called because there won't be a cell in the text view
+  }
+
+  @Override
   public int getSelectedCellRow() {
     // should never be called because there won't be a selected cell in the text view
     return 0;

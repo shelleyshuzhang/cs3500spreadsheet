@@ -185,4 +185,26 @@ public class ProviderViewAdapter implements IView {
     return false;
     // they do not support this
   }
+
+  @Override
+  public int getCellWidth(int col, int row) {
+    // they do not support this
+    return 0;
+  }
+
+  @Override
+  public int getCellHeight(int col, int row) {
+    // they do not support this
+    return 0;
+  }
+
+  @Override
+  public void setCellWidth(int col, int width) {
+    // they do not support this
+  }
+
+  @Override
+  public void setCellHeight(int row, int height) {
+    // they do not support this
+  }
 }
