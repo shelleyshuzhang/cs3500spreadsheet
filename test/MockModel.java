@@ -60,6 +60,7 @@ public class MockModel implements Worksheet {
 
   @Override
   public int getWorkSheetSize() {
+    log.append("model being called to get worksheet's size");
     return 0;
   }
 
@@ -84,11 +85,13 @@ public class MockModel implements Worksheet {
 
   @Override
   public int getCellRowHeight(int col, int row) {
+    log.append("model being called to get a cell's height at col: " + col + ", row: " + row + "\n");
     return 0;
   }
 
   @Override
   public int getCellColWidth(int col, int row) {
+    log.append("model being called to get a cell's width at col: " + col + ", row: " + row + "\n");
     return 0;
   }
 }

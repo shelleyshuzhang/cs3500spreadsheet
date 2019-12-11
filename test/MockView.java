@@ -190,16 +190,18 @@ public class MockView implements IView {
 
   @Override
   public int getRowToResize(Point p) {
+    log.append("view has been called to get the row to be resize based on Point: " + p + "\n");
     return 0;
   }
 
   @Override
   public void swapRowHeaderCursor() {
-
+    log.append("view has been called to swap row header cursor");
   }
 
   @Override
   public Cursor getRowHeaderCursor() {
+    log.append("view has been called to get row header cursor");
     return null;
   }
 }
