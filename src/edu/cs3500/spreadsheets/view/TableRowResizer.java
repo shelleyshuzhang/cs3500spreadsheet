@@ -1,9 +1,11 @@
 package edu.cs3500.spreadsheets.view;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.event.MouseInputAdapter;
 
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 public class TableRowResizer extends MouseInputAdapter {
