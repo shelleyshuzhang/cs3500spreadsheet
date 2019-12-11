@@ -1,15 +1,18 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.Color;
+import java.awt.*;
+
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import java.awt.Dimension;
+
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
+import static javax.swing.plaf.basic.BasicTableHeaderUI.resizeCursor;
 
 /**
  * A worksheet scroll panel which can make a worksheet scrollable. It extends the JScrollPane in
@@ -22,12 +25,14 @@ public class WorksheetScrollablePanel extends JScrollPane {
    */
   private JTable headerTable;
   private JTable worksheet;
+  private Cursor otherCursor = DEFAULT_RESIZE_CURSOR;
   private Dimension viewportSize = new Dimension(40, 0);
   private static Color BACK_GROUND_COLOR = new Color(250, 250, 250);
   private static Color HEADER_GRID_COLOR = new Color(233, 233, 243);
   private static Color WORKSHEET_GRID_COLOR = Color.GRAY;
   private static Color WORKSHEET_FOREGROUND = Color.BLACK;
   private static Color WORKSHEET_SELECTED_BACKGROUND = new Color(182, 213, 212);
+  private static Cursor DEFAULT_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
 
   /**
    * Construct a WorksheetScrollablePanel with a table in it.
@@ -171,6 +176,39 @@ public class WorksheetScrollablePanel extends JScrollPane {
   public void setCellHeight(int row, int height) {
     headerTable.setRowHeight(row, height);
     worksheet.setRowHeight(row, height);
+  }
+
+  public void addMouseListenerToRowHeader(MouseListener m, MouseMotionListener l) {
+    this.headerTable.addMouseListener(m);
+    this.headerTable.addMouseMotionListener(l);
+  }
+
+  public void swapCursor() {
+    Cursor temporary = headerTable.getCursor();
+    headerTable.setCursor(otherCursor);
+    otherCursor = temporary;
+  }
+
+  public int getRowAtResizePoint(Point p) {
+    return this.getRowAtPointHelper(p, headerTable.rowAtPoint(p));
+  }
+
+  private int getRowAtPointHelper(Point p, int row) {
+    int col = headerTable.columnAtPoint(p);
+    if (row == -1 || col == -1) {
+      return -1;
+    }
+    Rectangle r = headerTable.getCellRect(row, col, true);
+    r.grow(0, -3);
+    if (r.contains(p)) {
+      return -1;
+    }
+    int midPoint = r.y + r.height / 2;
+    if (p.y < midPoint) {
+      return row - 1;
+    } else {
+      return row;
+    }
   }
 
   private void setWorksheet() {

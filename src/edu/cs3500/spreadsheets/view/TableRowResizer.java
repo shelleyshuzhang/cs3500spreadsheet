@@ -22,36 +22,10 @@ public class TableRowResizer extends MouseInputAdapter {
     table1.addMouseMotionListener(this);
   }
 
-  private int getResizingRow(Point p) {
-    return getResizingRow(p, table.rowAtPoint(p));
-  }
-
-  private int getResizingRow(Point p, int row) {
-    if (row == -1) {
-      return -1;
-    }
-    int col = table.columnAtPoint(p);
-    if (col == -1)
-      return -1;
-    Rectangle r = table.getCellRect(row, col, true);
-    r.grow(0, -3);
-    if (r.contains(p)) {
-      return -1;
-    }
-    int midPoint = r.y + r.height / 2;
-    return (p.y < midPoint) ? row - 1 : row;
-  }
-
   public void mousePressed(MouseEvent e) {
     Point p = e.getPoint();
     resizingRow = getResizingRow(p);
     mouseYOffset = p.y - table.getRowHeight(resizingRow);
-  }
-
-  private void swapCursor() {
-    Cursor tmp = table.getCursor();
-    table.setCursor(otherCursor);
-    otherCursor = tmp;
   }
 
   public void mouseMoved(MouseEvent e) {

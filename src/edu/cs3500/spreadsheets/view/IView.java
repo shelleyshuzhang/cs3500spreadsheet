@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -94,10 +95,14 @@ public interface IView {
 
   /**
    * Add a mouse event listener to this view's specific place.
+   *
    * @param textField the given mouse event listener for textField
    * @param cells the given mouse event listener for cells
+   * @param headerRowM the given mouse event listener for rowHeaderTable
+   * @param headerRowL the given mouse lotion event listener for rowHeaderTable
    */
-  void addMouseEventListener(MouseListener textField, MouseListener cells);
+  void addMouseEventListener(MouseListener textField, MouseListener cells,
+                             MouseListener headerRowM, MouseMotionListener headerRowL);
 
   /**
    * set a input to a specific text field.

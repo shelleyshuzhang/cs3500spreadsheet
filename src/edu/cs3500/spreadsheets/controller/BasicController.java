@@ -27,6 +27,8 @@ import static edu.cs3500.spreadsheets.view.EditableView.getSingleRefer;
 public class BasicController implements Features {
   Worksheet model;
   IView view;
+  private int mouseYOffset;
+  private int rowToBeResized;
 
   /**
    * Construct a BasicController take in a model and a view.
@@ -185,6 +187,21 @@ public class BasicController implements Features {
       }
     }
     view.setEditable(false);
+  }
+
+  @Override
+  public void prepareResizeRow() {
+
+  }
+
+  @Override
+  public void changeHeaderCursor() {
+
+  }
+
+  @Override
+  public void resizeRowWidth() {
+
   }
 
   private void editWorksheetCells(List<Coord> lo) {
