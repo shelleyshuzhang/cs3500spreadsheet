@@ -49,10 +49,4 @@ public interface Features {
    */
   void openFile();
 
-  void prepareResizeRow();
-
-  void changeHeaderCursor();
-
-  void resizeRowWidth();
-
 }

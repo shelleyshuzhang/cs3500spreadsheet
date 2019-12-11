@@ -1,13 +1,9 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.TextField;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
@@ -288,6 +284,21 @@ public class EditableView extends JFrame implements IView {
     panel.setCellHeight(row, height);
   }
 
+  @Override
+  public int getRowToResize(Point p) {
+    return this.panel.getRowAtResizePoint(p);
+  }
+
+  @Override
+  public void swapRowHeaderCursor() {
+    this.panel.swapRowHeaderCursor();
+  }
+
+  @Override
+  public Cursor getRowHeaderCursor() {
+    return this.panel.getRowHeaderCursor();
+  }
+
   protected static void setTableValues(WorksheetReadOnly worksheetReadOnly,
                                        WorksheetScrollablePanel panel, IView view) {
     Set<String> coords = worksheetReadOnly.getAllCellCoordinates();
@@ -380,10 +391,9 @@ public class EditableView extends JFrame implements IView {
   private void setMouseListener() {
     Map<Integer, Runnable> mouseMapTextField = new HashMap<Integer, Runnable>();
     Map<Integer, Runnable> mouseMapCells = new HashMap<Integer, Runnable>();
-    Map<Integer, Runnable> mouseMapRowHeaderTable = new HashMap<Integer, Runnable>();
     MouseEventListener mListenerTextField = new MouseEventListener();
     MouseEventListener mListenerCells = new MouseEventListener();
-    MouseEventListener mListenerRowHeader = new MouseEventListener();
+    ResizeRowMouseListener mListenerRowHeader = new ResizeRowMouseListener(this);
 
     mouseMapTextField.put(1, new Runnable() {
       @Override
@@ -409,34 +419,9 @@ public class EditableView extends JFrame implements IView {
         }
       }
     });
-    mouseMapRowHeaderTable.put(3, new Runnable() {
-      @Override
-      public void run() {
-        for (Features f : featuresListener) {
-          f.;
-        }
-      }
-    });
-    mouseMapRowHeaderTable.put(4, new Runnable() {
-      @Override
-      public void run() {
-        for (Features f : featuresListener) {
-          f.;
-        }
-      }
-    });
-    mouseMapRowHeaderTable.put(5, new Runnable() {
-      @Override
-      public void run() {
-        for (Features f : featuresListener) {
-          f.;
-        }
-      }
-    });
 
     mListenerTextField.setMouseActionMap(mouseMapTextField);
     mListenerCells.setMouseActionMap(mouseMapCells);
-    mListenerRowHeader.setMouseActionMap(mouseMapRowHeaderTable);
 
     this.addMouseEventListener(mListenerTextField, mListenerCells, mListenerRowHeader,
             mListenerRowHeader);

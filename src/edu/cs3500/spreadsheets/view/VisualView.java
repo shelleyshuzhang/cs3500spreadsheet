@@ -1,10 +1,10 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -117,7 +117,8 @@ public class VisualView extends JFrame implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
+  public void addMouseEventListener(MouseListener textField, MouseListener cells,
+                                    MouseListener headerRowM, MouseMotionListener headerRowL) {
     // nothing here because an uneditable cell should not have this functionality
   }
 
@@ -207,6 +208,23 @@ public class VisualView extends JFrame implements IView {
   @Override
   public void setCellHeight(int row, int height) {
     // should never be called because this is not a job for an non editable view
+  }
+
+  @Override
+  public int getRowToResize(Point p) {
+    // should never be called because this is not a job for an non editable view
+    return 0;
+  }
+
+  @Override
+  public void swapRowHeaderCursor() {
+    // should never be called because this is not a job for an non editable view
+  }
+
+  @Override
+  public Cursor getRowHeaderCursor() {
+    // should never be called because this is not a job for an non editable view
+    return null;
   }
 
   @Override

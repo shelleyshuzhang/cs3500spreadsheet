@@ -1,8 +1,10 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -91,7 +93,8 @@ public class TextualView implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
+  public void addMouseEventListener(MouseListener textField, MouseListener cells,
+                                    MouseListener headerRowM, MouseMotionListener headerRowL) {
     // do nothing because this is not the job for a textual view
   }
 
@@ -180,6 +183,23 @@ public class TextualView implements IView {
   @Override
   public void setCellHeight(int row, int height) {
     // should never be called because there won't be a cell in the text view
+  }
+
+  @Override
+  public int getRowToResize(Point p) {
+    // do nothing because this is not the job for a textual view
+    return 0;
+  }
+
+  @Override
+  public void swapRowHeaderCursor() {
+    // do nothing because this is not the job for a textual view
+  }
+
+  @Override
+  public Cursor getRowHeaderCursor() {
+    // do nothing because this is not the job for a textual view
+    return null;
   }
 
   @Override

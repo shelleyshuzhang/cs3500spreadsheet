@@ -1,8 +1,10 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -109,8 +111,8 @@ public class ProviderViewAdapter implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
-    view.addMouse();
+  public void addMouseEventListener(MouseListener textField, MouseListener cells,
+                                    MouseListener headerRowM, MouseMotionListener headerRowL) {
     // provider didn't use different listener
     // else same as above
   }
@@ -206,5 +208,22 @@ public class ProviderViewAdapter implements IView {
   @Override
   public void setCellHeight(int row, int height) {
     // they do not support this
+  }
+
+  @Override
+  public int getRowToResize(Point p) {
+    // they do not support this
+    return 0;
+  }
+
+  @Override
+  public void swapRowHeaderCursor() {
+    // they do not support this
+  }
+
+  @Override
+  public Cursor getRowHeaderCursor() {
+    // they do not support this
+    return null;
   }
 }

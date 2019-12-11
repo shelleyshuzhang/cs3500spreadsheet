@@ -1,6 +1,8 @@
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.util.Objects;
 
@@ -93,9 +95,9 @@ public class MockView implements IView {
   }
 
   @Override
-  public void addMouseEventListener(MouseListener textField, MouseListener cells) {
-    log.append("view has been called to add two mouse listener:\n" + textField.toString() +
-            " for text field,\n" + cells + " for cells" + "\n");
+  public void addMouseEventListener(MouseListener textField, MouseListener cells,
+                                    MouseListener headerRowM, MouseMotionListener headerRowL) {
+
   }
 
   @Override
@@ -184,5 +186,20 @@ public class MockView implements IView {
   @Override
   public void setCellHeight(int row, int height) {
     log.append("view has been called to set cell's height in row: " + row + " as " + height + "\n");
+  }
+
+  @Override
+  public int getRowToResize(Point p) {
+    return 0;
+  }
+
+  @Override
+  public void swapRowHeaderCursor() {
+
+  }
+
+  @Override
+  public Cursor getRowHeaderCursor() {
+    return null;
   }
 }

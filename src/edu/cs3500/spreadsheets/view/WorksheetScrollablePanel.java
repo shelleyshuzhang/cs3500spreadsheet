@@ -12,7 +12,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
-import static javax.swing.plaf.basic.BasicTableHeaderUI.resizeCursor;
 
 /**
  * A worksheet scroll panel which can make a worksheet scrollable. It extends the JScrollPane in
@@ -48,7 +47,6 @@ public class WorksheetScrollablePanel extends JScrollPane {
     this.setBorder(createEmptyBorder());
     this.setRowHeaderView(headerTable);
     this.setBackground(BACK_GROUND_COLOR);
-    TableRowResizer t = new TableRowResizer(headerTable, worksheet);
   }
 
   /**
@@ -183,10 +181,14 @@ public class WorksheetScrollablePanel extends JScrollPane {
     this.headerTable.addMouseMotionListener(l);
   }
 
-  public void swapCursor() {
+  public void swapRowHeaderCursor() {
     Cursor temporary = headerTable.getCursor();
     headerTable.setCursor(otherCursor);
     otherCursor = temporary;
+  }
+
+  public Cursor getRowHeaderCursor() {
+    return headerTable.getCursor();
   }
 
   public int getRowAtResizePoint(Point p) {

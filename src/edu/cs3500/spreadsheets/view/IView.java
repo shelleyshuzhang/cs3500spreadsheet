@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -191,5 +192,11 @@ public interface IView {
   void setCellWidth(int col, int width);
 
   void setCellHeight(int row, int height);
+
+  int getRowToResize(Point p);
+
+  void swapRowHeaderCursor();
+
+  Cursor getRowHeaderCursor();
 
 }
