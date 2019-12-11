@@ -28,7 +28,21 @@ public interface Worksheet extends WorksheetReadOnly {
    */
   List<Coord> editCellContent(int col, int row, Contents contents);
 
+  /**
+   * set the row height of a cell.
+   *
+   * @param col    the column of a cell
+   * @param row    the row of a cell
+   * @param height the height of the cell
+   */
   void setCellRowHeight(int col, int row, int height);
 
+  /**
+   * set the width of a cell.
+   *
+   * @param col the column of a cell
+   * @param row the row of a cell
+   * @param width the width of the cell
+   */
   void setCellColWidth(int col, int row, int width);
 }

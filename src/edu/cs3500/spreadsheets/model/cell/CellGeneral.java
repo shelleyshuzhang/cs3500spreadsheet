@@ -105,12 +105,32 @@ public interface CellGeneral {
   List<Coord> executeUpdate(HashMap<Coord, Value> allEvaCell,
                             HashMap<Formula, Value> formulaValueHashMap);
 
+  /**
+   * set the height of a cell.
+   *
+   * @param height the height of a cell
+   */
   void setRowHeight(int height);
 
+  /**
+   * set the width of a cell.
+   *
+   * @param width the width of a cell
+   */
   void setColumnWidth(int width);
 
+  /**
+   * get the height of a cell.
+   *
+   * @return the height
+   */
   int getRowHeight();
 
+  /**
+   * get the width of a cell.
+   *
+   * @return the width
+   */
   int getColWidth();
 
 }
