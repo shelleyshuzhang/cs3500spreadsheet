@@ -143,46 +143,46 @@ public class MockView implements IView {
 
   @Override
   public File setSaveFileChooser() {
-    log.append("view has been called to save file");
+    log.append("view has been called to save file" + "\n");
     return null;
   }
 
   @Override
   public File setOpenFileChooser() {
-    log.append("view has been called to open file");
+    log.append("view has been called to open file" + "\n");
     return null;
   }
 
   @Override
   public void setEditable(boolean editable) {
-    log.append("view has been called to set editable boolean as" + editable);
+    log.append("view has been called to set editable boolean as" + editable + "\n");
   }
 
   @Override
   public boolean getEditable() {
-    log.append("view has been called to get editable boolean");
+    log.append("view has been called to get editable boolean" + "\n");
     return false;
   }
 
   @Override
   public int getCellWidth(int col, int row) {
-    log.append("view has been called to get cell width");
+    log.append("view has been called to get cell width" + "\n");
     return 0;
   }
 
   @Override
   public int getCellHeight(int col, int row) {
-    log.append("view has been called to get cell height");
+    log.append("view has been called to get cell height" + "\n");
     return 0;
   }
 
   @Override
   public void setCellWidth(int col, int width) {
-
+    log.append("view has been called to set cell's width in col: " + col + " as " + width + "\n");
   }
 
   @Override
   public void setCellHeight(int row, int height) {
-
+    log.append("view has been called to set cell's height in row: " + row + " as " + height + "\n");
   }
 }

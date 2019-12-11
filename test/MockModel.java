@@ -42,12 +42,14 @@ public class MockModel implements Worksheet {
 
   @Override
   public void setCellRowHeight(int col, int row, int height) {
-
+    log.append("model being called to set a cell in col:" + col + ", row:" + row + " ,'s height " +
+            "as " + height + "\n");
   }
 
   @Override
   public void setCellColWidth(int col, int row, int width) {
-
+    log.append("model being called to set a cell in col:" + col + ", row:" + row + " ,'s width " +
+            "as " + width + "\n");
   }
 
   @Override
