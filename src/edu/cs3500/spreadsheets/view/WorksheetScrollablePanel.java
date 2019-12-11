@@ -159,38 +159,82 @@ public class WorksheetScrollablePanel extends JScrollPane {
     return headerTable;
   }
 
+  /**
+   * get the width of a given cell.
+   *
+   * @param col the column of the cell
+   * @return the width of the cell
+   */
   public int getCellWidth(int col) {
     return worksheet.getTableHeader().getColumnModel().getColumn(col).getWidth();
   }
 
+  /**
+   * get the height of a cell.
+   *
+   * @param row the row of the cell
+   * @return the height of the cell
+   */
   public int getCellHeight(int row) {
     return worksheet.getRowHeight(row);
   }
 
+  /**
+   * set the width for a cell.
+   *
+   * @param col   the column of the cell
+   * @param width the width of the cell to set to
+   */
   public void setCellWidth(int col, int width) {
     worksheet.getTableHeader().getColumnModel().getColumn(col).setPreferredWidth(width);
   }
 
+  /**
+   * set the height of a cell.
+   *
+   * @param row the row of the cell
+   * @param height the height of the cell
+   */
   public void setCellHeight(int row, int height) {
     headerTable.setRowHeight(row, height);
     worksheet.setRowHeight(row, height);
   }
 
+  /**
+   * add mouse listen for the header table
+   *
+   * @param m the mouse event listener
+   * @param l the mouse movement listener
+   */
   public void addMouseListenerToRowHeader(MouseListener m, MouseMotionListener l) {
     this.headerTable.addMouseListener(m);
     this.headerTable.addMouseMotionListener(l);
   }
 
+  /**
+   * swap the cursor between resize and move.
+   */
   public void swapRowHeaderCursor() {
     Cursor temporary = headerTable.getCursor();
     headerTable.setCursor(otherCursor);
     otherCursor = temporary;
   }
 
+  /**
+   * get the cursor from the row header table.
+   *
+   * @return the cursor of the row header table
+   */
   public Cursor getRowHeaderCursor() {
     return headerTable.getCursor();
   }
 
+  /**
+   * get the row number of the given position.
+   *
+   * @param p the given position to get a row number
+   * @return the row number
+   */
   public int getRowAtResizePoint(Point p) {
     return this.getRowAtPointHelper(p, headerTable.rowAtPoint(p));
   }

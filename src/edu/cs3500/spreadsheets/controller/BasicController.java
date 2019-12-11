@@ -59,7 +59,6 @@ public class BasicController implements Features {
     }
   }
 
-
   /**
    * Convert a string to a Contents, if the string is empty, then the content is blank.
    *

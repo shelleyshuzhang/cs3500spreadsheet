@@ -185,18 +185,58 @@ public interface IView {
    */
   boolean getEditable();
 
+  /**
+   * get the width of a cell.
+   *
+   * @param col the column of the cell
+   * @param row the row of the cell
+   * @return the width of the cell
+   */
   int getCellWidth(int col, int row);
 
+  /**
+   * get the height of a cell.
+   *
+   * @param col the column of the cell
+   * @param row the row of the cell
+   * @return the height of the cell
+   */
   int getCellHeight(int col, int row);
 
+  /**
+   * set the width of the cell.
+   *
+   * @param col   the column of the cell
+   * @param width the width of the cell
+   */
   void setCellWidth(int col, int width);
 
+  /**
+   * set the height of the cell.
+   *
+   * @param row the row of the cell
+   * @param height the height to change to
+   */
   void setCellHeight(int row, int height);
 
+  /**
+   * get the row number that we want to resize.
+   *
+   * @param p the position on the row
+   * @return the row number to resize
+   */
   int getRowToResize(Point p);
 
+  /**
+   * swap the cursor to a resize cursor for the head table.
+   */
   void swapRowHeaderCursor();
 
+  /**
+   * get the cursor for the row header table.
+   *
+   * @return the cursor for the row header table
+   */
   Cursor getRowHeaderCursor();
 
 }

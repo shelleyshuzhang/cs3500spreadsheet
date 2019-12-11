@@ -56,7 +56,21 @@ public interface WorksheetReadOnly {
    */
   HashMap<Coord, CellGeneral> getAllRawCell();
 
+  /**
+   * get the row height of a cell.
+   *
+   * @param col the column of the cell
+   * @param row the row of a cell
+   * @return the row height of the cell
+   */
   int getCellRowHeight(int col, int row);
 
+  /**
+   * get the column width of a cell.
+   *
+   * @param col the column of a cell
+   * @param row the row of a cell
+   * @return the column width of the cell
+   */
   int getCellColWidth(int col, int row);
 }
